@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"goshop/internal/controller"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -21,6 +22,7 @@ var (
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Bind(
 					hello.NewV1(),
+					controller.Rotation,
 				)
 			})
 			s.Run()
