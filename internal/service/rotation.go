@@ -14,6 +14,8 @@ type (
 	IRotation interface {
 		// Create 创建轮播图
 		Create(ctx context.Context, in model.RotationCreateInput) (out model.RotationCreateOutput, err error)
+		// Delete 删除轮播图
+		Delete(ctx context.Context, id int) error
 	}
 )
 

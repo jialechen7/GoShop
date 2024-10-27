@@ -3,6 +3,9 @@ package rotation
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/frame/g"
+
 	"goshop/internal/service"
 
 	"github.com/gogf/gf/v2/encoding/ghtml"
@@ -32,4 +35,15 @@ func (s *sRotation) Create(ctx context.Context, in model.RotationCreateInput) (o
 		return out, err
 	}
 	return model.RotationCreateOutput{RotationId: int(lastInsertID)}, err
+}
+
+// Delete 删除轮播图
+func (s *sRotation) Delete(ctx context.Context, id int) error {
+	return dao.RotationInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		// 删除轮播图
+		_, err := dao.RotationInfo.Ctx(ctx).Where(g.Map{
+			dao.RotationInfo.Columns().Id: id,
+		}).Delete()
+		return err
+	})
 }
