@@ -12,6 +12,8 @@ import (
 
 type (
 	IRotation interface {
+		// GetList 查询轮播图列表
+		GetList(ctx context.Context, in model.RotationGetListInput) (out *model.RotationGetListOutput, err error)
 		// Create 创建轮播图
 		Create(ctx context.Context, in model.RotationCreateInput) (out model.RotationCreateOutput, err error)
 		// Delete 删除轮播图

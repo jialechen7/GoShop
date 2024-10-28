@@ -2,6 +2,7 @@ package rotation
 
 import (
 	"context"
+	"goshop/internal/model/entity"
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
@@ -22,6 +23,41 @@ func init() {
 
 func New() *sRotation {
 	return &sRotation{}
+}
+
+// GetList 查询轮播图列表
+func (s *sRotation) GetList(ctx context.Context, in model.RotationGetListInput) (out *model.RotationGetListOutput, err error) {
+	var (
+		m = dao.RotationInfo.Ctx(ctx)
+	)
+	out = &model.RotationGetListOutput{
+		Page: in.Page,
+		Size: in.Size,
+	}
+
+	listModel := m.Page(in.Page, in.Size)
+	// 排序方式
+	listModel = listModel.OrderDesc(dao.RotationInfo.Columns().Sort)
+
+	// 执行查询
+	var list []*entity.RotationInfo
+	if err := listModel.Scan(&list); err != nil {
+		return out, err
+	}
+	// 没有数据
+	if len(list) == 0 {
+		return out, nil
+	}
+	out.Total, err = m.Count()
+	if err != nil {
+		return out, err
+	}
+
+	// TODO: 区分Scan和ScanList用法
+	if err := listModel.Scan(&out.List); err != nil {
+		return out, err
+	}
+	return
 }
 
 // Create 创建轮播图
