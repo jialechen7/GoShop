@@ -5,6 +5,7 @@
 package logic
 
 import (
+	_ "goshop/internal/logic/admin"
 	_ "goshop/internal/logic/position"
 	_ "goshop/internal/logic/rotation"
 )

@@ -53,7 +53,7 @@ func (s *sRotation) GetList(ctx context.Context, in model.RotationGetListInput) 
 		return out, err
 	}
 
-	// TODO: 区分Scan和ScanList用法
+	// 区分Scan和ScanList用法
 	if err := listModel.Scan(&out.List); err != nil {
 		return out, err
 	}
