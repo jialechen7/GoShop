@@ -43,7 +43,7 @@ type RotationGetListOutput struct {
 type RotationGetListOutputItem struct {
 	//Rotation  *RotationListItem `json:"Rotation"`
 	Id        int         `json:"id"` // 自增ID
-	PicUrl    string      `json:"picUrl"`
+	PicUrl    string      `json:"pic_url"`
 	Link      string      `json:"link"`
 	Sort      int         `json:"sort"`       // 排序，数值越高越靠前
 	CreatedAt *gtime.Time `json:"created_at"` // 创建时间
@@ -53,7 +53,7 @@ type RotationGetListOutputItem struct {
 // RotationListItem 主要用于轮播图列表展示
 type RotationListItem struct {
 	Id        int         `json:"id"` // 自增ID
-	PicUrl    string      `json:"picUrl"`
+	PicUrl    string      `json:"pic_url"`
 	Link      string      `json:"link"`
 	Sort      int         `json:"sort"`       // 排序，数值越高越靠前
 	CreatedAt *gtime.Time `json:"created_at"` // 创建时间
