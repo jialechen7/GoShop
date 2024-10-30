@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"goshop/api/backend"
+	"goshop/api/frontend"
 
 	"goshop/internal/model"
 	"goshop/internal/service"
@@ -13,7 +14,8 @@ var Rotation = cRotation{}
 
 type cRotation struct{}
 
-func (a *cRotation) List(ctx context.Context, req *backend.RotationGetListCommonReq) (res *backend.RotationGetListCommonRes, err error) {
+// ListBackend 后台轮播图列表
+func (a *cRotation) ListBackend(ctx context.Context, req *backend.RotationGetListCommonReq) (res *backend.RotationGetListCommonRes, err error) {
 	getListRes, err := service.Rotation().GetList(ctx, model.RotationGetListInput{
 		Page: req.Page,
 		Size: req.Size,
@@ -59,4 +61,22 @@ func (a *cRotation) Update(ctx context.Context, req *backend.RotationUpdateReq) 
 		},
 	})
 	return
+}
+
+// ListFrontend 前台轮播图列表
+func (a *cRotation) ListFrontend(ctx context.Context, req *frontend.RotationGetListCommonReq) (res *frontend.RotationGetListCommonRes, err error) {
+	getListRes, err := service.Rotation().GetList(ctx, model.RotationGetListInput{
+		Page: req.Page,
+		Size: req.Size,
+		Sort: req.Sort,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &frontend.RotationGetListCommonRes{
+		List:  getListRes.List,
+		Page:  getListRes.Page,
+		Size:  getListRes.Size,
+		Total: getListRes.Total,
+	}, nil
 }

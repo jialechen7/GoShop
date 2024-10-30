@@ -24,7 +24,6 @@ var (
 				group.Middleware(
 					service.Middleware().CORS,
 					service.Middleware().Ctx,
-					service.Middleware().CORS,
 					service.Middleware().ResponseHandler,
 				)
 				group.Bind(
