@@ -4,6 +4,8 @@ import (
 	"context"
 	"goshop/api/backend"
 
+	"github.com/gogf/gf/util/gconv"
+
 	"goshop/internal/model"
 	"goshop/internal/service"
 )
@@ -60,4 +62,14 @@ func (a *cAdmin) Update(ctx context.Context, req *backend.AdminUpdateReq) (res *
 		},
 	})
 	return
+}
+
+// Info should be authenticated to view.
+// It is the get admin data handler
+func (c *cAdmin) Info(ctx context.Context, req *backend.AdminGetInfoReq) (res *backend.AdminGetInfoRes, err error) {
+	return &backend.AdminGetInfoRes{
+		Id:          gconv.Int(service.Auth().GetIdentity(ctx)),
+		IdentityKey: service.Auth().IdentityKey,
+		Payload:     service.Auth().GetPayload(ctx),
+	}, nil
 }

@@ -20,6 +20,8 @@ type (
 		Delete(ctx context.Context, id int) error
 		// Update 修改管理员
 		Update(ctx context.Context, in model.AdminUpdateInput) error
+		// GetAdminByNamePassword 根据管理员用户名密码获取管理员
+		GetAdminByNamePassword(ctx context.Context, in model.AdminLoginInput) map[string]interface{}
 	}
 )
 

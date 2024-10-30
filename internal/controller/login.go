@@ -3,7 +3,6 @@ package controller
 import (
 	"context"
 	"goshop/api/backend"
-	"goshop/internal/model"
 	"goshop/internal/service"
 )
 
@@ -12,16 +11,33 @@ var Login = cLogin{}
 
 type cLogin struct{}
 
-func (a *cLogin) Login(ctx context.Context, req *backend.LoginDoReq) (res *backend.LoginDoRes, err error) {
+//func (a *cLogin) Login(ctx context.Context, req *backend.LoginDoReq) (res *backend.LoginDoRes, err error) {
+//	res = &backend.LoginDoRes{}
+//	err = service.Login().Login(ctx, model.AdminLoginInput{
+//		Name:     req.Name,
+//		Password: req.Password,
+//	})
+//	if err != nil {
+//		return
+//	}
+//	loginAdmin := service.Session().GetAdmin(ctx)
+//	res.Info = loginAdmin
+//	return
+//}
+
+func (c *cLogin) Login(ctx context.Context, req *backend.LoginDoReq) (res *backend.LoginDoRes, err error) {
 	res = &backend.LoginDoRes{}
-	err = service.Login().Login(ctx, model.AdminLoginInput{
-		Name:     req.Name,
-		Password: req.Password,
-	})
-	if err != nil {
-		return
-	}
-	loginAdmin := service.Session().GetAdmin(ctx)
-	res.Info = loginAdmin
+	res.Token, res.ExpireAt = service.Auth().LoginHandler(ctx)
+	return
+}
+
+func (c *cLogin) RefreshToken(ctx context.Context, req *backend.RefreshTokenReq) (res *backend.RefreshTokenRes, err error) {
+	res = &backend.RefreshTokenRes{}
+	res.Token, res.ExpireAt = service.Auth().RefreshHandler(ctx)
+	return
+}
+
+func (c *cLogin) Logout(ctx context.Context, req *backend.LogoutReq) (res *backend.LogoutRes, err error) {
+	service.Auth().LogoutHandler(ctx)
 	return
 }

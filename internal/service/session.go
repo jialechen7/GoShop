@@ -12,11 +12,11 @@ import (
 
 type (
 	ISession interface {
-		// 设置管理员Session.
+		// SetAdmin 设置管理员Session
 		SetAdmin(ctx context.Context, admin *entity.AdminInfo) error
-		// 获取当前登录的管理员信息对象，如果管理员未登录返回nil。
+		// GetAdmin 获取当前登录的管理员信息对象，如果管理员未登录返回nil
 		GetAdmin(ctx context.Context) *entity.AdminInfo
-		// 删除管理员Session。
+		// RemoveAdmin 删除管理员Session
 		RemoveAdmin(ctx context.Context) error
 	}
 )

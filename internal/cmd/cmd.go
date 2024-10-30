@@ -22,16 +22,28 @@ var (
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				//group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Middleware(
+					service.Middleware().CORS,
 					service.Middleware().Ctx,
+					service.Middleware().CORS,
 					service.Middleware().ResponseHandler,
 				)
 				group.Bind(
-					hello.NewV1(),       //示例
-					controller.Rotation, //轮播图
-					controller.Position, //手工位
-					controller.Admin,    //管理员
-					controller.Login,    //登录
+					hello.NewV1(),           //示例
+					controller.Rotation,     //轮播图
+					controller.Position,     //手工位
+					controller.Admin.Create, //管理员创建
+					controller.Admin.List,   //管理员列表
+					controller.Login,        //登录
 				)
+				// Special handler that needs authentication.
+				group.Group("/", func(group *ghttp.RouterGroup) {
+					group.Middleware(service.Middleware().Auth)
+					group.ALLMap(g.Map{
+						"/backend/admin/info":   controller.Admin.Info,
+						"/backend/admin/update": controller.Admin.Update,
+						"/backend/admin/delete": controller.Admin.Delete,
+					})
+				})
 			})
 			s.Run()
 			return nil

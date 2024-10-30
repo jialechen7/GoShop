@@ -21,7 +21,7 @@ func New() *sLogin {
 	return &sLogin{}
 }
 
-// 执行登录
+// Login 执行登录
 func (s *sLogin) Login(ctx context.Context, in model.AdminLoginInput) error {
 	adminInfo := entity.AdminInfo{}
 	err := dao.AdminInfo.Ctx(ctx).Where("name", in.Name).Scan(&adminInfo)

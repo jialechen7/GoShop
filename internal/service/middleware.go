@@ -11,10 +11,14 @@ import (
 
 type (
 	IMiddleware interface {
-		// 返回处理中间件
+		// ResponseHandler 返回处理中间件
 		ResponseHandler(r *ghttp.Request)
-		// 自定义上下文对象
+		// Ctx 自定义上下文对象
 		Ctx(r *ghttp.Request)
+		// CORS 跨域处理
+		CORS(r *ghttp.Request)
+		// Auth 登录验证
+		Auth(r *ghttp.Request)
 	}
 )
 

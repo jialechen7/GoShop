@@ -112,3 +112,19 @@ func (s *sAdmin) Update(ctx context.Context, in model.AdminUpdateInput) error {
 		return err
 	})
 }
+
+// GetAdminByNamePassword 根据管理员用户名密码获取管理员
+func (s *sAdmin) GetAdminByNamePassword(ctx context.Context, in model.AdminLoginInput) map[string]interface{} {
+	adminModel := entity.AdminInfo{}
+	err := dao.AdminInfo.Ctx(ctx).Where(dao.AdminInfo.Columns().Name, in.Name).Scan(&adminModel)
+	if err != nil {
+		return nil
+	}
+	if utility.EncryptPassword(in.Password, adminModel.UserSalt) != adminModel.Password {
+		return nil
+	}
+	return g.Map{
+		"id":   adminModel.Id,
+		"name": adminModel.Name,
+	}
+}

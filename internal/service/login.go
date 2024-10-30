@@ -12,7 +12,7 @@ import (
 
 type (
 	ILogin interface {
-		// 执行登录
+		// Login 执行登录
 		Login(ctx context.Context, in model.AdminLoginInput) error
 	}
 )

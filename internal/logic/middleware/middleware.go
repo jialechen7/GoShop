@@ -25,7 +25,7 @@ func New() *sMiddleware {
 	}
 }
 
-// 返回处理中间件
+// ResponseHandler 返回处理中间件
 func (s *sMiddleware) ResponseHandler(r *ghttp.Request) {
 	r.Middleware.Next()
 
@@ -50,7 +50,7 @@ func (s *sMiddleware) ResponseHandler(r *ghttp.Request) {
 	}
 }
 
-// 自定义上下文对象
+// Ctx 自定义上下文对象
 func (s *sMiddleware) Ctx(r *ghttp.Request) {
 	// 初始化，务必最开始执行
 	customCtx := &model.Context{
@@ -71,5 +71,17 @@ func (s *sMiddleware) Ctx(r *ghttp.Request) {
 		"Context": customCtx,
 	})
 	// 执行下一步请求逻辑
+	r.Middleware.Next()
+}
+
+// CORS 跨域处理
+func (s *sMiddleware) CORS(r *ghttp.Request) {
+	r.Response.CORSDefault()
+	r.Middleware.Next()
+}
+
+// Auth 登录验证
+func (s *sMiddleware) Auth(r *ghttp.Request) {
+	service.Auth().MiddlewareFunc()(r)
 	r.Middleware.Next()
 }
