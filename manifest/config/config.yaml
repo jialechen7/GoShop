@@ -129,3 +129,11 @@ database:
 #     updatedAt:             "(可选)自动更新时间字段名称"
 #     deletedAt:             "(可选)软删除时间字段名称"
 #     timeMaintainDisabled:  "(可选)是否完全关闭时间更新特性，true时CreatedAt/UpdatedAt/DeletedAt都将失效"
+
+# 配置Redis
+redis:
+  default:
+    address: 127.0.0.1:6379
+    db:      1
+    pass:    123456
+    idleTimeout: 600

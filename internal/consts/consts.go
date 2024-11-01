@@ -5,4 +5,9 @@ const (
 	CaptchaDefaultName       = "CaptchaDefaultName" // 验证码默认存储空间名称
 	ContextKey               = "ContextKey"         // 上下文变量存储键名，前后端系统共享
 	FileMaxUploadCountMinute = 10                   // 同一用户1分钟之内最大上传数量
+	GtokenAdminPrefix        = "Admin:"             // gtoken登录管理后台前缀，用于区分admin和user的用户名相同的情况
+	CtxAdminId               = "CtxAdminId"
+	CtxAdminName             = "CtxAdminName"
+	CtxAdminIsAdmin          = "CtxAdminIsAdmin"
+	CtxAdminRoleIds          = "CtxAdminRoleIds"
 )
