@@ -18,9 +18,8 @@ CREATE TABLE IF NOT EXISTS `admin_info` (
 
 -- Sample data for admin_info
 INSERT INTO `admin_info` (`name`, `password`, `role_ids`, `user_salt`, `is_admin`, `created_at`, `updated_at`) VALUES
-('jialechen', '123', '1,2', 'salt1', 1, NOW(), NOW()),
-('admin', 'password123', '1,2', 'salt1', 1, NOW(), NOW()),
-('editor', 'password456', '2', 'salt2', 0, NOW(), NOW());
+('jialechen', 'b23239a15dbae17bc78cc83cd3c1d071', '1,2', 'wUUjkJqFiM', 1, NOW(), NOW()),
+('admin', 'b23239a15dbae17bc78cc83cd3c1d071', '1,2', 'wUUjkJqFiM', 1, NOW(), NOW());
 
 -- Table creation for position_info
 CREATE TABLE IF NOT EXISTS `position_info` (

@@ -41,7 +41,7 @@ var (
 				LoginAfterFunc:   loginAfterFunc,
 				LogoutPath:       "/backend/logout",
 				AuthPaths:        g.SliceStr{"/backend/admin/info", "/backend/admin/update", "/backend/admin/delete"},
-				AuthExcludePaths: g.SliceStr{"/backend/admin/add"}, // 不拦截路径
+				AuthExcludePaths: g.SliceStr{"/backend/admin/add", "/backend/dashboard/head"}, // 不拦截路径
 				AuthAfterFunc:    authAfterFunc,
 				MultiLogin:       true,
 			}
@@ -64,6 +64,7 @@ var (
 					controller.Position,     //手工位
 					controller.Admin.Create, //管理员创建
 					controller.Admin.List,   //管理员列表
+					controller.Dashboard,
 					//controller.Login,        //登录（使用gtoken时不需要绑定，在gtoken中绑定）
 				)
 
