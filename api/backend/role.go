@@ -40,3 +40,21 @@ type RoleGetListCommonRes struct {
 	Size  int         `json:"size" description:"分页数量"`
 	Total int         `json:"total" description:"数据总数"`
 }
+
+type RoleAddPermissionReq struct {
+	g.Meta       `path:"/backend/role/add/permission" method:"post" summary:"添加角色权限" tags:"角色"`
+	RoleId       int `json:"role_id" v:"required#请输入角色ID"`
+	PermissionId int `json:"permission_id" v:"required#请输入权限ID"`
+}
+
+type RoleAddPermissionRes struct {
+	RolePermissionId int `json:"role_permission_id"`
+}
+
+type RoleDeletePermissionReq struct {
+	g.Meta       `path:"/backend/role/delete/permission" method:"delete" summary:"删除角色权限" tags:"角色"`
+	RoleId       int `json:"role_id" v:"required#请输入角色ID"`
+	PermissionId int `json:"permission_id" v:"required#请输入权限ID"`
+}
+
+type RoleDeletePermissionRes struct{}

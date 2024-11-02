@@ -43,3 +43,19 @@ type RoleGetListOutputItem struct {
 	RoleIds string
 	IsRole  int
 }
+
+type RoleAddPermissionInput struct {
+	RoleId       int `json:"role_id"`
+	PermissionId int `json:"permission_id"`
+}
+
+type RoleAddPermissionOutput struct {
+	RolePermissionId int `json:"role_permission_id"`
+}
+
+type RoleDeletePermissionInput struct {
+	RoleId       int `json:"role_id"`
+	PermissionId int `json:"permission_id"`
+}
+
+type RoleDeletePermissionOutput struct{}
