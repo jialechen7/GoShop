@@ -6,11 +6,11 @@ import (
 	"goshop/internal/service"
 )
 
-type sDashboard struct{}
+type cDashboard struct{}
 
-var Dashboard = sDashboard{}
+var Dashboard = cDashboard{}
 
-func (s *sDashboard) DashboardHead(ctx context.Context, req *backend.DashboardHeadReq) (out *backend.DashboardHeadRes, err error) {
+func (c *cDashboard) DashboardHead(ctx context.Context, req *backend.DashboardHeadReq) (out *backend.DashboardHeadRes, err error) {
 	res, err := service.Dashboard().DashboardHead(ctx)
 	if err != nil {
 		return nil, err

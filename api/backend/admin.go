@@ -33,7 +33,7 @@ type AdminDeleteReq struct {
 type AdminDeleteRes struct{}
 
 type AdminUpdateReq struct {
-	g.Meta   `path:"/backend/admin/update/{Id}" method:"post" tags:"管理员" summary:"修改管理员接口"`
+	g.Meta   `path:"/backend/admin/update" method:"post" tags:"管理员" summary:"修改管理员接口"`
 	Id       int    `json:"id"      v:"min:1#请选择需要修改的管理员" dc:"管理员Id"`
 	Name     string `json:"name" dc:"用户名"`
 	Password string `json:"password" dc:"密码"`

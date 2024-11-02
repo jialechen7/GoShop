@@ -56,7 +56,6 @@ INSERT INTO `rotation_info` (`pic_url`, `link`, `sort`, `created_at`, `updated_a
 ('https://example.com/rotation2.jpg', 'https://example.com/link2', 2, NOW(), NOW());
 
 -- Table creation for order_info
-DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE IF NOT EXISTS `order_info` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `number` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单编号',
@@ -83,4 +82,54 @@ INSERT INTO `order_info` (`number`, `user_id`, `pay_type`, `remark`, `pay_at`, `
 ('1659231554317361000757', 1, 1, '备注2', NULL, 1, '王先生', '13269477432', '北京丰台汽车博物馆', 10000, 200, 9800, '2022-08-27 09:39:14', '2022-08-27 09:39:14'),
 ('1661603467832912000516', 1, 0, '', '2022-12-13 21:52:26', 0, '', '', '', 0, 0, 0, '2022-12-08 20:31:07', '2022-12-08 20:31:07'),
 ('1661603562656619000513', 1, 1, '放到快递柜', '2022-12-13 21:52:19', 0, '王先生', '13269477432', '北京丰台汽车博物馆', 0, 0, 0, '2022-12-09 20:32:42', '2022-12-09 20:32:42');
+COMMIT;
+
+
+CREATE TABLE IF NOT EXISTS role_info (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT '角色ID',
+    name VARCHAR(50) NOT NULL COMMENT '角色名称',
+    `desc` VARCHAR(255) COMMENT '角色描述',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    deleted_at DATETIME NULL COMMENT '删除时间',
+    constraint role_info_pk
+        unique (name)
+) COMMENT='角色信息表';
+
+-- 示例数据w
+BEGIN;
+INSERT INTO role_info (name, `desc`, created_at, updated_at) VALUES
+ ('销售员', '负责管理订单和库存查看权限', NOW(), NOW()),
+ ('客服人员', '负责查看订单及回复客户咨询权限', NOW(), NOW());
+COMMIT;
+
+CREATE TABLE IF NOT EXISTS permission_info (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT '权限ID',
+    name VARCHAR(50) NOT NULL COMMENT '权限名称',
+    path VARCHAR(255) COMMENT '权限路径，指向具体的API或页面',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    deleted_at DATETIME NULL COMMENT '删除时间'
+) COMMENT='权限信息表';
+
+BEGIN;
+INSERT INTO permission_info (name, path, created_at, updated_at) VALUES
+INSERT INTO permission_info (name, path, created_at, updated_at) VALUES
+('文章1', 'admin.article.index', NOW(), NOW()),
+('测试2', 'admin.test.index', NOW(), NOW());
+COMMIT;
+
+CREATE TABLE IF NOT EXISTS role_permission_info (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    role_id INT NOT NULL COMMENT '角色ID',
+    permission_id INT NOT NULL COMMENT '权限ID',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    deleted_at DATETIME NULL COMMENT '删除时间'
+) COMMENT = '角色权限关联表';
+
+BEGIN;
+INSERT INTO role_permission_info (role_id, permission_id, created_at, updated_at) VALUES
+(1, 1, NOW(), NOW()),
+(1, 2, NOW(), NOW());
 COMMIT;

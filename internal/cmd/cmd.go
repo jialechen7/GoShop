@@ -64,7 +64,8 @@ var (
 					controller.Position,     //手工位
 					controller.Admin.Create, //管理员创建
 					controller.Admin.List,   //管理员列表
-					controller.Dashboard,
+					controller.Dashboard,    //数据大屏
+					controller.Role,         //角色
 					//controller.Login,        //登录（使用gtoken时不需要绑定，在gtoken中绑定）
 				)
 
