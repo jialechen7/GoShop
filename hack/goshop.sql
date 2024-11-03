@@ -116,7 +116,6 @@ CREATE TABLE IF NOT EXISTS permission_info (
 
 BEGIN;
 INSERT INTO permission_info (name, path, created_at, updated_at) VALUES
-INSERT INTO permission_info (name, path, created_at, updated_at) VALUES
 ('文章1', 'admin.article.index', NOW(), NOW()),
 ('测试2', 'admin.test.index', NOW(), NOW());
 COMMIT;
@@ -136,7 +135,6 @@ CREATE TABLE IF NOT EXISTS role_permission_info (
             on update cascade on delete cascade
 ) COMMENT = '角色权限关联表';
 
-BEGIN;
 INSERT INTO role_permission_info (role_id, permission_id, created_at, updated_at) VALUES
 (1, 1, NOW(), NOW()),
 (1, 2, NOW(), NOW());
