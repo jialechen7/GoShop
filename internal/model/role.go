@@ -38,10 +38,9 @@ type RoleGetListOutput struct {
 
 type RoleGetListOutputItem struct {
 	//Role  *RoleListItem `json:"Role"`
-	Id      int `json:"id"` // 自增ID
-	Name    string
-	RoleIds string
-	IsRole  int
+	Id   int    `json:"id"` // 自增ID
+	Name string `json:"name"`
+	Desc string `json:"desc"`
 }
 
 type RoleAddPermissionInput struct {

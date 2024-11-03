@@ -66,6 +66,7 @@ var (
 					controller.Admin.List,   //管理员列表
 					controller.Dashboard,    //数据大屏
 					controller.Role,         //角色
+					controller.Permission,   //权限
 					//controller.Login,        //登录（使用gtoken时不需要绑定，在gtoken中绑定）
 				)
 

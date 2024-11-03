@@ -27,7 +27,7 @@ type AdminRes struct {
 }
 
 type AdminDeleteReq struct {
-	g.Meta `path:"/backend/admin/delete/{Id}" method:"delete" tags:"Admin" summary:"删除管理员接口"`
+	g.Meta `path:"/backend/admin/delete" method:"delete" tags:"Admin" summary:"删除管理员接口"`
 	Id     int `v:"min:1#请选择需要删除的管理员" dc:"管理员id"`
 }
 type AdminDeleteRes struct{}

@@ -109,7 +109,9 @@ CREATE TABLE IF NOT EXISTS permission_info (
     path VARCHAR(255) COMMENT '权限路径，指向具体的API或页面',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    deleted_at DATETIME NULL COMMENT '删除时间'
+    deleted_at DATETIME NULL COMMENT '删除时间',
+    constraint permission_info_pk
+        unique (name)
 ) COMMENT='权限信息表';
 
 BEGIN;
@@ -125,7 +127,13 @@ CREATE TABLE IF NOT EXISTS role_permission_info (
     permission_id INT NOT NULL COMMENT '权限ID',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    deleted_at DATETIME NULL COMMENT '删除时间'
+    deleted_at DATETIME NULL COMMENT '删除时间',
+    constraint role_permission_info_permission_info_id_fk
+        foreign key (permission_id) references permission_info (id)
+            on update cascade on delete cascade,
+    constraint role_permission_info_role_info_id_fk
+        foreign key (role_id) references role_info (id)
+            on update cascade on delete cascade
 ) COMMENT = '角色权限关联表';
 
 BEGIN;

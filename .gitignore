@@ -11,6 +11,7 @@ bin/
 gf
 main
 main.exe
+main.exe~
 output/
 manifest/output/
 temp/
