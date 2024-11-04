@@ -21,11 +21,12 @@ type LoginDoRes struct {
 
 // LoginRes 用于gtoken登录请求的参数
 type LoginRes struct {
-	Type     string `json:"type"`
-	Token    string `json:"token"`
-	ExpireAt int    `json:"expire_at"`
-	IsAdmin  int    `json:"is_admin"`
-	RoleIds  string `json:"role_ids"`
+	Type        string      `json:"type"`
+	Token       string      `json:"token"`
+	ExpireAt    int         `json:"expire_at"`
+	IsAdmin     int         `json:"is_admin"`
+	RoleIds     string      `json:"role_ids"`
+	Permissions interface{} `json:"permissions"`
 }
 
 type RefreshTokenReq struct {
