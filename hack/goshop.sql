@@ -139,3 +139,14 @@ INSERT INTO role_permission_info (role_id, permission_id, created_at, updated_at
 (1, 1, NOW(), NOW()),
 (1, 2, NOW(), NOW());
 COMMIT;
+
+CREATE TABLE file_info (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(128) NOT NULL COMMENT '图片名称',
+    src VARCHAR(128) NOT NULL COMMENT '本地文件存储路径',
+    url VARCHAR(255) NOT NULL COMMENT '文件地址',
+    user_id INT NOT NULL COMMENT '用户id',
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NULL,
+    deleted_at DATETIME NULL
+) COMMENT='文件信息表';

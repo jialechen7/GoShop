@@ -15,5 +15,5 @@ type PermissionInfo struct {
 	Path      string      `json:"path"      orm:"path"       description:"权限路径，指向具体的API或页面"`
 	CreatedAt *gtime.Time `json:"createdAt" orm:"created_at" description:"创建时间"`
 	UpdatedAt *gtime.Time `json:"updatedAt" orm:"updated_at" description:"更新时间"`
-	DeletedAt *gtime.Time `json:"deletedAt" orm:"deleted_at" description:"删除时间，用于软删除"`
+	DeletedAt *gtime.Time `json:"deletedAt" orm:"deleted_at" description:"删除时间"`
 }

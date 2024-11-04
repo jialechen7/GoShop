@@ -25,7 +25,7 @@ type PermissionInfoColumns struct {
 	Path      string // 权限路径，指向具体的API或页面
 	CreatedAt string // 创建时间
 	UpdatedAt string // 更新时间
-	DeletedAt string // 删除时间，用于软删除
+	DeletedAt string // 删除时间
 }
 
 // permissionInfoColumns holds the columns for table permission_info.

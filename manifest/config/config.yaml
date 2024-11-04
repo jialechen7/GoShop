@@ -137,3 +137,6 @@ redis:
     db:      1
     pass:    123456
     idleTimeout: 600
+
+upload:
+  path: "upload"

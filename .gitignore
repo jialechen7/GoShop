@@ -17,3 +17,4 @@ manifest/output/
 temp/
 temp.yaml
 bin
+upload/

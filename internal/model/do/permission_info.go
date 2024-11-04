@@ -17,5 +17,5 @@ type PermissionInfo struct {
 	Path      interface{} // 权限路径，指向具体的API或页面
 	CreatedAt *gtime.Time // 创建时间
 	UpdatedAt *gtime.Time // 更新时间
-	DeletedAt *gtime.Time // 删除时间，用于软删除
+	DeletedAt *gtime.Time // 删除时间
 }
