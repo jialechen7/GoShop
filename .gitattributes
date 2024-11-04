@@ -1,2 +1,3 @@
 * linguist-language=GO
 *.go text eol=lf
+go* text eol=lf

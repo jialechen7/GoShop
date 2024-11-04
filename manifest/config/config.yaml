@@ -140,3 +140,10 @@ redis:
 
 upload:
   path: "upload"
+
+qiniu:
+  bucket: "goshop7"
+  accessKey: "DQpA1jDKBGaE7zxFe9Mk6QB6IVXmYviAQkmQ7lqn"
+  secretKey: "HwQLWxudtbsHqPl_ih8BxGBNYSaAvy0vo_YS5mu4"
+  domain: "http://smf4uz9in.hn-bkt.clouddn.com"
+  tempDir: "upload/temp"

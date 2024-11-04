@@ -44,6 +44,7 @@ var (
 					controller.Role,       //角色
 					controller.Permission, //权限
 					controller.File,       //文件上传
+					controller.Upload,     //文件上云
 					//controller.Login,        //登录（使用gtoken时不需要绑定，在gtoken中绑定）
 				)
 
