@@ -1,3 +1,4 @@
 * linguist-language=GO
 *.go text eol=lf
+*.sql text eol=lf
 go* text eol=lf

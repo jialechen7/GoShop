@@ -19,14 +19,14 @@ import (
 
 func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
 	gfAdminToken = &gtoken.GfToken{
-		ServerName: "goshop",
+		ServerName: "goshop-backend",
 		//Timeout:         10 * 1000,
 		CacheMode:        2,
-		LoginPath:        "/backend/login",
+		LoginPath:        "/login",
 		LoginBeforeFunc:  loginBeforeFunc,
 		LoginAfterFunc:   loginAfterFunc,
-		LogoutPath:       "/backend/logout",
-		AuthPaths:        g.SliceStr{"/backend"},
+		LogoutPath:       "/logout",
+		AuthPaths:        g.SliceStr{"/"},
 		AuthExcludePaths: g.SliceStr{"/backend/admin/add"}, // 不拦截路径
 		AuthAfterFunc:    authAfterFunc,
 		MultiLogin:       true,
@@ -60,11 +60,11 @@ func loginBeforeFunc(r *ghttp.Request) (string, interface{}) {
 func loginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 	g.Dump("respData", respData)
 	if !respData.Success() {
-		respData.Code = 0
+		respData.Code = 1
 		r.Response.WriteJson(respData)
 		return
 	} else {
-		respData.Code = 1
+		respData.Code = 0
 		// 此处的userkey为LoginBeforeFunc返回的第二个参数
 		userKey := respData.GetString("userKey")
 		adminId := gstr.StrEx(userKey, consts.GtokenAdminPrefix)

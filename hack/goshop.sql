@@ -150,3 +150,32 @@ CREATE TABLE file_info (
     updated_at DATETIME NULL,
     deleted_at DATETIME NULL
 ) COMMENT='文件信息表';
+
+DROP TABLE IF EXISTS `user_info`;
+CREATE TABLE `user_info` (
+    `id` INT NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+    `name` VARCHAR(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户名',
+    `avatar` VARCHAR(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '头像URL',
+    `password` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '加密后的密码',
+    `user_salt` VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '加密盐，用于生成密码',
+    `sex` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '性别：1表示男，2表示女',
+    `status` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '状态：1表示正常，2表示拉黑冻结',
+    `sign` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '个性签名',
+    `secret_answer` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '密保问题答案',
+    `created_at` DATETIME DEFAULT NULL COMMENT '创建时间',
+    `updated_at` DATETIME DEFAULT NULL COMMENT '更新时间',
+    `deleted_at` DATETIME DEFAULT NULL COMMENT '删除时间',
+    PRIMARY KEY (`id`) USING BTREE,
+    constraint user_info_pk
+        unique (name)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户信息表';
+
+-- ----------------------------
+-- 插入 user_info 表的记录
+-- ----------------------------
+BEGIN;
+INSERT INTO `user_info`
+(`id`, `name`, `avatar`, `password`, `user_salt`, `sex`, `status`, `sign`, `secret_answer`, `created_at`, `updated_at`, `deleted_at`)
+VALUES
+    (1, 'jialechen', 'https://img1.baidu.com/it/u=2029513305,2137933177&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=472', 'e13975da9dccbdf8c2eb0f7187488e52', 'kAndmnfafJ', 0, 1, '个性签名', '银河中学', '2022-07-28 17:19:42', '2022-07-31 19:25:01', NULL)
+COMMIT;

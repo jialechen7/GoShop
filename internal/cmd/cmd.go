@@ -23,7 +23,11 @@ var (
 			if err != nil {
 				return err
 			}
-			s.Group("/", func(group *ghttp.RouterGroup) {
+			gfUserToken, err := StartFrontendGToken()
+			if err != nil {
+				return err
+			}
+			s.Group("/backend", func(group *ghttp.RouterGroup) {
 				//group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Middleware(
 					service.Middleware().CORS,
@@ -36,8 +40,11 @@ var (
 					panic(err)
 				}
 				group.Bind(
-					hello.NewV1(),         //示例
-					controller.Rotation,   //轮播图
+					hello.NewV1(),                   //示例
+					controller.Rotation.ListBackend, //轮播图
+					controller.Rotation.Create,
+					controller.Rotation.Delete,
+					controller.Rotation.Update,
 					controller.Position,   //手工位
 					controller.Admin,      //管理员
 					controller.Dashboard,  //数据大屏
@@ -57,6 +64,28 @@ var (
 				//		"/backend/admin/delete": controller.Admin.Delete,
 				//	})
 				//})
+			})
+			s.Group("/frontend", func(group *ghttp.RouterGroup) {
+				group.Middleware(
+					service.Middleware().CORS,
+					service.Middleware().Ctx,
+					service.Middleware().ResponseHandler,
+				)
+				// 不需要frontend鉴权的路由
+				group.Bind(
+					controller.Rotation.ListFrontend,
+				)
+				// 需要frontend鉴权的路由
+				group.Group("/", func(group *ghttp.RouterGroup) {
+					err := gfUserToken.Middleware(ctx, group)
+					if err != nil {
+						panic(err)
+					}
+					group.Bind(
+						controller.User, //用户
+					)
+				})
+
 			})
 			s.Run()
 			return nil

@@ -63,9 +63,9 @@ func dataReturn(r *ghttp.Request, code int, req ...interface{}) *JsonRes {
 		data = req[1]
 	}
 	//msg = GetCodeMsg(code, msg)
-	if code != 1 && !gconv.Bool(r.GetCtxVar("api_code")) {
-		code = 0
-	}
+	//if code != 1 && !gconv.Bool(r.GetCtxVar("api_code")) {
+	//	code = 0
+	//}
 	response := &JsonRes{
 		//ID:      r.GetCtxVar("RequestId").String(),
 		Code:    code,
