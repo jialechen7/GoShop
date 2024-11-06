@@ -57,7 +57,6 @@ func userLoginBeforeFunc(r *ghttp.Request) (string, interface{}) {
 
 // loginAfterFunc 自定义登陆成功后的行为
 func userLoginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
-	g.Dump("respData", respData)
 	if !respData.Success() {
 		respData.Code = 1
 		r.Response.WriteJson(respData)

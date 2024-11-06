@@ -65,6 +65,20 @@ func (a *cAdmin) Update(ctx context.Context, req *backend.AdminUpdateReq) (res *
 	return
 }
 
+func (a *cAdmin) UpdatePassword(ctx context.Context, req *backend.AdminUpdatePasswordReq) (res *backend.AdminUpdatePasswordRes, err error) {
+	userId := gconv.Int(ctx.Value(consts.CtxAdminId))
+	err = service.Admin().Update(ctx, model.AdminUpdateInput{
+		Id: userId,
+		AdminCreateUpdateBase: model.AdminCreateUpdateBase{
+			Password: req.Password,
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+
 // Info should be authenticated to view.
 // It is the get admin data handler
 func (c *cAdmin) Info(ctx context.Context, req *backend.AdminGetInfoReq) (res *backend.AdminGetInfoRes, err error) {

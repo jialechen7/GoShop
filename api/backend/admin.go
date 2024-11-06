@@ -60,3 +60,10 @@ type AdminGetInfoRes struct {
 	RoleIds string `json:"role_ids"`
 	IsAdmin int    `json:"is_admin"`
 }
+
+type AdminUpdatePasswordReq struct {
+	g.Meta   `path:"/admin/update/my/password" method:"post" tags:"管理员" summary:"修改管理员密码接口"`
+	Password string `json:"password" dc:"密码"`
+}
+
+type AdminUpdatePasswordRes struct{}

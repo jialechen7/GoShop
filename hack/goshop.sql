@@ -50,11 +50,6 @@ CREATE TABLE IF NOT EXISTS `rotation_info` (
     `deleted_at` DATETIME NULL
 ) COMMENT='轮播图表';
 
--- Sample data for rotation_info
-INSERT INTO `rotation_info` (`pic_url`, `link`, `sort`, `created_at`, `updated_at`) VALUES
-('https://example.com/rotation1.jpg', 'https://example.com/link1', 1, NOW(), NOW()),
-('https://example.com/rotation2.jpg', 'https://example.com/link2', 2, NOW(), NOW());
-
 -- Table creation for order_info
 CREATE TABLE IF NOT EXISTS `order_info` (
     `id` INT NOT NULL AUTO_INCREMENT,
@@ -96,11 +91,9 @@ CREATE TABLE IF NOT EXISTS role_info (
         unique (name)
 ) COMMENT='角色信息表';
 
--- 示例数据w
 BEGIN;
-INSERT INTO role_info (name, `desc`, created_at, updated_at) VALUES
- ('销售员', '负责管理订单和库存查看权限', NOW(), NOW()),
- ('客服人员', '负责查看订单及回复客户咨询权限', NOW(), NOW());
+INSERT INTO `role_info` (`name`, `desc`, `created_at`, `updated_at`)
+VALUES ('运营', '运营权限', '2022-09-25 10:35:52', '2022-09-25 10:35:52');
 COMMIT;
 
 CREATE TABLE IF NOT EXISTS permission_info (
@@ -116,7 +109,7 @@ CREATE TABLE IF NOT EXISTS permission_info (
 
 BEGIN;
 INSERT INTO permission_info (name, path, created_at, updated_at) VALUES
-('文章1', 'admin.article.index', NOW(), NOW()),
+('文章1', 'admin.article.index', '2022-09-25 15:03:01', '2022-09-25 15:03:43'),
 ('测试2', 'admin.test.index', NOW(), NOW());
 COMMIT;
 
@@ -135,10 +128,6 @@ CREATE TABLE IF NOT EXISTS role_permission_info (
             on update cascade on delete cascade
 ) COMMENT = '角色权限关联表';
 
-INSERT INTO role_permission_info (role_id, permission_id, created_at, updated_at) VALUES
-(1, 1, NOW(), NOW()),
-(1, 2, NOW(), NOW());
-COMMIT;
 
 CREATE TABLE file_info (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -177,5 +166,5 @@ BEGIN;
 INSERT INTO `user_info`
 (`id`, `name`, `avatar`, `password`, `user_salt`, `sex`, `status`, `sign`, `secret_answer`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-    (1, 'jialechen', 'https://img1.baidu.com/it/u=2029513305,2137933177&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=472', 'e13975da9dccbdf8c2eb0f7187488e52', 'kAndmnfafJ', 0, 1, '个性签名', '银河中学', '2022-07-28 17:19:42', '2022-07-31 19:25:01', NULL)
+    (1, 'jialechen', 'https://img1.baidu.com/it/u=2029513305,2137933177&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=472', 'e13975da9dccbdf8c2eb0f7187488e52', 'kAndmnfafJ', 0, 1, '个性签名', '银河中学', '2022-07-28 17:19:42', '2022-07-31 19:25:01', NULL);
 COMMIT;

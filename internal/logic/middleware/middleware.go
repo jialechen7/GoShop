@@ -21,7 +21,7 @@ func init() {
 
 func New() *sMiddleware {
 	return &sMiddleware{
-		LoginUrl: "/backend/login",
+		LoginUrl: "/backend/admin/login",
 	}
 }
 

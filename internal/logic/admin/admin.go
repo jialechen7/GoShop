@@ -101,11 +101,11 @@ func (s *sAdmin) Update(ctx context.Context, in model.AdminUpdateInput) error {
 			in.UserSalt = grand.S(10)
 			in.Password = utility.EncryptPassword(in.Password, in.UserSalt)
 		}
-
-		// 执行更行
+		// 执行更新
 		_, err := dao.AdminInfo.
 			Ctx(ctx).
 			Data(in).
+			OmitEmpty().
 			FieldsEx(dao.AdminInfo.Columns().Id).
 			Where(dao.AdminInfo.Columns().Id, in.Id).
 			Update()

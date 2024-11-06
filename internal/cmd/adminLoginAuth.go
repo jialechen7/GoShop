@@ -22,10 +22,10 @@ func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
 		ServerName: "goshop-backend",
 		//Timeout:         10 * 1000,
 		CacheMode:        2,
-		LoginPath:        "/login",
+		LoginPath:        "/admin/login",
 		LoginBeforeFunc:  loginBeforeFunc,
 		LoginAfterFunc:   loginAfterFunc,
-		LogoutPath:       "/logout",
+		LogoutPath:       "/admin/logout",
 		AuthPaths:        g.SliceStr{"/"},
 		AuthExcludePaths: g.SliceStr{"/backend/admin/add"}, // 不拦截路径
 		AuthAfterFunc:    authAfterFunc,
@@ -39,7 +39,6 @@ func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
 func loginBeforeFunc(r *ghttp.Request) (string, interface{}) {
 	name := r.Get("name").String()
 	password := r.Get("password").String()
-
 	ctx := context.TODO()
 
 	adminInfo := entity.AdminInfo{}
@@ -58,7 +57,6 @@ func loginBeforeFunc(r *ghttp.Request) (string, interface{}) {
 
 // loginAfterFunc 自定义登陆成功后的行为
 func loginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
-	g.Dump("respData", respData)
 	if !respData.Success() {
 		respData.Code = 1
 		r.Response.WriteJson(respData)
