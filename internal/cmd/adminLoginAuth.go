@@ -83,7 +83,7 @@ func loginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 			permissionsIds = append(permissionsIds, rolePermissionInfo.PermissionId)
 		}
 
-		var permissions []entity.PermissionInfo
+		permissions := make([]entity.PermissionInfo, 0)
 		err = dao.PermissionInfo.Ctx(context.TODO()).WhereIn(dao.PermissionInfo.Columns().Id, permissionsIds).Scan(&permissions)
 		if err != nil {
 			return

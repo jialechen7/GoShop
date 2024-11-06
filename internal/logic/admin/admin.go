@@ -4,6 +4,8 @@ import (
 	"context"
 	"goshop/internal/model/entity"
 	"goshop/utility"
+	"strconv"
+	"strings"
 
 	"github.com/gogf/gf/v2/util/grand"
 
@@ -56,6 +58,18 @@ func (s *sAdmin) GetList(ctx context.Context, in model.AdminGetListInput) (out *
 
 	if err := listModel.Scan(&out.List); err != nil {
 		return out, err
+	}
+	for i := 0; i < len(out.List); i++ {
+		roleIdsStr := strings.Split(out.List[i].RoleIds, ",")
+		roleIdsInt := make([]int, 0)
+		for _, idStr := range roleIdsStr {
+			if idStr == "" {
+				continue
+			}
+			id, _ := strconv.Atoi(idStr)
+			roleIdsInt = append(roleIdsInt, id)
+		}
+		out.List[i].RoleIdArray = roleIdsInt
 	}
 	return
 }

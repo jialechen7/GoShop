@@ -8,6 +8,7 @@ type UserCreateUpdateBase struct {
 	Sign         string
 	Sex          int
 	SecretAnswer string
+	Status       int
 }
 
 type UserCreateInput struct {
@@ -24,3 +25,27 @@ type UserUpdateInput struct {
 }
 
 type UserUpdateOutput struct{}
+
+// UserGetListInput 获取用户列表
+type UserGetListInput struct {
+	Page int // 分页号码
+	Size int // 分页数量，最大50
+}
+
+// UserGetListOutput 查询列表结果
+type UserGetListOutput struct {
+	List  []UserGetListOutputItem `json:"list" description:"列表"`
+	Page  int                     `json:"page" description:"分页码"`
+	Size  int                     `json:"size" description:"分页数量"`
+	Total int                     `json:"total" description:"数据总数"`
+}
+
+type UserGetListOutputItem struct {
+	Id        int    `json:"id"` // 自增ID
+	Name      string `json:"name"`
+	Avatar    string `json:"avatar"`
+	Sex       string `json:"sex"`
+	Sign      string `json:"sign"`
+	Status    int    `json:"status"`
+	CreatedAt string `json:"created_at"`
+}

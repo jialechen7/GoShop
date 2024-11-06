@@ -24,16 +24,6 @@ type UserDeleteReq struct {
 }
 type UserDeleteRes struct{}
 
-type UserUpdateReq struct {
-	g.Meta   `path:"/user/update" method:"post" tags:"用户" summary:"修改用户接口"`
-	Id       int    `json:"id"      v:"min:1#请选择需要修改的用户" dc:"用户Id"`
-	Name     string `json:"name" dc:"用户名"`
-	Password string `json:"password" dc:"密码"`
-	RoleIds  string `json:"role_id" dc:"角色ids"`
-	IsUser   int    `json:"is_user" dc:"是否是用户"`
-}
-type UserUpdateRes struct{}
-
 type UserGetInfoReq struct {
 	g.Meta `path:"/user/info" method:"get" tags:"用户" summary:"获取用户信息接口"`
 }

@@ -38,7 +38,9 @@ type PermissionGetListOutput struct {
 
 type PermissionGetListOutputItem struct {
 	//Permission  *PermissionListItem `json:"Permission"`
-	Id   int    `json:"id"`   // 自增ID
-	Name string `json:"name"` // 权限名
-	Path string `json:"path"`
+	Id        int    `json:"id"`   // 自增ID
+	Name      string `json:"name"` // 权限名
+	Path      string `json:"path"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }

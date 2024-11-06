@@ -11,6 +11,7 @@ import (
 	_ "goshop/internal/logic/file"
 	_ "goshop/internal/logic/login"
 	_ "goshop/internal/logic/middleware"
+	_ "goshop/internal/logic/order"
 	_ "goshop/internal/logic/permission"
 	_ "goshop/internal/logic/position"
 	_ "goshop/internal/logic/role"

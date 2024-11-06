@@ -41,8 +41,11 @@ type AdminGetListOutput struct {
 
 type AdminGetListOutputItem struct {
 	//Admin  *AdminListItem `json:"Admin"`
-	Id      int `json:"id"` // 自增ID
-	Name    string
-	RoleIds string
-	IsAdmin int
+	Id          int    `json:"id"` // 自增ID
+	Name        string `json:"name"`
+	RoleIds     string `json:"role_ids"`
+	IsAdmin     int    `json:"is_admin"`
+	RoleIdArray []int  `json:"role_id_array"`
+	CreatedAt   string `json:"created_at"`
+	UpdatedAt   string `json:"updated_at"`
 }
