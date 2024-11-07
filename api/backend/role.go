@@ -41,20 +41,18 @@ type RoleGetListCommonRes struct {
 	Total int         `json:"total" description:"数据总数"`
 }
 
-type RoleAddPermissionReq struct {
-	g.Meta       `path:"/role/add/permission" method:"post" summary:"添加角色权限" tags:"角色"`
-	RoleId       int `json:"role_id" v:"required#请输入角色ID"`
-	PermissionId int `json:"permission_id" v:"required#请输入权限ID"`
+type RoleAddPermissionsReq struct {
+	g.Meta        `path:"/role/add/permission" method:"post" summary:"添加角色权限" tags:"角色"`
+	RoleId        int   `json:"role_id" v:"required#请输入角色ID"`
+	PermissionIds []int `json:"permission_ids" v:"required#请输入权限ID"`
 }
 
-type RoleAddPermissionRes struct {
-	RolePermissionId int `json:"role_permission_id"`
+type RoleAddPermissionsRes struct{}
+
+type RoleDeletePermissionsReq struct {
+	g.Meta        `path:"/role/delete/permission" method:"delete" summary:"删除角色权限" tags:"角色"`
+	RoleId        int   `json:"role_id" v:"required#请输入角色ID"`
+	PermissionIds []int `json:"permission_ids" v:"required#请输入权限ID"`
 }
 
-type RoleDeletePermissionReq struct {
-	g.Meta       `path:"/role/delete/permission" method:"delete" summary:"删除角色权限" tags:"角色"`
-	RoleId       int `json:"role_id" v:"required#请输入角色ID"`
-	PermissionId int `json:"permission_id" v:"required#请输入权限ID"`
-}
-
-type RoleDeletePermissionRes struct{}
+type RoleDeletePermissionsRes struct{}

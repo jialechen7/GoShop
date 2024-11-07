@@ -45,18 +45,16 @@ type RoleGetListOutputItem struct {
 	UpdatedAt string `json:"updated_at"`
 }
 
-type RoleAddPermissionInput struct {
-	RoleId       int `json:"role_id"`
-	PermissionId int `json:"permission_id"`
+type RoleAddPermissionsInput struct {
+	RoleId        int   `json:"role_id"`
+	PermissionIds []int `json:"permission_ids"`
 }
 
-type RoleAddPermissionOutput struct {
-	RolePermissionId int `json:"role_permission_id"`
-}
+type RoleAddPermissionsOutput struct{}
 
-type RoleDeletePermissionInput struct {
-	RoleId       int `json:"role_id"`
-	PermissionId int `json:"permission_id"`
+type RoleDeletePermissionsInput struct {
+	RoleId        int   `json:"role_id"`
+	PermissionIds []int `json:"permission_ids"`
 }
 
 type RoleDeletePermissionOutput struct{}

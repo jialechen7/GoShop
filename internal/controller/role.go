@@ -24,22 +24,25 @@ func (c *cRole) Create(ctx context.Context, req *backend.RoleCreateReq) (res *ba
 	return &backend.RoleCreateRes{RoleId: out.RoleId}, nil
 }
 
-func (c *cRole) AddPermission(ctx context.Context, req *backend.RoleAddPermissionReq) (res *backend.RoleAddPermissionRes, err error) {
-	out, err := service.Role().AddPermission(ctx, model.RoleAddPermissionInput{
-		RoleId:       req.RoleId,
-		PermissionId: req.PermissionId,
+func (c *cRole) AddPermissions(ctx context.Context, req *backend.RoleAddPermissionsReq) (res *backend.RoleAddPermissionsRes, err error) {
+	err = service.Role().AddPermissions(ctx, model.RoleAddPermissionsInput{
+		RoleId:        req.RoleId,
+		PermissionIds: req.PermissionIds,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return &backend.RoleAddPermissionRes{RolePermissionId: out.RolePermissionId}, nil
+	return
 }
 
-func (a *cRole) DeletePermission(ctx context.Context, req *backend.RoleDeletePermissionReq) (res *backend.RoleDeletePermissionRes, err error) {
-	err = service.Role().DeletePermission(ctx, model.RoleDeletePermissionInput{
-		RoleId:       req.RoleId,
-		PermissionId: req.PermissionId,
+func (a *cRole) DeletePermissions(ctx context.Context, req *backend.RoleDeletePermissionsReq) (res *backend.RoleDeletePermissionsRes, err error) {
+	err = service.Role().DeletePermissions(ctx, model.RoleDeletePermissionsInput{
+		RoleId:        req.RoleId,
+		PermissionIds: req.PermissionIds,
 	})
+	if err != nil {
+		return nil, err
+	}
 	return
 }
 

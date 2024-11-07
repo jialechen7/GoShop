@@ -35,28 +35,35 @@ func (s *sRole) Create(ctx context.Context, in model.RoleCreateInput) (out model
 	return model.RoleCreateOutput{RoleId: int(lastInsertID)}, err
 }
 
-// AddPermission 添加角色权限
-func (s *sRole) AddPermission(ctx context.Context, in model.RoleAddPermissionInput) (out model.RoleAddPermissionOutput, err error) {
-	// 不允许HTML代码
-	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
-		return out, err
-	}
-	lastInsertID, err := dao.RolePermissionInfo.Ctx(ctx).Data(in).InsertAndGetId()
-	if err != nil {
-		return out, err
-	}
-	return model.RoleAddPermissionOutput{RolePermissionId: int(lastInsertID)}, err
+// AddPermissions 添加角色权限
+func (s *sRole) AddPermissions(ctx context.Context, in model.RoleAddPermissionsInput) (err error) {
+	return dao.RoleInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		for _, permissionId := range in.PermissionIds {
+			_, err = dao.RolePermissionInfo.Ctx(ctx).Data(g.Map{
+				dao.RolePermissionInfo.Columns().RoleId:       in.RoleId,
+				dao.RolePermissionInfo.Columns().PermissionId: permissionId,
+			}).Insert()
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	})
 }
 
 // DeletePermission 删除角色权限
-func (s *sRole) DeletePermission(ctx context.Context, in model.RoleDeletePermissionInput) error {
+func (s *sRole) DeletePermissions(ctx context.Context, in model.RoleDeletePermissionsInput) error {
 	return dao.RoleInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
-		// 删除角色
-		_, err := dao.RolePermissionInfo.Ctx(ctx).Where(g.Map{
-			dao.RolePermissionInfo.Columns().RoleId:       in.RoleId,
-			dao.RolePermissionInfo.Columns().PermissionId: in.PermissionId,
-		}).Unscoped().Delete()
-		return err
+		for _, permissionId := range in.PermissionIds {
+			_, err := dao.RolePermissionInfo.Ctx(ctx).Where(g.Map{
+				dao.RolePermissionInfo.Columns().RoleId:       in.RoleId,
+				dao.RolePermissionInfo.Columns().PermissionId: permissionId,
+			}).Unscoped().Delete()
+			if err != nil {
+				return err
+			}
+		}
+		return nil
 	})
 }
 

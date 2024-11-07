@@ -14,10 +14,10 @@ type (
 	IRole interface {
 		// Create 添加角色
 		Create(ctx context.Context, in model.RoleCreateInput) (out model.RoleCreateOutput, err error)
-		// AddPermission 添加角色权限
-		AddPermission(ctx context.Context, in model.RoleAddPermissionInput) (out model.RoleAddPermissionOutput, err error)
+		// AddPermissions 添加角色权限
+		AddPermissions(ctx context.Context, in model.RoleAddPermissionsInput) (err error)
 		// DeletePermission 删除角色权限
-		DeletePermission(ctx context.Context, in model.RoleDeletePermissionInput) error
+		DeletePermissions(ctx context.Context, in model.RoleDeletePermissionsInput) error
 		// Delete 删除角色
 		Delete(ctx context.Context, id int) error
 		// Update 修改角色
