@@ -16,7 +16,7 @@ var Admin = cAdmin{}
 
 type cAdmin struct{}
 
-func (a *cAdmin) List(ctx context.Context, req *backend.AdminGetListCommonReq) (res *backend.AdminGetListCommonRes, err error) {
+func (c *cAdmin) List(ctx context.Context, req *backend.AdminGetListCommonReq) (res *backend.AdminGetListCommonRes, err error) {
 	getListRes, err := service.Admin().GetList(ctx, model.AdminGetListInput{
 		Page: req.Page,
 		Size: req.Size,
@@ -32,7 +32,7 @@ func (a *cAdmin) List(ctx context.Context, req *backend.AdminGetListCommonReq) (
 	}, nil
 }
 
-func (a *cAdmin) Create(ctx context.Context, req *backend.AdminReq) (res *backend.AdminRes, err error) {
+func (c *cAdmin) Create(ctx context.Context, req *backend.AdminReq) (res *backend.AdminRes, err error) {
 	out, err := service.Admin().Create(ctx, model.AdminCreateInput{
 		AdminCreateUpdateBase: model.AdminCreateUpdateBase{
 			Name:     req.Name,
@@ -47,12 +47,12 @@ func (a *cAdmin) Create(ctx context.Context, req *backend.AdminReq) (res *backen
 	return &backend.AdminRes{AdminId: out.AdminId}, nil
 }
 
-func (a *cAdmin) Delete(ctx context.Context, req *backend.AdminDeleteReq) (res *backend.AdminDeleteRes, err error) {
+func (c *cAdmin) Delete(ctx context.Context, req *backend.AdminDeleteReq) (res *backend.AdminDeleteRes, err error) {
 	err = service.Admin().Delete(ctx, req.Id)
 	return
 }
 
-func (a *cAdmin) Update(ctx context.Context, req *backend.AdminUpdateReq) (res *backend.AdminUpdateRes, err error) {
+func (c *cAdmin) Update(ctx context.Context, req *backend.AdminUpdateReq) (res *backend.AdminUpdateRes, err error) {
 	err = service.Admin().Update(ctx, model.AdminUpdateInput{
 		Id: req.Id,
 		AdminCreateUpdateBase: model.AdminCreateUpdateBase{
@@ -65,7 +65,7 @@ func (a *cAdmin) Update(ctx context.Context, req *backend.AdminUpdateReq) (res *
 	return
 }
 
-func (a *cAdmin) UpdatePassword(ctx context.Context, req *backend.AdminUpdatePasswordReq) (res *backend.AdminUpdatePasswordRes, err error) {
+func (c *cAdmin) UpdatePassword(ctx context.Context, req *backend.AdminUpdatePasswordReq) (res *backend.AdminUpdatePasswordRes, err error) {
 	userId := gconv.Int(ctx.Value(consts.CtxAdminId))
 	err = service.Admin().Update(ctx, model.AdminUpdateInput{
 		Id: userId,

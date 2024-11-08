@@ -35,7 +35,7 @@ func (c *cRole) AddPermissions(ctx context.Context, req *backend.RoleAddPermissi
 	return
 }
 
-func (a *cRole) DeletePermissions(ctx context.Context, req *backend.RoleDeletePermissionsReq) (res *backend.RoleDeletePermissionsRes, err error) {
+func (c *cRole) DeletePermissions(ctx context.Context, req *backend.RoleDeletePermissionsReq) (res *backend.RoleDeletePermissionsRes, err error) {
 	err = service.Role().DeletePermissions(ctx, model.RoleDeletePermissionsInput{
 		RoleId:        req.RoleId,
 		PermissionIds: req.PermissionIds,
@@ -46,12 +46,12 @@ func (a *cRole) DeletePermissions(ctx context.Context, req *backend.RoleDeletePe
 	return
 }
 
-func (a *cRole) Delete(ctx context.Context, req *backend.RoleDeleteReq) (res *backend.RoleDeleteRes, err error) {
+func (c *cRole) Delete(ctx context.Context, req *backend.RoleDeleteReq) (res *backend.RoleDeleteRes, err error) {
 	err = service.Role().Delete(ctx, req.Id)
 	return
 }
 
-func (a *cRole) Update(ctx context.Context, req *backend.RoleUpdateReq) (res *backend.RoleUpdateRes, err error) {
+func (c *cRole) Update(ctx context.Context, req *backend.RoleUpdateReq) (res *backend.RoleUpdateRes, err error) {
 	err = service.Role().Update(ctx, model.RoleUpdateInput{
 		Id: req.Id,
 		RoleCreateUpdateBase: model.RoleCreateUpdateBase{
@@ -62,7 +62,7 @@ func (a *cRole) Update(ctx context.Context, req *backend.RoleUpdateReq) (res *ba
 	return
 }
 
-func (a *cRole) List(ctx context.Context, req *backend.RoleGetListCommonReq) (res *backend.RoleGetListCommonRes, err error) {
+func (c *cRole) List(ctx context.Context, req *backend.RoleGetListCommonReq) (res *backend.RoleGetListCommonRes, err error) {
 	getListRes, err := service.Role().GetList(ctx, model.RoleGetListInput{
 		Page: req.Page,
 		Size: req.Size,

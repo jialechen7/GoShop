@@ -168,3 +168,34 @@ INSERT INTO `user_info`
 VALUES
     (1, 'jialechen', 'https://img1.baidu.com/it/u=2029513305,2137933177&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=472', 'e13975da9dccbdf8c2eb0f7187488e52', 'kAndmnfafJ', 0, 1, '个性签名', '银河中学', '2022-07-28 17:19:42', '2022-07-31 19:25:01', NULL);
 COMMIT;
+
+
+-- ----------------------------
+-- Table structure for category_info
+-- ----------------------------
+DROP TABLE IF EXISTS `category_info`;
+CREATE TABLE `category_info` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `parent_id` int NOT NULL DEFAULT '0' COMMENT '父级id',
+    `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+    `pic_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'icon',
+    `deleted_at` datetime DEFAULT NULL,
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    `level` tinyint(1) NOT NULL DEFAULT '1' COMMENT '等级 默认1级分类',
+    `sort` tinyint(1) NOT NULL DEFAULT '1',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表\n';
+
+-- ----------------------------
+-- Records of category_info
+-- ----------------------------
+BEGIN;
+INSERT INTO `category_info` VALUES (1, 0, '家用电器', 'https://img10.360buyimg.com/n1/jfs/t1/211798/40/45226/70698/670e113cFbfebf347/7cb86ec50d195420.jpg.avif', NULL, NULL, NULL, 1, 1);
+INSERT INTO `category_info` VALUES (2, 1, '电视', 'https://img11.360buyimg.com/n1/jfs/t1/107975/22/57903/111261/672ca34bFd0264716/832fe66f08b3bb76.jpg.avif', NULL, NULL, NULL, 2, 1);
+INSERT INTO `category_info` VALUES (3, 2, '全面屏电视', 'https://img11.360buyimg.com/n1/jfs/t1/107975/22/57903/111261/672ca34bFd0264716/832fe66f08b3bb76.jpg.avif', NULL, NULL, NULL, 3, 1);
+INSERT INTO `category_info` VALUES (4, 2, '教育电视', 'https://img11.360buyimg.com/n1/jfs/t1/107975/22/57903/111261/672ca34bFd0264716/832fe66f08b3bb76.jpg.avif', NULL, NULL, NULL, 3, 1);
+INSERT INTO `category_info` VALUES (5, 1, '智慧屏电视', 'https://img11.360buyimg.com/n1/jfs/t1/107975/22/57903/111261/672ca34bFd0264716/832fe66f08b3bb76.jpg.avif', NULL, NULL, NULL, 3, 1);
+INSERT INTO `category_info` VALUES (6, 0, '手机/数码', 'https://img14.360buyimg.com/n1/s450x450_jfs/t1/186627/35/51187/75651/672acd7eF1e7f61a8/9f6495558e53e4a9.jpg.avif', NULL, '2022-07-27 15:07:31', '2022-07-27 15:08:57', 1, 2);
+INSERT INTO `category_info` VALUES (7, 6, '手机通讯', 'https://img14.360buyimg.com/n1/s450x450_jfs/t1/186627/35/51187/75651/672acd7eF1e7f61a8/9f6495558e53e4a9.jpg.avif', NULL, '2022-07-27 15:08:41', '2022-07-27 15:09:34', 2, 2);
+COMMIT;

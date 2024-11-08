@@ -15,7 +15,7 @@ var Rotation = cRotation{}
 type cRotation struct{}
 
 // ListBackend 后台轮播图列表
-func (a *cRotation) ListBackend(ctx context.Context, req *backend.RotationGetListCommonReq) (res *backend.RotationGetListCommonRes, err error) {
+func (c *cRotation) ListBackend(ctx context.Context, req *backend.RotationGetListCommonReq) (res *backend.RotationGetListCommonRes, err error) {
 	getListRes, err := service.Rotation().GetList(ctx, model.RotationGetListInput{
 		Page: req.Page,
 		Size: req.Size,
@@ -32,7 +32,7 @@ func (a *cRotation) ListBackend(ctx context.Context, req *backend.RotationGetLis
 	}, nil
 }
 
-func (a *cRotation) Create(ctx context.Context, req *backend.RotationReq) (res *backend.RotationRes, err error) {
+func (c *cRotation) Create(ctx context.Context, req *backend.RotationReq) (res *backend.RotationRes, err error) {
 	out, err := service.Rotation().Create(ctx, model.RotationCreateInput{
 		RotationCreateUpdateBase: model.RotationCreateUpdateBase{
 			PicUrl: req.PicUrl,
@@ -46,12 +46,12 @@ func (a *cRotation) Create(ctx context.Context, req *backend.RotationReq) (res *
 	return &backend.RotationRes{RotationId: out.RotationId}, nil
 }
 
-func (a *cRotation) Delete(ctx context.Context, req *backend.RotationDeleteReq) (res *backend.RotationDeleteRes, err error) {
+func (c *cRotation) Delete(ctx context.Context, req *backend.RotationDeleteReq) (res *backend.RotationDeleteRes, err error) {
 	err = service.Rotation().Delete(ctx, req.Id)
 	return
 }
 
-func (a *cRotation) Update(ctx context.Context, req *backend.RotationUpdateReq) (res *backend.RotationUpdateRes, err error) {
+func (c *cRotation) Update(ctx context.Context, req *backend.RotationUpdateReq) (res *backend.RotationUpdateRes, err error) {
 	err = service.Rotation().Update(ctx, model.RotationUpdateInput{
 		Id: req.Id,
 		RotationCreateUpdateBase: model.RotationCreateUpdateBase{
@@ -64,7 +64,7 @@ func (a *cRotation) Update(ctx context.Context, req *backend.RotationUpdateReq) 
 }
 
 // ListFrontend 前台轮播图列表
-func (a *cRotation) ListFrontend(ctx context.Context, req *frontend.RotationGetListCommonReq) (res *frontend.RotationGetListCommonRes, err error) {
+func (c *cRotation) ListFrontend(ctx context.Context, req *frontend.RotationGetListCommonReq) (res *frontend.RotationGetListCommonRes, err error) {
 	getListRes, err := service.Rotation().GetList(ctx, model.RotationGetListInput{
 		Page: req.Page,
 		Size: req.Size,

@@ -8,6 +8,13 @@ type OrderGetListInput struct {
 	Size int // 分页数量，最大50
 }
 
+// OrderGetListWithStatusInput 获取订单列表
+type OrderGetListWithStatusInput struct {
+	Page   int // 分页号码
+	Size   int // 分页数量，最大50
+	Status int // 订单状态
+}
+
 // OrderGetListOutput 查询列表结果
 type OrderGetListOutput struct {
 	List  []OrderGetListOutputItem `json:"list" description:"列表"`

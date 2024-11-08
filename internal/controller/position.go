@@ -13,7 +13,7 @@ var Position = cPosition{}
 
 type cPosition struct{}
 
-func (a *cPosition) List(ctx context.Context, req *backend.PositionGetListCommonReq) (res *backend.PositionGetListCommonRes, err error) {
+func (c *cPosition) List(ctx context.Context, req *backend.PositionGetListCommonReq) (res *backend.PositionGetListCommonRes, err error) {
 	getListRes, err := service.Position().GetList(ctx, model.PositionGetListInput{
 		Page: req.Page,
 		Size: req.Size,
@@ -30,7 +30,7 @@ func (a *cPosition) List(ctx context.Context, req *backend.PositionGetListCommon
 	}, nil
 }
 
-func (a *cPosition) Create(ctx context.Context, req *backend.PositionReq) (res *backend.PositionRes, err error) {
+func (c *cPosition) Create(ctx context.Context, req *backend.PositionReq) (res *backend.PositionRes, err error) {
 	out, err := service.Position().Create(ctx, model.PositionCreateInput{
 		PositionCreateUpdateBase: model.PositionCreateUpdateBase{
 			PicUrl:    req.PicUrl,
@@ -46,12 +46,12 @@ func (a *cPosition) Create(ctx context.Context, req *backend.PositionReq) (res *
 	return &backend.PositionRes{PositionId: out.PositionId}, nil
 }
 
-func (a *cPosition) Delete(ctx context.Context, req *backend.PositionDeleteReq) (res *backend.PositionDeleteRes, err error) {
+func (c *cPosition) Delete(ctx context.Context, req *backend.PositionDeleteReq) (res *backend.PositionDeleteRes, err error) {
 	err = service.Position().Delete(ctx, req.Id)
 	return
 }
 
-func (a *cPosition) Update(ctx context.Context, req *backend.PositionUpdateReq) (res *backend.PositionUpdateRes, err error) {
+func (c *cPosition) Update(ctx context.Context, req *backend.PositionUpdateReq) (res *backend.PositionUpdateRes, err error) {
 	err = service.Position().Update(ctx, model.PositionUpdateInput{
 		Id: req.Id,
 		PositionCreateUpdateBase: model.PositionCreateUpdateBase{

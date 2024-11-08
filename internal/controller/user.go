@@ -17,7 +17,7 @@ var User = cUser{}
 
 type cUser struct{}
 
-func (a *cUser) Create(ctx context.Context, req *frontend.UserRegisterReq) (res *frontend.UserRegisterRes, err error) {
+func (c *cUser) Create(ctx context.Context, req *frontend.UserRegisterReq) (res *frontend.UserRegisterRes, err error) {
 	out, err := service.User().Create(ctx, model.UserCreateInput{
 		UserCreateUpdateBase: model.UserCreateUpdateBase{
 			Name:         req.Name,
@@ -77,7 +77,7 @@ func (c *cUser) Update(ctx context.Context, req *backend.UserUpdateReq) (res *ba
 	return res, err
 }
 
-func (a *cUser) List(ctx context.Context, req *backend.UserGetListCommonReq) (res *backend.UserGetListCommonRes, err error) {
+func (c *cUser) List(ctx context.Context, req *backend.UserGetListCommonReq) (res *backend.UserGetListCommonRes, err error) {
 	getListRes, err := service.User().GetList(ctx, model.UserGetListInput{
 		Page: req.Page,
 		Size: req.Size,
@@ -93,7 +93,7 @@ func (a *cUser) List(ctx context.Context, req *backend.UserGetListCommonReq) (re
 	}, nil
 }
 
-func (a *cUser) Delete(ctx context.Context, req *backend.UserDeleteReq) (res *backend.UserDeleteRes, err error) {
+func (c *cUser) Delete(ctx context.Context, req *backend.UserDeleteReq) (res *backend.UserDeleteRes, err error) {
 	err = service.User().Delete(ctx, req.Id)
 	return
 }

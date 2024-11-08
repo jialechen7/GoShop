@@ -44,12 +44,10 @@ func userLoginBeforeFunc(r *ghttp.Request) (string, interface{}) {
 	userInfo := entity.UserInfo{}
 	err := dao.UserInfo.Ctx(ctx).Where("name", name).Scan(&userInfo)
 	if err != nil {
-		r.Response.WriteJson(gtoken.Fail("用户名不存在"))
-		r.ExitAll()
+		response.JsonExit(r, consts.UserNameOrPasswordError, "用户名不存在", nil)
 	}
 	if utility.EncryptPassword(password, userInfo.UserSalt) != userInfo.Password {
-		r.Response.WriteJson(gtoken.Fail("密码不正确"))
-		r.ExitAll()
+		response.JsonExit(r, consts.UserNameOrPasswordError, "密码错误", nil)
 	}
 	// 唯一标识，扩展参数user data
 	return consts.GtokenUserPrefix + strconv.Itoa(userInfo.Id), userInfo

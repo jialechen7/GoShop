@@ -14,6 +14,8 @@ type (
 	IOrder interface {
 		// GetList 查询订单列表
 		GetList(ctx context.Context, in model.OrderGetListInput) (out *model.OrderGetListOutput, err error)
+		// GetListFrontend 查询订单列表（仅用户自己的订单）
+		GetListFrontend(ctx context.Context, in model.OrderGetListWithStatusInput) (out *model.OrderGetListOutput, err error)
 	}
 )
 

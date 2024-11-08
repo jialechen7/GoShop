@@ -12,7 +12,7 @@ var Permission = cPermission{}
 
 type cPermission struct{}
 
-func (a *cPermission) List(ctx context.Context, req *backend.PermissionGetListCommonReq) (res *backend.PermissionGetListCommonRes, err error) {
+func (c *cPermission) List(ctx context.Context, req *backend.PermissionGetListCommonReq) (res *backend.PermissionGetListCommonRes, err error) {
 	getListRes, err := service.Permission().GetList(ctx, model.PermissionGetListInput{
 		Page: req.Page,
 		Size: req.Size,
@@ -28,7 +28,7 @@ func (a *cPermission) List(ctx context.Context, req *backend.PermissionGetListCo
 	}, nil
 }
 
-func (a *cPermission) Create(ctx context.Context, req *backend.PermissionReq) (res *backend.PermissionRes, err error) {
+func (c *cPermission) Create(ctx context.Context, req *backend.PermissionReq) (res *backend.PermissionRes, err error) {
 	out, err := service.Permission().Create(ctx, model.PermissionCreateInput{
 		PermissionCreateUpdateBase: model.PermissionCreateUpdateBase{
 			Name: req.Name,
@@ -41,12 +41,12 @@ func (a *cPermission) Create(ctx context.Context, req *backend.PermissionReq) (r
 	return &backend.PermissionRes{PermissionId: out.PermissionId}, nil
 }
 
-func (a *cPermission) Delete(ctx context.Context, req *backend.PermissionDeleteReq) (res *backend.PermissionDeleteRes, err error) {
+func (c *cPermission) Delete(ctx context.Context, req *backend.PermissionDeleteReq) (res *backend.PermissionDeleteRes, err error) {
 	err = service.Permission().Delete(ctx, req.Id)
 	return
 }
 
-func (a *cPermission) Update(ctx context.Context, req *backend.PermissionUpdateReq) (res *backend.PermissionUpdateRes, err error) {
+func (c *cPermission) Update(ctx context.Context, req *backend.PermissionUpdateReq) (res *backend.PermissionUpdateRes, err error) {
 	err = service.Permission().Update(ctx, model.PermissionUpdateInput{
 		Id: req.Id,
 		PermissionCreateUpdateBase: model.PermissionCreateUpdateBase{
