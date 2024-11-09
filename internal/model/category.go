@@ -1,7 +1,5 @@
 package model
 
-import "github.com/gogf/gf/v2/os/gtime"
-
 // CategoryGetListInput 获取分类列表
 type CategoryGetListInput struct {
 	Page int // 分页号码
@@ -24,13 +22,13 @@ type CategoryGetListOutput struct {
 }
 
 type CategoryGetListOutputItem struct {
-	Id        int         `json:"id"` // 自增ID
-	ParentId  int         `json:"parent_id"`
-	Name      string      `json:"name"`
-	PicUrl    string      `json:"pic_url"`
-	Level     int         `json:"level"`
-	Sort      int         `json:"sort"`
-	CreatedAt *gtime.Time `json:"created_at"`
+	Id       int    `json:"id"` // 自增ID
+	ParentId int    `json:"parent_id"`
+	Name     string `json:"name"`
+	PicUrl   string `json:"pic_url"`
+	Level    int    `json:"level"`
+	Sort     int    `json:"sort"`
+	TimeCommon
 }
 
 type CategoryAddInput struct {

@@ -41,11 +41,11 @@ type UserGetListOutput struct {
 }
 
 type UserGetListOutputItem struct {
-	Id        int    `json:"id"` // 自增ID
-	Name      string `json:"name"`
-	Avatar    string `json:"avatar"`
-	Sex       string `json:"sex"`
-	Sign      string `json:"sign"`
-	Status    int    `json:"status"`
-	CreatedAt string `json:"created_at"`
+	Id     int    `json:"id"` // 自增ID
+	Name   string `json:"name"`
+	Avatar string `json:"avatar"`
+	Sex    string `json:"sex"`
+	Sign   string `json:"sign"`
+	Status int    `json:"status"`
+	TimeCommon
 }

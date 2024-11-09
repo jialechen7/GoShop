@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `rotation_info` (
 ) COMMENT='轮播图表';
 
 -- Table creation for order_info
+DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE IF NOT EXISTS `order_info` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `number` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单编号',
@@ -74,9 +75,9 @@ CREATE TABLE IF NOT EXISTS `order_info` (
 BEGIN;
 INSERT INTO `order_info` (`number`, `user_id`, `pay_type`, `remark`, `pay_at`, `status`, `consignee_name`, `consignee_phone`, `consignee_address`, `price`, `coupon_price`, `actual_price`, `created_at`, `updated_at`) VALUES
 ('1659231316407832000111', 1, 1, '备注1', NULL, 1, '王先生', '13269477432', '北京丰台汽车博物馆', 10000, 100, 9900, '2022-08-27 09:35:16', '2022-08-27 09:35:16'),
-('1659231554317361000757', 1, 1, '备注2', NULL, 1, '王先生', '13269477432', '北京丰台汽车博物馆', 10000, 200, 9800, '2022-08-27 09:39:14', '2022-08-27 09:39:14'),
-('1661603467832912000516', 1, 0, '', '2022-12-13 21:52:26', 0, '', '', '', 0, 0, 0, '2022-12-08 20:31:07', '2022-12-08 20:31:07'),
-('1661603562656619000513', 1, 1, '放到快递柜', '2022-12-13 21:52:19', 0, '王先生', '13269477432', '北京丰台汽车博物馆', 0, 0, 0, '2022-12-09 20:32:42', '2022-12-09 20:32:42');
+('1659231554317361000757', 1, 1, '备注2', NULL, 2, '王先生', '13269477432', '北京丰台汽车博物馆', 10000, 200, 9800, '2022-08-27 09:39:14', '2022-08-27 09:39:14'),
+('1661603467832912000516', 1, 2, '', '2022-12-13 21:52:26', 3, '', '', '', 0, 0, 0, '2022-12-08 20:31:07', '2022-12-08 20:31:07'),
+('1661603562656619000513', 1, 3, '放到快递柜', '2022-12-13 21:52:19', 4, '王先生', '13269477432', '北京丰台汽车博物馆', 0, 0, 0, '2022-12-09 20:32:42', '2022-12-09 20:32:42');
 COMMIT;
 
 
@@ -109,8 +110,8 @@ CREATE TABLE IF NOT EXISTS permission_info (
 
 BEGIN;
 INSERT INTO permission_info (name, path, created_at, updated_at) VALUES
-('文章1', 'admin.article.index', '2022-09-25 15:03:01', '2022-09-25 15:03:43'),
-('测试2', 'admin.test.index', NOW(), NOW());
+('首页配置', '/homepageManager', '2022-09-25 15:03:01', '2022-09-25 15:03:43'),
+('轮播图', '/homepageManager/bannerSwiper', NOW(), NOW());
 COMMIT;
 
 CREATE TABLE IF NOT EXISTS role_permission_info (
@@ -166,7 +167,7 @@ BEGIN;
 INSERT INTO `user_info`
 (`id`, `name`, `avatar`, `password`, `user_salt`, `sex`, `status`, `sign`, `secret_answer`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-    (1, 'jialechen', 'https://img1.baidu.com/it/u=2029513305,2137933177&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=472', 'e13975da9dccbdf8c2eb0f7187488e52', 'kAndmnfafJ', 0, 1, '个性签名', '银河中学', '2022-07-28 17:19:42', '2022-07-31 19:25:01', NULL);
+    (1, 'jialechen', 'https://cdn.acwing.com/media/user/profile/photo/40815_lg_d5f4bcc813.JPG', '905d0c656e6f93d5e73fb00ad0702a41', 'JAUrpNobzs', 1, 1, '个性签名', '银河中学', '2022-07-28 17:19:42', '2022-07-31 19:25:01', NULL);
 COMMIT;
 
 
@@ -198,4 +199,36 @@ INSERT INTO `category_info` VALUES (4, 2, '教育电视', 'https://img11.360buyi
 INSERT INTO `category_info` VALUES (5, 1, '智慧屏电视', 'https://img11.360buyimg.com/n1/jfs/t1/107975/22/57903/111261/672ca34bFd0264716/832fe66f08b3bb76.jpg.avif', NULL, NULL, NULL, 3, 1);
 INSERT INTO `category_info` VALUES (6, 0, '手机/数码', 'https://img14.360buyimg.com/n1/s450x450_jfs/t1/186627/35/51187/75651/672acd7eF1e7f61a8/9f6495558e53e4a9.jpg.avif', NULL, '2022-07-27 15:07:31', '2022-07-27 15:08:57', 1, 2);
 INSERT INTO `category_info` VALUES (7, 6, '手机通讯', 'https://img14.360buyimg.com/n1/s450x450_jfs/t1/186627/35/51187/75651/672acd7eF1e7f61a8/9f6495558e53e4a9.jpg.avif', NULL, '2022-07-27 15:08:41', '2022-07-27 15:09:34', 2, 2);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for article_info
+-- ----------------------------
+DROP TABLE IF EXISTS `article_info`;
+CREATE TABLE `article_info` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL DEFAULT '0' COMMENT '作者id',
+  `title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '摘要',
+  `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '封面图',
+  `is_admin` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1后台管理员发布 2前台用户发布',
+  `praise` int NOT NULL DEFAULT '0' COMMENT '点赞数',
+  `detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '文章详情',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='文章（种草）表';
+
+-- ----------------------------
+-- Records of article_info
+-- ----------------------------
+BEGIN;
+INSERT INTO `article_info` VALUES (1, 0, '华凌空调真不错!', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-19 11:47:59', '2022-07-19 11:48:52', '2022-07-19 11:49:13');
+INSERT INTO `article_info` VALUES (2, 2, '华凌空调真不错!', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 0, 0, '这里是文章正文', '2022-07-19 11:49:36', '2022-07-31 15:51:06', '2022-07-31 16:08:59');
+INSERT INTO `article_info` VALUES (3, 2, '华凌空调真不错a', '京东买的，真的种草了a', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 0, 0, '这里是文章正文a', '2022-07-31 15:42:45', '2022-07-31 15:42:45', NULL);
+INSERT INTO `article_info` VALUES (4, 1, '华凌空调真不错a', '京东买的，真的种草了a', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 0, 0, '这里是文章正文a', '2022-07-31 15:44:25', '2022-07-31 15:44:25', NULL);
+INSERT INTO `article_info` VALUES (5, 1, '华凌空调真不错', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-31 19:06:59', '2022-07-31 19:06:59', NULL);
+INSERT INTO `article_info` VALUES (6, 2, '华凌空调真不错', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-31 19:07:08', '2022-07-31 19:07:08', NULL);
+INSERT INTO `article_info` VALUES (7, 1, '华凌空调真不错', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-31 19:08:03', '2022-07-31 19:08:03', NULL);
 COMMIT;

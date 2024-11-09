@@ -37,5 +37,5 @@ type OrderGetListOutputItem struct {
 	Price            int         `json:"price"`
 	CouponPrice      int         `json:"coupon_price"`
 	ActualPrice      int         `json:"actual_price"`
-	CreatedAt        *gtime.Time `json:"created_at"`
+	TimeCommon
 }

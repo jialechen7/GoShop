@@ -15,7 +15,7 @@ type UserRegisterReq struct {
 }
 
 type UserRegisterRes struct {
-	UserId int `json:"userId"`
+	UserId int `json:"user_id"`
 }
 
 type UserDeleteReq struct {

@@ -46,6 +46,5 @@ type AdminGetListOutputItem struct {
 	RoleIds     string `json:"role_ids"`
 	IsAdmin     int    `json:"is_admin"`
 	RoleIdArray []int  `json:"role_id_array"`
-	CreatedAt   string `json:"created_at"`
-	UpdatedAt   string `json:"updated_at"`
+	TimeCommon
 }

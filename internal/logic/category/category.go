@@ -23,7 +23,7 @@ func New() *sCategory {
 	return &sCategory{}
 }
 
-// GetList 查询分类列表
+// GetList 查询分类列表（管理员查询全部）
 func (s *sCategory) GetList(ctx context.Context, in model.CategoryGetListInput) (out *model.CategoryGetListOutput, err error) {
 	var (
 		m = dao.CategoryInfo.Ctx(ctx)
@@ -55,7 +55,7 @@ func (s *sCategory) GetList(ctx context.Context, in model.CategoryGetListInput) 
 	return
 }
 
-// GetListFrontend 查询分类列表（仅用户自己的分类）
+// GetListFrontend 查询分类列表
 func (s *sCategory) GetListFrontend(ctx context.Context, in model.CategoryGetListWithParentIdInput) (out *model.CategoryGetListOutput, err error) {
 	var (
 		m = dao.CategoryInfo.Ctx(ctx)
@@ -91,7 +91,7 @@ func (s *sCategory) GetListFrontend(ctx context.Context, in model.CategoryGetLis
 }
 
 // Add 添加分类
-func (s *sCategory) Add(ctx context.Context, in model.CategoryAddInput) (out model.CategoryAddOutput, err error) {
+func (s *sCategory) Add(ctx context.Context, in model.CategoryAddInput) (out *model.CategoryAddOutput, err error) {
 	// 不允许HTML代码
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
@@ -100,7 +100,7 @@ func (s *sCategory) Add(ctx context.Context, in model.CategoryAddInput) (out mod
 	if err != nil {
 		return out, err
 	}
-	return model.CategoryAddOutput{CategoryId: int(lastInsertID)}, err
+	return &model.CategoryAddOutput{CategoryId: int(lastInsertID)}, err
 }
 
 // Delete 删除分类

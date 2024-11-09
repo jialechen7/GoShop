@@ -6,7 +6,7 @@ import (
 
 type CategoryGetListCommonReq struct {
 	g.Meta   `path:"/category/list" tags:"Category" method:"get" summary:"分类列表接口"`
-	ParentId int `json:"parent_id" in:"query" v:"required#请选择分类状态"`
+	ParentId int `json:"parent_id" in:"query" v:"required#请选择父级ID"`
 	CommonPaginationReq
 }
 type CategoryGetListCommonRes struct {
@@ -21,7 +21,7 @@ type CategoryAddReq struct {
 }
 
 type CategoryAddRes struct {
-	CategoryId int `json:"categoryId"`
+	CategoryId int `json:"category_id"`
 }
 
 type CategoryDeleteReq struct {

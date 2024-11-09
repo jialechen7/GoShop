@@ -12,12 +12,12 @@ import (
 
 type (
 	ICategory interface {
-		// GetList 查询分类列表
+		// GetList 查询分类列表（管理员查询全部）
 		GetList(ctx context.Context, in model.CategoryGetListInput) (out *model.CategoryGetListOutput, err error)
-		// GetListFrontend 查询分类列表（仅用户自己的分类）
+		// GetListFrontend 查询分类列表
 		GetListFrontend(ctx context.Context, in model.CategoryGetListWithParentIdInput) (out *model.CategoryGetListOutput, err error)
 		// Add 添加分类
-		Add(ctx context.Context, in model.CategoryAddInput) (out model.CategoryAddOutput, err error)
+		Add(ctx context.Context, in model.CategoryAddInput) (out *model.CategoryAddOutput, err error)
 		// Delete 删除分类
 		Delete(ctx context.Context, id int) error
 	}

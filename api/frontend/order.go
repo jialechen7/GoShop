@@ -21,7 +21,7 @@ type OrderAddReq struct {
 }
 
 type OrderAddRes struct {
-	OrderId int `json:"orderId"`
+	OrderId int `json:"order_id"`
 }
 
 type OrderDeleteReq struct {
