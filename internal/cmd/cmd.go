@@ -94,6 +94,7 @@ var (
 						controller.Article.ListFrontend,   //文章列表（仅用户自己的文章）
 						controller.Article.AddFrontend,    //添加文章
 						controller.Article.DeleteFrontend, //删除文章
+						controller.Article.DetailFrontend, //文章详情
 					)
 				})
 

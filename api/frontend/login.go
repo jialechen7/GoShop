@@ -24,7 +24,7 @@ type RefreshTokenReq struct {
 
 type RefreshTokenRes struct {
 	Token    string    `json:"token"`
-	ExpireAt time.Time `json:"expire_at"`
+	ExpireIn time.Time `json:"expire_in"`
 }
 
 type LogoutReq struct {

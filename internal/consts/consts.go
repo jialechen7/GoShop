@@ -19,5 +19,6 @@ const (
 	UserStatusBlacked  = 2 // 用户状态：2-黑名单
 	ErrSecretAnswer    = "密保答案错误"
 	ErrUserStatus      = "您的账号被冻结拉黑，请联系管理员"
+	ErrNoPermission    = "您没有权限访问"
 	MinPasswordLength  = 6 // 密码最小长度
 )

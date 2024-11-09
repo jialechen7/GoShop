@@ -40,3 +40,17 @@ type ArticleUpdateReq struct {
 	g.Meta `path:"/article/update" method:"post" tags:"文章" summary:"修改文章接口"`
 }
 type ArticleUpdateRes struct{}
+
+type ArticleDetailReq struct {
+	g.Meta `path:"/article/detail" method:"get" tags:"文章" summary:"文章详情接口"`
+	Id     int `v:"min:1#请选择需要查询的文章" form:"query" dc:"文章id"`
+}
+
+type ArticleDetailRes struct {
+	Title     string `json:"title"`
+	Desc      string `json:"desc"`
+	Detail    string `json:"detail"`
+	PicUrl    string `json:"pic_url"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}

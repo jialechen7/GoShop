@@ -27,13 +27,13 @@ type cLogin struct{}
 
 func (c *cLogin) Login(ctx context.Context, req *backend.LoginDoReq) (res *backend.LoginDoRes, err error) {
 	res = &backend.LoginDoRes{}
-	res.Token, res.ExpireAt = service.Auth().LoginHandler(ctx)
+	res.Token, res.ExpireIn = service.Auth().LoginHandler(ctx)
 	return
 }
 
 func (c *cLogin) RefreshToken(ctx context.Context, req *backend.RefreshTokenReq) (res *backend.RefreshTokenRes, err error) {
 	res = &backend.RefreshTokenRes{}
-	res.Token, res.ExpireAt = service.Auth().RefreshHandler(ctx)
+	res.Token, res.ExpireIn = service.Auth().RefreshHandler(ctx)
 	return
 }
 

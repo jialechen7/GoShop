@@ -16,14 +16,14 @@ type LoginDoReq struct {
 // LoginDoRes 用于JWT登录成功后返回的数据
 type LoginDoRes struct {
 	Token    string    `json:"token"`
-	ExpireAt time.Time `json:"expire_at"`
+	ExpireIn time.Time `json:"expire_in"`
 }
 
 // LoginRes 用于gtoken登录请求的参数
 type LoginRes struct {
 	Type        string      `json:"type"`
 	Token       string      `json:"token"`
-	ExpireAt    int         `json:"expire_at"`
+	ExpireIn    int         `json:"expire_in"`
 	IsAdmin     int         `json:"is_admin"`
 	RoleIds     string      `json:"role_ids"`
 	Permissions interface{} `json:"permissions"`
@@ -35,7 +35,7 @@ type RefreshTokenReq struct {
 
 type RefreshTokenRes struct {
 	Token    string    `json:"token"`
-	ExpireAt time.Time `json:"expire_at"`
+	ExpireIn time.Time `json:"expire_in"`
 }
 
 type LogoutReq struct {

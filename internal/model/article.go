@@ -24,13 +24,17 @@ type ArticleGetListOutputItem struct {
 	TimeCommon
 }
 
-type ArticleAddInput struct {
+type ArticleCreateUpdateBase struct {
 	UserId  int
 	Title   string
 	Desc    string
 	PicUrl  string
 	Detail  string
 	IsAdmin int
+}
+
+type ArticleAddInput struct {
+	ArticleCreateUpdateBase
 }
 
 type ArticleAddOutput struct {
@@ -42,3 +46,15 @@ type ArticleDeleteInput struct {
 }
 
 type ArticleDeleteOutput struct{}
+
+type ArticleDetailInput struct {
+	Id int
+}
+
+type ArticleDetailOutput struct {
+	Title  string `json:"title"`
+	Desc   string `json:"desc"`
+	Detail string `json:"detail"`
+	PicUrl string `json:"pic_url"`
+	TimeCommon
+}

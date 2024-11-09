@@ -1,4 +1,5 @@
 -- Database creation
+DROP DATABASE IF EXISTS `goshop`;
 CREATE DATABASE IF NOT EXISTS `goshop` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `goshop`;
 

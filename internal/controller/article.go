@@ -31,12 +31,14 @@ func (c *cArticle) ListFrontend(ctx context.Context, req *frontend.ArticleGetLis
 
 func (c *cArticle) AddFrontend(ctx context.Context, req *frontend.ArticleAddReq) (res *frontend.ArticleAddRes, err error) {
 	out, err := service.Article().AddFrontend(ctx, model.ArticleAddInput{
-		UserId:  req.UserId,
-		Title:   req.Title,
-		Desc:    req.Desc,
-		PicUrl:  req.PicUrl,
-		IsAdmin: req.IsAdmin,
-		Detail:  req.Detail,
+		ArticleCreateUpdateBase: model.ArticleCreateUpdateBase{
+			UserId:  req.UserId,
+			Title:   req.Title,
+			Desc:    req.Desc,
+			PicUrl:  req.PicUrl,
+			IsAdmin: req.IsAdmin,
+			Detail:  req.Detail,
+		},
 	})
 	if err != nil {
 		return nil, err
@@ -52,4 +54,18 @@ func (c *cArticle) DeleteFrontend(ctx context.Context, req *frontend.ArticleDele
 		return nil, err
 	}
 	return &frontend.ArticleDeleteRes{}, nil
+}
+
+func (c *cArticle) DetailFrontend(ctx context.Context, req *frontend.ArticleDetailReq) (res *frontend.ArticleDetailRes, err error) {
+	out, err := service.Article().DetailFrontend(ctx, req.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &frontend.ArticleDetailRes{
+		Title:     out.Title,
+		Desc:      out.Desc,
+		Detail:    out.Detail,
+		PicUrl:    out.PicUrl,
+		CreatedAt: out.CreatedAt,
+	}, nil
 }

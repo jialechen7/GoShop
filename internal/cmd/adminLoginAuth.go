@@ -92,7 +92,7 @@ func loginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		data := &backend.LoginRes{
 			Type:        "Bearer",
 			Token:       respData.GetString("token"),
-			ExpireAt:    10 * 24 * 60 * 60,
+			ExpireIn:    10 * 24 * 60 * 60,
 			IsAdmin:     adminInfo.IsAdmin,
 			RoleIds:     adminInfo.RoleIds,
 			Permissions: permissions,

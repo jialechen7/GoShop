@@ -10,6 +10,7 @@ import (
 	"goshop/internal/model"
 
 	"github.com/gogf/gf/encoding/ghtml"
+	"github.com/gogf/gf/errors/gerror"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/util/gconv"
 	"github.com/gogf/gf/v2/database/gdb"
@@ -79,4 +80,29 @@ func (s *sArticle) DeleteFrontend(ctx context.Context, id int) error {
 		}).Unscoped().Delete()
 		return err
 	})
+}
+
+// DetailFrontend 查询文章详情
+func (s *sArticle) DetailFrontend(ctx context.Context, id int) (out *model.ArticleDetailOutput, err error) {
+	var articleInfo entity.ArticleInfo
+	err = dao.ArticleInfo.Ctx(ctx).Where(dao.ArticleInfo.Columns().Id, id).Scan(&articleInfo)
+	if err != nil {
+		return nil, err
+	}
+
+	userId := gconv.Int(ctx.Value(consts.CtxUserId))
+	if userId != articleInfo.UserId {
+		return nil, gerror.New(consts.ErrNoPermission)
+	}
+
+	return &model.ArticleDetailOutput{
+		Title:  articleInfo.Title,
+		Desc:   articleInfo.Desc,
+		Detail: articleInfo.Detail,
+		PicUrl: articleInfo.PicUrl,
+		TimeCommon: model.TimeCommon{
+			CreatedAt: articleInfo.CreatedAt.String(),
+			UpdatedAt: articleInfo.UpdatedAt.String(),
+		},
+	}, nil
 }

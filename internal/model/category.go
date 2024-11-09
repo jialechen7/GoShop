@@ -31,12 +31,16 @@ type CategoryGetListOutputItem struct {
 	TimeCommon
 }
 
-type CategoryAddInput struct {
+type CategoryCreateUpdateBase struct {
 	Name     string `json:"name"`
 	PicUrl   string `json:"pic_url"`
 	Level    int    `json:"level"`
 	Sort     int    `json:"sort"`
 	ParentId int    `json:"parent_id"`
+}
+
+type CategoryAddInput struct {
+	CategoryCreateUpdateBase
 }
 
 type CategoryAddOutput struct {

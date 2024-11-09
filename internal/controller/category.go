@@ -50,11 +50,13 @@ func (c *cCategory) ListWithParentId(ctx context.Context, req *frontend.Category
 
 func (c *cCategory) Add(ctx context.Context, req *backend.CategoryAddReq) (res *backend.CategoryAddRes, err error) {
 	out, err := service.Category().Add(ctx, model.CategoryAddInput{
-		Name:     req.Name,
-		PicUrl:   req.PicUrl,
-		Level:    req.Level,
-		Sort:     req.Sort,
-		ParentId: req.ParentId,
+		CategoryCreateUpdateBase: model.CategoryCreateUpdateBase{
+			Name:     req.Name,
+			PicUrl:   req.PicUrl,
+			Level:    req.Level,
+			Sort:     req.Sort,
+			ParentId: req.ParentId,
+		},
 	})
 	if err != nil {
 		return nil, err

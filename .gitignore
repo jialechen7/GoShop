@@ -15,6 +15,7 @@ main.exe~
 output/
 manifest/output/
 temp/
+test/
 temp.yaml
 bin
 upload/

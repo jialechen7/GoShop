@@ -18,6 +18,8 @@ type (
 		AddFrontend(ctx context.Context, in model.ArticleAddInput) (out *model.ArticleAddOutput, err error)
 		// DeleteFrontend 删除文章
 		DeleteFrontend(ctx context.Context, id int) error
+		// DetailFrontend 查询文章详情
+		DetailFrontend(ctx context.Context, id int) (out *model.ArticleDetailOutput, err error)
 	}
 )
 
