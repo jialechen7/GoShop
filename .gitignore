@@ -18,3 +18,5 @@ temp/
 temp.yaml
 bin
 upload/
+!utility/upload/**
+!utility/upload
