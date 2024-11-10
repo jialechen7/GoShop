@@ -47,10 +47,14 @@ type ArticleDetailReq struct {
 }
 
 type ArticleDetailRes struct {
+	Id        int    `json:"id"`
+	UserId    int    `json:"user_id"`
 	Title     string `json:"title"`
 	Desc      string `json:"desc"`
 	Detail    string `json:"detail"`
 	PicUrl    string `json:"pic_url"`
+	IsAdmin   int    `json:"is_admin"`
+	Praise    int    `json:"praise"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"updated_at"`
 }

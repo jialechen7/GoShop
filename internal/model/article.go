@@ -52,9 +52,13 @@ type ArticleDetailInput struct {
 }
 
 type ArticleDetailOutput struct {
-	Title  string `json:"title"`
-	Desc   string `json:"desc"`
-	Detail string `json:"detail"`
-	PicUrl string `json:"pic_url"`
+	Id      int    `json:"id"`
+	UserId  int    `json:"user_id"`
+	Title   string `json:"title"`
+	Desc    string `json:"desc"`
+	Detail  string `json:"detail"`
+	PicUrl  string `json:"pic_url"`
+	IsAdmin int    `json:"is_admin"`
+	Praise  int    `json:"praise"`
 	TimeCommon
 }

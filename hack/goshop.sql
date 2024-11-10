@@ -233,3 +233,25 @@ INSERT INTO `article_info` VALUES (5, 1, '华凌空调真不错', '京东买的�
 INSERT INTO `article_info` VALUES (6, 2, '华凌空调真不错', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-31 19:07:08', '2022-07-31 19:07:08', NULL);
 INSERT INTO `article_info` VALUES (7, 1, '华凌空调真不错', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-31 19:08:03', '2022-07-31 19:08:03', NULL);
 COMMIT;
+
+-- ----------------------------
+-- Table structure for praise_info
+-- ----------------------------
+DROP TABLE IF EXISTS `praise_info`;
+CREATE TABLE `praise_info` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT '点赞表',
+    `user_id` int NOT NULL,
+    `type` tinyint(1) NOT NULL COMMENT '点赞类型 1商品 2文章',
+    `object_id` int NOT NULL DEFAULT '0' COMMENT '点赞对象id 方便后期扩展',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_index` (`user_id`,`type`,`object_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- -------------------------
+-- Records of praise_info
+-- ----------------------------
+BEGIN;
+INSERT INTO `praise_info` VALUES (8, 1 , 2, 4, '2023-01-19 12:18:07', '2023-01-19 12:18:07');
+COMMIT;

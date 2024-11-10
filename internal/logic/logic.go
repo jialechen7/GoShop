@@ -16,6 +16,7 @@ import (
 	_ "goshop/internal/logic/order"
 	_ "goshop/internal/logic/permission"
 	_ "goshop/internal/logic/position"
+	_ "goshop/internal/logic/praise"
 	_ "goshop/internal/logic/role"
 	_ "goshop/internal/logic/rotation"
 	_ "goshop/internal/logic/session"

@@ -62,10 +62,15 @@ func (c *cArticle) DetailFrontend(ctx context.Context, req *frontend.ArticleDeta
 		return nil, err
 	}
 	return &frontend.ArticleDetailRes{
+		Id:        out.Id,
+		UserId:    out.UserId,
 		Title:     out.Title,
 		Desc:      out.Desc,
 		Detail:    out.Detail,
 		PicUrl:    out.PicUrl,
+		IsAdmin:   out.IsAdmin,
+		Praise:    out.Praise,
 		CreatedAt: out.CreatedAt,
+		UpdatedAt: out.UpdatedAt,
 	}, nil
 }

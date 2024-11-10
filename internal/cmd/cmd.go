@@ -95,6 +95,9 @@ var (
 						controller.Article.AddFrontend,    //添加文章
 						controller.Article.DeleteFrontend, //删除文章
 						controller.Article.DetailFrontend, //文章详情
+						controller.Praise.ListFrontend,    //点赞列表（仅用户自己的点赞）
+						controller.Praise.AddFrontend,     //添加点赞
+						controller.Praise.DeleteFrontend,  //删除点赞
 					)
 				})
 
