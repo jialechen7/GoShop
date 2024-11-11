@@ -67,9 +67,27 @@ func (s *sPraise) AddFrontend(ctx context.Context, in model.PraiseAddInput) (out
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
-	lastInsertID, err := dao.PraiseInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
+	var lastInsertID int64
+	err = dao.PraiseInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		// 插入点赞
+		lastInsertID, err = dao.PraiseInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
+		if err != nil {
+			return err
+		}
+
+		// 更新文章点赞数
+		if in.Type == consts.PraiseArticleType {
+			_, err = dao.ArticleInfo.Ctx(ctx).Where(dao.ArticleInfo.Columns().Id, in.ObjectId).Increment(dao.ArticleInfo.Columns().Praise, 1)
+			if err != nil {
+				return err
+			}
+		}
+
+		return nil
+	})
+
 	if err != nil {
-		return out, err
+		return nil, err
 	}
 	return &model.PraiseAddOutput{PraiseId: int(lastInsertID)}, err
 }
@@ -81,6 +99,28 @@ func (s *sPraise) DeleteFrontend(ctx context.Context, id int) error {
 		_, err := dao.PraiseInfo.Ctx(ctx).Where(g.Map{
 			dao.PraiseInfo.Columns().Id: id,
 		}).Unscoped().Delete()
+
+		return err
+	})
+}
+
+// DeleteByTypeFrontend 删除点赞（根据类型）
+func (s *sPraise) DeleteByTypeFrontend(ctx context.Context, in model.PraiseDeleteByTypeInput) error {
+	return dao.PraiseInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		// 删除点赞
+		_, err := dao.PraiseInfo.Ctx(ctx).Where(g.Map{
+			dao.PraiseInfo.Columns().UserId:   in.UserId,
+			dao.PraiseInfo.Columns().Type:     in.Type,
+			dao.PraiseInfo.Columns().ObjectId: in.ObjectId,
+		}).Unscoped().Delete()
+
+		// 更新文章点赞数
+		_, err = dao.ArticleInfo.Ctx(ctx).Where(g.Map{
+			dao.ArticleInfo.Columns().Id: in.ObjectId,
+		}).Decrement(dao.ArticleInfo.Columns().Praise, 1)
+		if err != nil {
+			return err
+		}
 		return err
 	})
 }

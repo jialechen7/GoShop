@@ -3,8 +3,11 @@ package controller
 import (
 	"context"
 	"goshop/api/frontend"
+	"goshop/internal/consts"
 	"goshop/internal/model"
 	"goshop/internal/service"
+
+	"github.com/gogf/gf/util/gconv"
 )
 
 // Article 文章管理
@@ -32,11 +35,11 @@ func (c *cArticle) ListFrontend(ctx context.Context, req *frontend.ArticleGetLis
 func (c *cArticle) AddFrontend(ctx context.Context, req *frontend.ArticleAddReq) (res *frontend.ArticleAddRes, err error) {
 	out, err := service.Article().AddFrontend(ctx, model.ArticleAddInput{
 		ArticleCreateUpdateBase: model.ArticleCreateUpdateBase{
-			UserId:  req.UserId,
+			UserId:  gconv.Int(ctx.Value(consts.CtxUserId)),
 			Title:   req.Title,
 			Desc:    req.Desc,
 			PicUrl:  req.PicUrl,
-			IsAdmin: req.IsAdmin,
+			IsAdmin: consts.ArticlePublisherFrontend,
 			Detail:  req.Detail,
 		},
 	})
@@ -70,6 +73,7 @@ func (c *cArticle) DetailFrontend(ctx context.Context, req *frontend.ArticleDeta
 		PicUrl:    out.PicUrl,
 		IsAdmin:   out.IsAdmin,
 		Praise:    out.Praise,
+		IsPraise:  out.IsPraise,
 		CreatedAt: out.CreatedAt,
 		UpdatedAt: out.UpdatedAt,
 	}, nil

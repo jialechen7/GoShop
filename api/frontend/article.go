@@ -17,13 +17,11 @@ type ArticleGetListCommonRes struct {
 }
 
 type ArticleAddReq struct {
-	g.Meta  `path:"/article/add" tags:"Article" method:"post" summary:"创建文章接口"`
-	UserId  int    `json:"user_id" form:"user_id" v:"required#请选择用户" dc:"用户ID"`
-	Title   string `json:"title" form:"title" v:"required#请输入标题" dc:"标题"`
-	Desc    string `json:"desc" form:"desc" v:"required#请输入描述" dc:"描述/摘要"`
-	PicUrl  string `json:"pic_url" form:"pic_url" v:"required#请上传图片" dc:"图片地址"`
-	Detail  string `json:"detail" form:"detail" v:"required#请输入内容" dc:"内容"`
-	IsAdmin int    `json:"is_admin" form:"is_admin" v:"required#请选择是否管理员" dc:"是否管理员"`
+	g.Meta `path:"/article/add" tags:"Article" method:"post" summary:"创建文章接口"`
+	Title  string `json:"title" form:"title" v:"required#请输入标题" dc:"标题"`
+	Desc   string `json:"desc" form:"desc" v:"required#请输入描述" dc:"描述/摘要"`
+	PicUrl string `json:"pic_url" form:"pic_url" v:"required#请上传图片" dc:"图片地址"`
+	Detail string `json:"detail" form:"detail" v:"required#请输入内容" dc:"内容"`
 }
 
 type ArticleAddRes struct {
@@ -55,6 +53,7 @@ type ArticleDetailRes struct {
 	PicUrl    string `json:"pic_url"`
 	IsAdmin   int    `json:"is_admin"`
 	Praise    int    `json:"praise"`
+	IsPraise  int    `json:"is_praise"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"updated_at"`
 }

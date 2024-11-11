@@ -95,11 +95,26 @@ func (s *sArticle) DetailFrontend(ctx context.Context, id int) (out *model.Artic
 		return nil, gerror.New(consts.ErrNoPermission)
 	}
 
+	articleId := articleInfo.Id
+	queryType := consts.PraiseArticleType
+
+	// 使用 Exists 方法直接判断是否存在点赞记录，返回布尔值
+	isPraise, _ := dao.PraiseInfo.Ctx(ctx).Where(g.Map{
+		dao.PraiseInfo.Columns().Type:     queryType,
+		dao.PraiseInfo.Columns().UserId:   userId,
+		dao.PraiseInfo.Columns().ObjectId: articleId,
+	}).Count()
+
 	return &model.ArticleDetailOutput{
-		Title:  articleInfo.Title,
-		Desc:   articleInfo.Desc,
-		Detail: articleInfo.Detail,
-		PicUrl: articleInfo.PicUrl,
+		Id:       articleId,
+		UserId:   articleInfo.UserId,
+		Title:    articleInfo.Title,
+		Desc:     articleInfo.Desc,
+		Detail:   articleInfo.Detail,
+		PicUrl:   articleInfo.PicUrl,
+		Praise:   articleInfo.Praise,
+		IsPraise: isPraise,
+		IsAdmin:  articleInfo.IsAdmin,
 		TimeCommon: model.TimeCommon{
 			CreatedAt: articleInfo.CreatedAt.String(),
 			UpdatedAt: articleInfo.UpdatedAt.String(),

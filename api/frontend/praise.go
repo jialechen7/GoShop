@@ -19,9 +19,8 @@ type PraiseGetListCommonRes struct {
 
 type PraiseAddReq struct {
 	g.Meta   `path:"/praise/add" tags:"Praise" method:"post" summary:"创建点赞接口"`
-	UserId   int `json:"user_id" form:"user_id" v:"required#请选择用户" dc:"用户ID"`
 	Type     int `json:"type" form:"type" v:"required#请选择类型" dc:"类型"`
-	ObjectId int `json:"object_id" form:"object_id" v:"required#请选择对象" dc:"对象"`
+	ObjectId int `json:"object_id" form:"object_id" v:"required#请选择对象" dc:"对象ID"`
 }
 
 type PraiseAddRes struct {
@@ -33,6 +32,14 @@ type PraiseDeleteReq struct {
 	Id     int `v:"min:1#请选择需要删除的点赞" dc:"点赞id"`
 }
 type PraiseDeleteRes struct{}
+
+type PraiseDeleteByTypeReq struct {
+	g.Meta   `path:"/praise/deleteByType" method:"delete" tags:"Praise" summary:"删除点赞接口"`
+	Type     int `json:"type" form:"type" v:"required#请选择类型" dc:"类型"`
+	ObjectId int `json:"object_id" form:"object_id" v:"required#请选择对象" dc:"对象"`
+}
+
+type PraiseDeleteByTypeRes struct{}
 
 type PraiseUpdateReq struct {
 	g.Meta `path:"/praise/update" method:"post" tags:"点赞" summary:"修改点赞接口"`

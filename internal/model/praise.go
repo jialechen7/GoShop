@@ -42,3 +42,11 @@ type PraiseDeleteInput struct {
 }
 
 type PraiseDeleteOutput struct{}
+
+type PraiseDeleteByTypeInput struct {
+	Type     int `json:"type"`
+	UserId   int `json:"user_id"`
+	ObjectId int `json:"object_id"`
+}
+
+type PraiseDeleteByTypeOutput struct{}

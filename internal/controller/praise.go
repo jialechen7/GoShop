@@ -3,8 +3,11 @@ package controller
 import (
 	"context"
 	"goshop/api/frontend"
+	"goshop/internal/consts"
 	"goshop/internal/model"
 	"goshop/internal/service"
+
+	"github.com/gogf/gf/util/gconv"
 )
 
 // Praise 点赞管理
@@ -33,7 +36,7 @@ func (c *cPraise) ListFrontend(ctx context.Context, req *frontend.PraiseGetListC
 func (c *cPraise) AddFrontend(ctx context.Context, req *frontend.PraiseAddReq) (res *frontend.PraiseAddRes, err error) {
 	out, err := service.Praise().AddFrontend(ctx, model.PraiseAddInput{
 		PraiseCreateUpdateBase: model.PraiseCreateUpdateBase{
-			UserId:   req.UserId,
+			UserId:   gconv.Int(ctx.Value(consts.CtxUserId)),
 			Type:     req.Type,
 			ObjectId: req.ObjectId,
 		},
@@ -52,4 +55,16 @@ func (c *cPraise) DeleteFrontend(ctx context.Context, req *frontend.PraiseDelete
 		return nil, err
 	}
 	return &frontend.PraiseDeleteRes{}, nil
+}
+
+func (c *cPraise) DeleteByTypeFrontend(ctx context.Context, req *frontend.PraiseDeleteByTypeReq) (res *frontend.PraiseDeleteByTypeRes, err error) {
+	err = service.Praise().DeleteByTypeFrontend(ctx, model.PraiseDeleteByTypeInput{
+		Type:     req.Type,
+		ObjectId: req.ObjectId,
+		UserId:   gconv.Int(ctx.Value(consts.CtxUserId)),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &frontend.PraiseDeleteByTypeRes{}, nil
 }

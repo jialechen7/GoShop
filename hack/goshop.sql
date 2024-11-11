@@ -51,6 +51,11 @@ CREATE TABLE IF NOT EXISTS `rotation_info` (
     `deleted_at` DATETIME NULL
 ) COMMENT='轮播图表';
 
+-- Sample data for rotation_info
+INSERT INTO `rotation_info` (`pic_url`, `link`, `sort`, `created_at`, `updated_at`) VALUES
+('https://img10.360buyimg.com/n1/s450x450_jfs/t1/207741/15/47068/156692/67306ca8Fd87ffeeb/ad1b66065f2ed11e.jpg', 'a', 1, NOW(), NOW()),
+('https://img13.360buyimg.com/n1/jfs/t1/240604/12/19894/141092/673161beFff0db991/3d9083445563844e.jpg.avif', 'b', 2, NOW(), NOW());
+
 -- Table creation for order_info
 DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE IF NOT EXISTS `order_info` (

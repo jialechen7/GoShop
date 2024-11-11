@@ -18,6 +18,8 @@ type (
 		AddFrontend(ctx context.Context, in model.PraiseAddInput) (out *model.PraiseAddOutput, err error)
 		// DeleteFrontend 删除点赞
 		DeleteFrontend(ctx context.Context, id int) error
+		// DeleteByTypeFrontend 删除点赞（根据类型）
+		DeleteByTypeFrontend(ctx context.Context, in model.PraiseDeleteByTypeInput) error
 	}
 )
 
