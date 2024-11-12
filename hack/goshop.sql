@@ -260,3 +260,32 @@ CREATE TABLE `praise_info` (
 BEGIN;
 INSERT INTO `praise_info` VALUES (8, 1 , 2, 4, '2023-01-19 12:18:07', '2023-01-19 12:18:07');
 COMMIT;
+
+-- ----------------------------
+-- Table structure for comment_info
+-- ----------------------------
+DROP TABLE IF EXISTS `comment_info`;
+CREATE TABLE `comment_info` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `parent_id` int NOT NULL DEFAULT '0' COMMENT '父级评论id',
+    `user_id` int NOT NULL DEFAULT '0',
+    `object_id` int NOT NULL DEFAULT '0',
+    `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '评论类型：1商品 2文章',
+    `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论内容',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    `deleted_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `unique_index` (`user_id`,`object_id`,`type`,`content`,`parent_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of comment_info
+-- ----------------------------
+BEGIN;
+INSERT INTO `comment_info` VALUES (4, 0, 1, 5, 2, '好评 下次还会买', '2022-07-31 17:23:48', '2022-07-31 17:23:48', NULL);
+INSERT INTO `comment_info` VALUES (5, 0, 1, 5, 2, '来个评论', '2022-07-31 17:24:10', '2022-07-31 17:24:10', NULL);
+INSERT INTO `comment_info` VALUES (7, 5, 1, 5, 2, '来个评论', '2022-07-31 17:24:59', '2022-07-31 17:24:59', NULL);
+INSERT INTO `comment_info` VALUES (10, 1, 4, 5, 1, 'labore', '2023-01-19 14:25:24', '2023-01-19 14:25:24', NULL);
+INSERT INTO `comment_info` VALUES (11, 1, 4, 5, 1, 'xxxxx', '2023-01-19 14:26:50', '2023-01-19 14:26:50', NULL);
+COMMIT;

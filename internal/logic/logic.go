@@ -9,6 +9,7 @@ import (
 	_ "goshop/internal/logic/article"
 	_ "goshop/internal/logic/bizctx"
 	_ "goshop/internal/logic/category"
+	_ "goshop/internal/logic/comment"
 	_ "goshop/internal/logic/dashboard"
 	_ "goshop/internal/logic/file"
 	_ "goshop/internal/logic/login"

@@ -41,6 +41,13 @@ type ArticleAddOutput struct {
 	ArticleId int
 }
 
+type ArticleUpdateInput struct {
+	ArticleCreateUpdateBase
+	Id int
+}
+
+type ArticleUpdateOutput struct{}
+
 type ArticleDeleteInput struct {
 	Id int `json:"id"`
 }

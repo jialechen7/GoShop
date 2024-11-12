@@ -12,6 +12,14 @@ import (
 
 type (
 	IArticle interface {
+		// GetListFrontend 查询文章列表
+		GetListBackend(ctx context.Context, in model.ArticleGetListInput) (out *model.ArticleGetListOutput, err error)
+		// UpdateBackend 更新文章
+		UpdateBackend(ctx context.Context, in model.ArticleUpdateInput) error
+		// AddBackend 添加文章
+		AddBackend(ctx context.Context, in model.ArticleAddInput) (out *model.ArticleAddOutput, err error)
+		// DeleteBackend 删除文章
+		DeleteBackend(ctx context.Context, id int) error
 		// GetListFrontend 查询文章列表（仅用户发表的文章）
 		GetListFrontend(ctx context.Context, in model.ArticleGetListInput) (out *model.ArticleGetListOutput, err error)
 		// AddFrontend 添加文章

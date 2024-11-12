@@ -42,20 +42,26 @@ var (
 					controller.Rotation.Create,
 					controller.Rotation.Delete,
 					controller.Rotation.Update,
-					controller.Position,        //手工位
-					controller.Admin,           //管理员
-					controller.Dashboard,       //数据大屏
-					controller.Role,            //角色
-					controller.Permission,      //权限
-					controller.File,            //文件上传
-					controller.Upload,          //文件上云
-					controller.User.List,       //用户列表
-					controller.User.Update,     //更新用户
-					controller.User.Delete,     //删除用户
-					controller.Order.List,      //订单列表
-					controller.Category.List,   //分类列表
-					controller.Category.Add,    //添加分类
-					controller.Category.Delete, //删除分类
+					controller.Position,              //手工位
+					controller.Admin,                 //管理员
+					controller.Dashboard,             //数据大屏
+					controller.Role,                  //角色
+					controller.Permission,            //权限
+					controller.File,                  //文件上传
+					controller.Upload,                //文件上云
+					controller.User.List,             //用户列表
+					controller.User.Update,           //更新用户
+					controller.User.Delete,           //删除用户
+					controller.Order.List,            //订单列表
+					controller.Category.List,         //分类列表
+					controller.Category.Add,          //添加分类
+					controller.Category.Delete,       //删除分类
+					controller.Article.ListBackend,   //文章列表
+					controller.Article.UpdateBackend, //更新文章
+					controller.Article.AddBackend,    //添加文章
+					controller.Article.DeleteBackend, //删除文章
+					controller.Comment.ListBackend,   //评论列表
+					controller.Comment.DeleteBackend, //删除评论
 					//controller.Login,        //登录（使用gtoken时不需要绑定，在gtoken中绑定）
 				)
 
@@ -99,6 +105,9 @@ var (
 						controller.Praise.AddFrontend,          //添加点赞
 						controller.Praise.DeleteFrontend,       //删除点赞
 						controller.Praise.DeleteByTypeFrontend, //删除点赞（根据类型）
+						controller.Comment.ListFrontend,        //评论列表
+						controller.Comment.AddFrontend,         //添加评论
+						controller.Comment.DeleteFrontend,      //删除评论
 					)
 				})
 

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"goshop/api/backend"
 	"goshop/api/frontend"
 	"goshop/internal/consts"
 	"goshop/internal/model"
@@ -14,6 +15,55 @@ import (
 var Article = cArticle{}
 
 type cArticle struct{}
+
+// ListBackend 查询文章列表
+func (c *cArticle) ListBackend(ctx context.Context, req *backend.ArticleGetListCommonReq) (res *backend.ArticleGetListCommonRes, err error) {
+	getListRes, err := service.Article().GetListBackend(ctx, model.ArticleGetListInput{
+		Page: req.Page,
+		Size: req.Size,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &backend.ArticleGetListCommonRes{
+		List:  getListRes.List,
+		Page:  getListRes.Page,
+		Size:  getListRes.Size,
+		Total: getListRes.Total,
+	}, nil
+}
+
+func (c *cArticle) UpdateBackend(ctx context.Context, req *backend.ArticleUpdateReq) (res *backend.ArticleUpdateRes, err error) {
+	err = service.Article().UpdateBackend(ctx, model.ArticleUpdateInput{
+		Id: req.Id,
+		ArticleCreateUpdateBase: model.ArticleCreateUpdateBase{
+			Title:  req.Title,
+			Desc:   req.Desc,
+			PicUrl: req.PicUrl,
+			Detail: req.Detail,
+		},
+	})
+	return
+}
+
+// AddBackend 添加文章
+func (c *cArticle) AddBackend(ctx context.Context, req *backend.ArticleAddReq) (res *backend.ArticleAddRes, err error) {
+	out, err := service.Article().AddBackend(ctx, model.ArticleAddInput{
+		ArticleCreateUpdateBase: model.ArticleCreateUpdateBase{
+			Title:   req.Title,
+			Desc:    req.Desc,
+			PicUrl:  req.PicUrl,
+			Detail:  req.Detail,
+			IsAdmin: consts.ArticlePublisherAdmin,
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &backend.ArticleAddRes{
+		ArticleId: out.ArticleId,
+	}, nil
+}
 
 // ListFrontend 查询文章列表（仅用户自己）
 func (c *cArticle) ListFrontend(ctx context.Context, req *frontend.ArticleGetListCommonReq) (res *frontend.ArticleGetListCommonRes, err error) {
@@ -30,6 +80,14 @@ func (c *cArticle) ListFrontend(ctx context.Context, req *frontend.ArticleGetLis
 		Size:  getListRes.Size,
 		Total: getListRes.Total,
 	}, nil
+}
+
+func (c *cArticle) DeleteBackend(ctx context.Context, req *backend.ArticleDeleteReq) (res *backend.ArticleDeleteRes, err error) {
+	err = service.Article().DeleteBackend(ctx, req.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &backend.ArticleDeleteRes{}, nil
 }
 
 func (c *cArticle) AddFrontend(ctx context.Context, req *frontend.ArticleAddReq) (res *frontend.ArticleAddRes, err error) {
