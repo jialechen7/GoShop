@@ -6,7 +6,7 @@ type CategoryGetListInput struct {
 	Size int // 分页数量，最大50
 }
 
-// CategoryGetListWithStatusInput 获取分类列表
+// CategoryGetListWithParentIdInput CategoryGetListWithStatusInput 获取分类列表
 type CategoryGetListWithParentIdInput struct {
 	Page     int // 分页号码
 	Size     int // 分页数量，最大50

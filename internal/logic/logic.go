@@ -13,6 +13,7 @@ import (
 	_ "goshop/internal/logic/consignee"
 	_ "goshop/internal/logic/dashboard"
 	_ "goshop/internal/logic/file"
+	_ "goshop/internal/logic/goods"
 	_ "goshop/internal/logic/login"
 	_ "goshop/internal/logic/middleware"
 	_ "goshop/internal/logic/order"

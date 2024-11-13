@@ -146,6 +146,7 @@ func (s *sArticle) DeleteFrontend(ctx context.Context, id int) error {
 	}
 
 	userId := gconv.Int(ctx.Value(consts.CtxUserId))
+	// 判断当前用户是否有权限对该文章操作
 	if userId != articleInfo.UserId {
 		return gerror.New(consts.ErrNoPermission)
 	}
@@ -168,14 +169,10 @@ func (s *sArticle) DetailFrontend(ctx context.Context, id int) (out *model.Artic
 	}
 
 	userId := gconv.Int(ctx.Value(consts.CtxUserId))
-	if userId != articleInfo.UserId {
-		return nil, gerror.New(consts.ErrNoPermission)
-	}
-
 	articleId := articleInfo.Id
 	queryType := consts.PraiseArticleType
 
-	// 使用 Exists 方法直接判断是否存在点赞记录，返回布尔值
+	// 判断当前用户是否对该文章点赞
 	isPraise, _ := dao.PraiseInfo.Ctx(ctx).Where(g.Map{
 		dao.PraiseInfo.Columns().Type:     queryType,
 		dao.PraiseInfo.Columns().UserId:   userId,

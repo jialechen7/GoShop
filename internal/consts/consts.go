@@ -23,6 +23,7 @@ const (
 	MinPasswordLength        = 6 // 密码最小长度
 	ArticlePublisherAdmin    = 1 // 后台管理员发布文章
 	ArticlePublisherFrontend = 2 // 前台用户发布文章
+	PraiseGoodsType          = 1 // 点赞商品类型
 	PraiseArticleType        = 2 // 点赞查询文章类型
 	ConsigneeNotDefault      = 0
 	ConsigneeDefault         = 1 // 默认收货人

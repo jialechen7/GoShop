@@ -41,6 +41,7 @@ INSERT INTO `position_info` (`pic_url`, `goods_name`, `link`, `sort`, `goods_id`
 ('https://example.com/img2.jpg', 'Product B', 'https://example.com/productB', 2, 102, NOW(), NOW());
 
 -- Table creation for rotation_info
+DROP TABLE IF EXISTS `rotation_info`;
 CREATE TABLE IF NOT EXISTS `rotation_info` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `pic_url` VARCHAR(200) DEFAULT '' NOT NULL COMMENT '轮播图片',
@@ -53,8 +54,8 @@ CREATE TABLE IF NOT EXISTS `rotation_info` (
 
 -- Sample data for rotation_info
 INSERT INTO `rotation_info` (`pic_url`, `link`, `sort`, `created_at`, `updated_at`) VALUES
-('https://img10.360buyimg.com/n1/s450x450_jfs/t1/207741/15/47068/156692/67306ca8Fd87ffeeb/ad1b66065f2ed11e.jpg', 'a', 1, NOW(), NOW()),
-('https://img13.360buyimg.com/n1/jfs/t1/240604/12/19894/141092/673161beFff0db991/3d9083445563844e.jpg.avif', 'b', 2, NOW(), NOW());
+('https://img12.360buyimg.com/n7/jfs/t1/224360/34/24095/23440/6726f94bFc20591e4/d25e4eafc3d38089.png.avif', '8', 1, NOW(), NOW()),
+('https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', '6', 2, NOW(), NOW());
 
 -- Table creation for order_info
 DROP TABLE IF EXISTS `order_info`;
@@ -164,7 +165,7 @@ CREATE TABLE `user_info` (
     PRIMARY KEY (`id`) USING BTREE,
     constraint user_info_pk
         unique (name)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户信息表';
 
 -- ----------------------------
 -- 插入 user_info 表的记录
@@ -173,7 +174,7 @@ BEGIN;
 INSERT INTO `user_info`
 (`id`, `name`, `avatar`, `password`, `user_salt`, `sex`, `status`, `sign`, `secret_answer`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-    (1, 'jialechen', 'https://cdn.acwing.com/media/user/profile/photo/40815_lg_d5f4bcc813.JPG', '905d0c656e6f93d5e73fb00ad0702a41', 'JAUrpNobzs', 1, 1, '个性签名', '银河中学', '2022-07-28 17:19:42', '2022-07-31 19:25:01', NULL);
+    (1, 'jialechen', 'https://cdn.acwing.com/media/user/profile/photo/40815_lg_d5f4bcc813.JPG', '905d0c656e6f93d5e73fb00ad0702a41', 'JAUrpNobzs', 0, 1, '个性签名', '银河中学', '2022-07-28 17:19:42', '2022-07-31 19:25:01', NULL);
 COMMIT;
 
 
@@ -192,20 +193,56 @@ CREATE TABLE `category_info` (
     `level` tinyint(1) NOT NULL DEFAULT '1' COMMENT '等级 默认1级分类',
     `sort` tinyint(1) NOT NULL DEFAULT '1',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表\n';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='分类表\n';
 
 -- ----------------------------
 -- Records of category_info
 -- ----------------------------
-BEGIN;
-INSERT INTO `category_info` VALUES (1, 0, '家用电器', 'https://img10.360buyimg.com/n1/jfs/t1/211798/40/45226/70698/670e113cFbfebf347/7cb86ec50d195420.jpg.avif', NULL, NULL, NULL, 1, 1);
-INSERT INTO `category_info` VALUES (2, 1, '电视', 'https://img11.360buyimg.com/n1/jfs/t1/107975/22/57903/111261/672ca34bFd0264716/832fe66f08b3bb76.jpg.avif', NULL, NULL, NULL, 2, 1);
-INSERT INTO `category_info` VALUES (3, 2, '全面屏电视', 'https://img11.360buyimg.com/n1/jfs/t1/107975/22/57903/111261/672ca34bFd0264716/832fe66f08b3bb76.jpg.avif', NULL, NULL, NULL, 3, 1);
-INSERT INTO `category_info` VALUES (4, 2, '教育电视', 'https://img11.360buyimg.com/n1/jfs/t1/107975/22/57903/111261/672ca34bFd0264716/832fe66f08b3bb76.jpg.avif', NULL, NULL, NULL, 3, 1);
-INSERT INTO `category_info` VALUES (5, 1, '智慧屏电视', 'https://img11.360buyimg.com/n1/jfs/t1/107975/22/57903/111261/672ca34bFd0264716/832fe66f08b3bb76.jpg.avif', NULL, NULL, NULL, 3, 1);
-INSERT INTO `category_info` VALUES (6, 0, '手机/数码', 'https://img14.360buyimg.com/n1/s450x450_jfs/t1/186627/35/51187/75651/672acd7eF1e7f61a8/9f6495558e53e4a9.jpg.avif', NULL, '2022-07-27 15:07:31', '2022-07-27 15:08:57', 1, 2);
-INSERT INTO `category_info` VALUES (7, 6, '手机通讯', 'https://img14.360buyimg.com/n1/s450x450_jfs/t1/186627/35/51187/75651/672acd7eF1e7f61a8/9f6495558e53e4a9.jpg.avif', NULL, '2022-07-27 15:08:41', '2022-07-27 15:09:34', 2, 2);
-COMMIT;
+-- 插入一级分类: 电子产品
+INSERT INTO category_info (name, parent_id, level, sort, created_at, updated_at)
+VALUES
+    ('电子产品', 0, 1, 1, NOW(), NOW());
+
+-- 插入二级分类: 手机, 电脑, 配件
+INSERT INTO category_info (name, parent_id, level, sort, created_at, updated_at)
+VALUES
+    ('手机', 1, 2, 1, NOW(), NOW()),
+    ('电脑', 1, 2, 2, NOW(), NOW()),
+    ('配件', 1, 2, 3, NOW(), NOW());
+
+-- 插入三级分类: 智能手机, 手机配件, 笔记本电脑, 电竞电脑, 耳机
+INSERT INTO category_info (name, parent_id, level, sort, created_at, updated_at)
+VALUES
+    ('智能手机', 2, 3, 1, NOW(), NOW()),
+    ('手机配件', 2, 3, 2, NOW(), NOW()),
+    ('笔记本电脑', 3, 3, 1, NOW(), NOW()),
+    ('电竞电脑', 3, 3, 2, NOW(), NOW()),
+    ('耳机', 4, 3, 1, NOW(), NOW());
+
+-- 设置 AUTO_INCREMENT 从 10 开始
+ALTER TABLE category_info AUTO_INCREMENT = 10;
+
+-- 插入一级分类: 家居用品 (id 10)
+INSERT INTO category_info (name, parent_id, level, sort, created_at, updated_at)
+VALUES
+    ('家居用品', 0, 1, 1, NOW(), NOW());
+
+-- 插入二级分类: 家具, 家居饰品, 厨房用品 (id 11, 12, 13)
+INSERT INTO category_info (name, parent_id, level, sort, created_at, updated_at)
+VALUES
+    ('家具', 10, 2, 1, NOW(), NOW()),
+    ('家居饰品', 10, 2, 2, NOW(), NOW()),
+    ('厨房用品', 10, 2, 3, NOW(), NOW());
+
+-- 插入三级分类: 沙发, 餐桌, 窗帘, 地毯, 厨房小电器 (id 14, 15, 16, 17, 18)
+INSERT INTO category_info (name, parent_id, level, sort, created_at, updated_at)
+VALUES
+    ('沙发', 11, 3, 1, NOW(), NOW()),
+    ('餐桌', 11, 3, 2, NOW(), NOW()),
+    ('窗帘', 12, 3, 1, NOW(), NOW()),
+    ('地毯', 12, 3, 2, NOW(), NOW()),
+    ('厨房小电器', 13, 3, 1, NOW(), NOW());
+
 
 -- ----------------------------
 -- Table structure for article_info
@@ -224,20 +261,20 @@ CREATE TABLE `article_info` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='文章（种草）表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='文章（种草）表';
 
 -- ----------------------------
 -- Records of article_info
 -- ----------------------------
-BEGIN;
-INSERT INTO `article_info` VALUES (1, 0, '华凌空调真不错!', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-19 11:47:59', '2022-07-19 11:48:52', '2022-07-19 11:49:13');
-INSERT INTO `article_info` VALUES (2, 2, '华凌空调真不错!', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 0, 0, '这里是文章正文', '2022-07-19 11:49:36', '2022-07-31 15:51:06', '2022-07-31 16:08:59');
-INSERT INTO `article_info` VALUES (3, 2, '华凌空调真不错a', '京东买的，真的种草了a', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 0, 0, '这里是文章正文a', '2022-07-31 15:42:45', '2022-07-31 15:42:45', NULL);
-INSERT INTO `article_info` VALUES (4, 1, '华凌空调真不错a', '京东买的，真的种草了a', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 0, 0, '这里是文章正文a', '2022-07-31 15:44:25', '2022-07-31 15:44:25', NULL);
-INSERT INTO `article_info` VALUES (5, 1, '华凌空调真不错', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-31 19:06:59', '2022-07-31 19:06:59', NULL);
-INSERT INTO `article_info` VALUES (6, 2, '华凌空调真不错', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-31 19:07:08', '2022-07-31 19:07:08', NULL);
-INSERT INTO `article_info` VALUES (7, 1, '华凌空调真不错', '京东买的，真的种草了', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgfs17.gomein.net.cn%2FT108VWB4W_1RCvBVdK_800.jpg%3Fv%3D1&refer=http%3A%2F%2Fgfs17.gomein.net.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1660794257&t=795ee536d5af33788a249b08d0b28b6f', 1, 0, '这里是文章正文', '2022-07-31 19:08:03', '2022-07-31 19:08:03', NULL);
-COMMIT;
+INSERT INTO `article_info` (`user_id`, `title`, `desc`, `pic_url`, `is_admin`, `praise`, `detail`, `created_at`, `updated_at`)
+VALUES (1, '探索MacBook Pro的性能', '这篇文章探讨了MacBook Pro的性能表现，适用于不同场景的使用分析', 'https://img12.360buyimg.com/n7/jfs/t1/224360/34/24095/23440/6726f94bFc20591e4/d25e4eafc3d38089.png.avif', 2, 10,
+        'MacBook Pro 是苹果公司推出的高端笔记本电脑，以其卓越的性能和精致的设计深受专业人士和创作者的喜爱。无论是在处理大型图形设计任务，还是在进行视频编辑和开发工作，MacBook Pro 都能够提供无与伦比的性能支持。特别是其配备的 M1 或 M2 芯片，结合高分辨率的 Retina 屏幕，使得 MacBook Pro 成为当前市场上最受欢迎的高性能笔记本之一。',
+        NOW(), NOW());
+INSERT INTO `article_info` (`user_id`, `title`, `desc`, `pic_url`, `is_admin`, `praise`, `detail`, `created_at`, `updated_at`)
+VALUES (1, 'iPhone 14 Pro的全面评测', '本文将对iPhone 14 Pro进行全面评测，探讨其性能、拍照功能及创新设计', 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 2, 20,
+        'iPhone 14 Pro 是苹果公司推出的最新一代旗舰智能手机，搭载了强大的 A16 Bionic 芯片，拥有极致的性能表现。其全新的动态岛设计不仅使得显示屏更加简洁美观，还增强了互动性。iPhone 14 Pro 配备了 48MP 主摄像头，支持更高质量的照片和视频拍摄，特别适合喜欢摄影的用户。此外，iPhone 14 Pro 的显示效果也极其出色，采用了 ProMotion 技术和 Always-On 屏幕，提供了更流畅的体验。',
+        NOW(), NOW());
+
 
 -- ----------------------------
 -- Table structure for praise_info
@@ -252,13 +289,13 @@ CREATE TABLE `praise_info` (
     `updated_at` datetime DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `unique_index` (`user_id`,`type`,`object_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- -------------------------
 -- Records of praise_info
 -- ----------------------------
 BEGIN;
-INSERT INTO `praise_info` VALUES (8, 1 , 2, 4, '2023-01-19 12:18:07', '2023-01-19 12:18:07');
+INSERT INTO `praise_info` VALUES (1, 1 , 2, 2, '2023-01-19 12:18:07', '2023-01-19 12:18:07');
 COMMIT;
 
 -- ----------------------------
@@ -277,17 +314,15 @@ CREATE TABLE `comment_info` (
     `deleted_at` datetime DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `unique_index` (`user_id`,`object_id`,`type`,`content`,`parent_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of comment_info
 -- ----------------------------
 BEGIN;
-INSERT INTO `comment_info` VALUES (4, 0, 1, 5, 2, '好评 下次还会买', '2022-07-31 17:23:48', '2022-07-31 17:23:48', NULL);
-INSERT INTO `comment_info` VALUES (5, 0, 1, 5, 2, '来个评论', '2022-07-31 17:24:10', '2022-07-31 17:24:10', NULL);
-INSERT INTO `comment_info` VALUES (7, 5, 1, 5, 2, '来个评论', '2022-07-31 17:24:59', '2022-07-31 17:24:59', NULL);
-INSERT INTO `comment_info` VALUES (10, 1, 4, 5, 1, 'labore', '2023-01-19 14:25:24', '2023-01-19 14:25:24', NULL);
-INSERT INTO `comment_info` VALUES (11, 1, 4, 5, 1, 'xxxxx', '2023-01-19 14:26:50', '2023-01-19 14:26:50', NULL);
+INSERT INTO `comment_info` VALUES (1, 0, 1, 2, 2, '好评 下次还会买', '2022-07-31 17:23:48', '2022-07-31 17:23:48', NULL);
+INSERT INTO `comment_info` VALUES (2, 0, 1, 2, 2, '还行', '2022-07-31 17:24:10', '2022-07-31 17:24:10', NULL);
+INSERT INTO `comment_info` VALUES (3, 2, 1, 2, 2, '真的还行吗?', '2022-07-31 17:24:59', '2022-07-31 17:24:59', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -315,5 +350,81 @@ CREATE TABLE `consignee_info` (
 -- Records of consignee_info
 -- ----------------------------
 BEGIN;
-INSERT INTO `consignee_info` VALUES (1, 1, 1, '王先生1', '13269477632', '北京', '北京市', '房山区', '拱辰街道', '大学城西', '2022-07-31 14:42:33', '2022-07-31 14:44:50', NULL);
+INSERT INTO `consignee_info` VALUES (1, 1, 1, '炸鸡', '13269477632', '北京', '北京市', '房山区', '拱辰街道', '大学城西', '2022-07-31 14:42:33', '2022-07-31 14:44:50', NULL);
 COMMIT;
+
+-- ----------------------------
+-- Table structure for goods_info
+-- ----------------------------
+DROP TABLE IF EXISTS `goods_info`;
+CREATE TABLE `goods_info` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `pic_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '图片',
+    `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '商品名称',
+    `price` int NOT NULL DEFAULT '1' COMMENT '价格 单位分',
+    `level1_category_id` int NOT NULL COMMENT '1级分类id',
+    `level2_category_id` int NOT NULL DEFAULT '0' COMMENT '2级分类id',
+    `level3_category_id` int NOT NULL DEFAULT '0' COMMENT '3级分类id',
+    `brand` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '品牌',
+    `stock` int NOT NULL DEFAULT '0' COMMENT '库存',
+    `sale` int NOT NULL DEFAULT '0' COMMENT '销量',
+    `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '标签',
+    `detail_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '商品详情',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    `deleted_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='商品表';
+
+-- ----------------------------
+-- Records of goods_info
+-- ----------------------------
+-- 插入商品数据，分别对应每个分类
+-- 家居用品 > 家具
+INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, created_at, updated_at)
+VALUES
+    ('沙发', 'https://img10.360buyimg.com/n1/jfs/t1/159795/9/49579/202482/672af451Ff0a61b34/f063016c41fa50de.jpg.avif', 1999, 10, 11, 0, NOW(), NOW()),
+    ('餐桌', 'https://img12.360buyimg.com/n1/jfs/t1/160186/19/47269/98348/66c7e925F87921646/c7209966aa477011.jpg.avif', 899, 10, 11, 0, NOW(), NOW());
+
+-- 家居用品 > 家居饰品
+INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, created_at, updated_at)
+VALUES
+    ('窗帘', 'https://img13.360buyimg.com/n7/jfs/t1/193417/1/50457/86358/67226adfF89704bc5/5844e97ccc356e60.jpg.avif', 199, 10, 12, 0, NOW(), NOW()),
+    ('地毯', 'https://img13.360buyimg.com/n7/jfs/t1/225775/21/18743/102631/667034bdF12a1a520/3a5aee679a79711c.jpg.avif', 299, 10, 12, 0, NOW(), NOW());
+
+-- 家居用品 > 厨房用品
+INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, created_at, updated_at)
+VALUES
+    ('厨房小电器', 'https://img12.360buyimg.com/n7/jfs/t1/238669/9/18316/146769/673420c4Fb68cb738/08e7812d64c1d3ed.png.avif', 599, 10, 13, 0, NOW(), NOW());
+
+-- 插入商品数据
+-- 一级分类: 电子产品 > 二级分类: 手机 > 三级分类: 智能手机
+INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, brand, stock, sale, tags, created_at, updated_at)
+VALUES
+    ('iPhone 14 Pro', 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 899900, 1, 2, 5, 'Apple', 100, 30, '旗舰,智能手机', NOW(), NOW());
+
+-- 一级分类: 电子产品 > 二级分类: 手机 > 三级分类: 手机配件
+INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, brand, stock, sale, tags, created_at, updated_at)
+VALUES
+    ('原装苹果充电器', 'https://img11.360buyimg.com/n7/jfs/t1/120933/14/49345/20820/67331648F08cc5230/47180b9222541553.png.avif', 9900, 1, 2, 6, 'Apple', 200, 50, '充电器,配件', NOW(), NOW());
+
+-- 一级分类: 电子产品 > 二级分类: 电脑 > 三级分类: 笔记本电脑
+INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, brand, stock, sale, tags, created_at, updated_at)
+VALUES
+    ('MacBook Pro 16', 'https://img12.360buyimg.com/n7/jfs/t1/224360/34/24095/23440/6726f94bFc20591e4/d25e4eafc3d38089.png.avif', 1799900, 1, 3, 7, 'Apple', 50, 20, '高端,笔记本电脑', NOW(), NOW());
+
+-- 一级分类: 电子产品 > 二级分类: 电脑 > 三级分类: 电竞电脑
+INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, brand, stock, sale, tags, created_at, updated_at)
+VALUES
+    ('ROG 电竞笔记本', 'https://img10.360buyimg.com/n7/jfs/t1/137023/16/49666/119246/67336731F79e8f60a/ca255f329ceeec1a.jpg.avif', 1599900, 1, 3, 8, 'ROG', 30, 10, '电竞,笔记本电脑', NOW(), NOW());
+
+INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, brand, stock, sale, tags, created_at, updated_at)
+VALUES
+    ('暗影精灵9', 'https://img12.360buyimg.com/n7/jfs/t1/217126/21/47609/138564/6731d8aaFb02f036d/f62ee8ad27b9f38c.jpg.avif', 1599900, 1, 3, 8, 'ROG', 30, 10, '电竞,笔记本电脑', NOW(), NOW());
+
+
+-- 一级分类: 电子产品 > 二级分类: 配件 > 三级分类: 耳机
+INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, brand, stock, sale, tags, created_at, updated_at)
+VALUES
+    ('Sony WH-1000XM5', 'https://img14.360buyimg.com/n7/jfs/t1/193676/21/52428/127689/67347f8aF02cff604/fe6fad80b3d9ce03.jpg.avif', 299900, 1, 4, 9, 'Sony', 150, 40, '耳机,降噪', NOW(), NOW());
+

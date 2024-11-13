@@ -63,7 +63,11 @@ var (
 					controller.Comment.ListBackend,   //评论列表
 					controller.Comment.DeleteBackend, //删除评论
 					controller.Consignee.ListBackend, //查询收货人列表
-
+					controller.Goods.ListBackend,     //商品列表
+					controller.Goods.AddBackend,      //添加商品
+					controller.Goods.UpdateBackend,   //更新商品
+					controller.Goods.DeleteBackend,   //删除商品
+					controller.Goods.DetailBackend,   //商品详情
 					//controller.Login,        //登录（使用gtoken时不需要绑定，在gtoken中绑定）
 				)
 
@@ -114,6 +118,9 @@ var (
 						controller.Consignee.AddFrontend,       //添加收货人
 						controller.Consignee.DeleteFrontend,    //删除收货人
 						controller.Consignee.UpdateFrontend,    //删除收货人
+						controller.Goods.ListFrontend,          //商品列表
+						controller.Goods.ListByLevelFrontend,   //商品列表（根据2级分类）
+						controller.Goods.DetailFrontend,        //商品详情
 					)
 				})
 
