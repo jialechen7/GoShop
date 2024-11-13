@@ -289,3 +289,31 @@ INSERT INTO `comment_info` VALUES (7, 5, 1, 5, 2, '来个评论', '2022-07-31 17
 INSERT INTO `comment_info` VALUES (10, 1, 4, 5, 1, 'labore', '2023-01-19 14:25:24', '2023-01-19 14:25:24', NULL);
 INSERT INTO `comment_info` VALUES (11, 1, 4, 5, 1, 'xxxxx', '2023-01-19 14:26:50', '2023-01-19 14:26:50', NULL);
 COMMIT;
+
+-- ----------------------------
+-- Table structure for consignee_info
+-- ----------------------------
+DROP TABLE IF EXISTS `consignee_info`;
+CREATE TABLE `consignee_info` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT '收货地址表',
+    `user_id` int NOT NULL DEFAULT '0',
+    `is_default` tinyint(1) NOT NULL DEFAULT '0' COMMENT '默认地址1  非默认0\n',
+    `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+    `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+    `province` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+    `city` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+    `town` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '县区',
+    `street` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '街道乡镇',
+    `detail` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '地址详情',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    `deleted_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of consignee_info
+-- ----------------------------
+BEGIN;
+INSERT INTO `consignee_info` VALUES (1, 1, 1, '王先生1', '13269477632', '北京', '北京市', '房山区', '拱辰街道', '大学城西', '2022-07-31 14:42:33', '2022-07-31 14:44:50', NULL);
+COMMIT;

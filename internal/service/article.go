@@ -12,7 +12,7 @@ import (
 
 type (
 	IArticle interface {
-		// GetListFrontend 查询文章列表
+		// GetListBackend 查询文章列表
 		GetListBackend(ctx context.Context, in model.ArticleGetListInput) (out *model.ArticleGetListOutput, err error)
 		// UpdateBackend 更新文章
 		UpdateBackend(ctx context.Context, in model.ArticleUpdateInput) error

@@ -36,6 +36,7 @@ type ArticleDeleteRes struct{}
 
 type ArticleUpdateReq struct {
 	g.Meta `path:"/article/update" method:"post" tags:"文章" summary:"修改文章接口"`
+	Id     int `json:"id" form:"id" v:"required#请输入id" dc:"文章id"`
 }
 type ArticleUpdateRes struct{}
 

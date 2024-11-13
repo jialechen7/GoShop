@@ -26,7 +26,7 @@ func New() *sArticle {
 	return &sArticle{}
 }
 
-// GetListFrontend 查询文章列表
+// GetListBackend 查询文章列表
 func (s *sArticle) GetListBackend(ctx context.Context, in model.ArticleGetListInput) (out *model.ArticleGetListOutput, err error) {
 	var (
 		m = dao.ArticleInfo.Ctx(ctx)

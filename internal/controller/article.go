@@ -50,6 +50,7 @@ func (c *cArticle) UpdateBackend(ctx context.Context, req *backend.ArticleUpdate
 func (c *cArticle) AddBackend(ctx context.Context, req *backend.ArticleAddReq) (res *backend.ArticleAddRes, err error) {
 	out, err := service.Article().AddBackend(ctx, model.ArticleAddInput{
 		ArticleCreateUpdateBase: model.ArticleCreateUpdateBase{
+			UserId:  gconv.Int(ctx.Value(consts.CtxAdminId)),
 			Title:   req.Title,
 			Desc:    req.Desc,
 			PicUrl:  req.PicUrl,
