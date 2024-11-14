@@ -39,7 +39,13 @@ func (s *sPraise) GetListFrontend(ctx context.Context, in model.PraiseGetListInp
 		dao.PraiseInfo.Columns().UserId: gconv.Int(ctx.Value(consts.CtxUserId)),
 		dao.PraiseInfo.Columns().Type:   in.Type,
 	}
-	listModel := m.Where(queryMap).Page(in.Page, in.Size)
+	m = m.Where(queryMap)
+	if in.Type == consts.PraiseArticleType {
+		m = m.With(model.ArticleInfo{})
+	} else if in.Type == consts.PraiseGoodsType {
+		m = m.With(model.GoodsInfo{})
+	}
+	listModel := m.Page(in.Page, in.Size)
 
 	// 执行查询
 	var list []*entity.PraiseInfo
@@ -50,7 +56,7 @@ func (s *sPraise) GetListFrontend(ctx context.Context, in model.PraiseGetListInp
 	if len(list) == 0 {
 		return out, nil
 	}
-	out.Total, err = listModel.Count()
+	out.Total, err = m.Count()
 	if err != nil {
 		return out, err
 	}

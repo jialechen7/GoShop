@@ -187,7 +187,6 @@ func (s *sGoods) DetailFrontend(ctx context.Context, id int) (out *model.GoodsDe
 		dao.PraiseInfo.Columns().UserId:   userId,
 		dao.PraiseInfo.Columns().ObjectId: goodsId,
 	}).Count()
-	isPraise = max(isPraise, 1)
 
 	return &model.GoodsDetailOutput{
 		Id:               goodsId,
@@ -204,8 +203,8 @@ func (s *sGoods) DetailFrontend(ctx context.Context, id int) (out *model.GoodsDe
 		DetailInfo:       goodsInfo.DetailInfo,
 		IsPraise:         isPraise,
 		TimeCommon: model.TimeCommon{
-			CreatedAt: goodsInfo.CreatedAt.String(),
-			UpdatedAt: goodsInfo.UpdatedAt.String(),
+			CreatedAt: goodsInfo.CreatedAt,
+			UpdatedAt: goodsInfo.UpdatedAt,
 		},
 	}, nil
 }
@@ -232,8 +231,8 @@ func (s *sGoods) DetailBackend(ctx context.Context, id int) (out *model.GoodsDet
 		Tags:             goodsInfo.Tags,
 		DetailInfo:       goodsInfo.DetailInfo,
 		TimeCommon: model.TimeCommon{
-			CreatedAt: goodsInfo.CreatedAt.String(),
-			UpdatedAt: goodsInfo.UpdatedAt.String(),
+			CreatedAt: goodsInfo.CreatedAt,
+			UpdatedAt: goodsInfo.UpdatedAt,
 		},
 	}, nil
 }

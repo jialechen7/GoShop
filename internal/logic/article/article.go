@@ -190,8 +190,8 @@ func (s *sArticle) DetailFrontend(ctx context.Context, id int) (out *model.Artic
 		IsPraise: isPraise,
 		IsAdmin:  articleInfo.IsAdmin,
 		TimeCommon: model.TimeCommon{
-			CreatedAt: articleInfo.CreatedAt.String(),
-			UpdatedAt: articleInfo.UpdatedAt.String(),
+			CreatedAt: articleInfo.CreatedAt,
+			UpdatedAt: articleInfo.UpdatedAt,
 		},
 	}, nil
 }

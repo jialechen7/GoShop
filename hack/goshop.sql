@@ -220,8 +220,6 @@ VALUES
     ('耳机', 4, 3, 1, NOW(), NOW());
 
 -- 设置 AUTO_INCREMENT 从 10 开始
-ALTER TABLE category_info AUTO_INCREMENT = 10;
-
 -- 插入一级分类: 家居用品 (id 10)
 INSERT INTO category_info (name, parent_id, level, sort, created_at, updated_at)
 VALUES
@@ -344,7 +342,7 @@ CREATE TABLE `consignee_info` (
     `updated_at` datetime DEFAULT NULL,
     `deleted_at` datetime DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of consignee_info
@@ -406,7 +404,7 @@ VALUES
 -- 一级分类: 电子产品 > 二级分类: 手机 > 三级分类: 手机配件
 INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, brand, stock, sale, tags, created_at, updated_at)
 VALUES
-    ('原装苹果充电器', 'https://img11.360buyimg.com/n7/jfs/t1/120933/14/49345/20820/67331648F08cc5230/47180b9222541553.png.avif', 9900, 1, 2, 6, 'Apple', 200, 50, '充电器,配件', NOW(), NOW());
+    ('原装苹果充电器', 'https://img11.360buyimg.com/n7/jfs/t1/120933/14/49345/20820/67331648F08cc5230/47180b9222541553.png.avif', 9900, 1, 4, 6, 'Apple', 200, 50, '充电器,配件', NOW(), NOW());
 
 -- 一级分类: 电子产品 > 二级分类: 电脑 > 三级分类: 笔记本电脑
 INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_category_id, level3_category_id, brand, stock, sale, tags, created_at, updated_at)
@@ -428,3 +426,42 @@ INSERT INTO goods_info (name, pic_url, price, level1_category_id, level2_categor
 VALUES
     ('Sony WH-1000XM5', 'https://img14.360buyimg.com/n7/jfs/t1/193676/21/52428/127689/67347f8aF02cff604/fe6fad80b3d9ce03.jpg.avif', 299900, 1, 4, 9, 'Sony', 150, 40, '耳机,降噪', NOW(), NOW());
 
+-- ----------------------------
+-- Table structure for goods_options_info
+-- ----------------------------
+DROP TABLE IF EXISTS `goods_options_info`;
+CREATE TABLE `goods_options_info` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `goods_id` int NOT NULL COMMENT '商品id',
+    `pic_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '图片',
+    `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '商品名称',
+    `price` int NOT NULL DEFAULT '1' COMMENT '价格 单位分',
+    `stock` int NOT NULL DEFAULT '0' COMMENT '库存',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    `deleted_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='商品规格表\n';
+
+INSERT INTO goods_options_info (goods_id, pic_url, name, price, stock, created_at, updated_at)
+VALUES
+    (1, 'https://img10.360buyimg.com/n1/jfs/t1/159795/9/49579/202482/672af451Ff0a61b34/f063016c41fa50de.jpg.avif', '大号沙发', 1999, 100, NOW(), NOW()),
+    (2, 'https://img12.360buyimg.com/n1/jfs/t1/160186/19/47269/98348/66c7e925F87921646/c7209966aa477011.jpg.avif', '大号餐桌', 899, 100, NOW(), NOW()),
+    (6, 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 'iPhone 14Pro 256GB', 899900, 100, NOW(), NOW()),
+    (6, 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 'iPhone 14Pro 512GB', 1099900, 100, NOW(), NOW()),
+    (6, 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 'iPhone 14Pro 1TB', 1299900, 100, NOW(), NOW());
+
+-- ----------------------------
+-- Table structure for cart_info
+-- ----------------------------
+DROP TABLE IF EXISTS `cart_info`;
+CREATE TABLE `cart_info` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT '购物车表',
+    `user_id` int NOT NULL DEFAULT '0',
+    `goods_options_id` int NOT NULL DEFAULT '0' COMMENT '商品规格id',
+    `count` int NOT NULL COMMENT '商品数量',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    `deleted_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

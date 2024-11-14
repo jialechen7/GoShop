@@ -121,6 +121,12 @@ var (
 						controller.Goods.ListFrontend,          //商品列表
 						controller.Goods.ListByLevelFrontend,   //商品列表（根据2级分类）
 						controller.Goods.DetailFrontend,        //商品详情
+						controller.GoodsOptions.ListFrontend,   //商品规格列表
+						controller.GoodsOptions.DetailFrontend, //商品规格详情
+						controller.Cart.ListFrontend,           //购物车列表（仅用户自己）
+						controller.Cart.AddFrontend,            //添加购物车
+						controller.Cart.DeleteFrontend,         //删除购物车
+						controller.Cart.UpdateFrontend,         //更新购物车
 					)
 				})
 

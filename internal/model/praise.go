@@ -16,10 +16,12 @@ type PraiseGetListOutput struct {
 }
 
 type PraiseGetListOutputItem struct {
-	Id       int `json:"id"` // 自增ID
-	UserId   int `json:"user_id"`
-	Type     int `json:"type"`
-	ObjectId int `json:"object_id"`
+	Id          int          `json:"id"` // 自增ID
+	UserId      int          `json:"user_id"`
+	Type        int          `json:"type"`
+	ObjectId    int          `json:"object_id"`
+	ArticleInfo *ArticleInfo `json:"article_info" orm:"with:id=object_id"`
+	GoodsInfo   *GoodsInfo   `json:"goods_info" orm:"with:id=object_id"`
 	TimeCommon
 }
 
