@@ -17,7 +17,7 @@ type (
 		// AddFrontend 添加购物车
 		AddFrontend(ctx context.Context, in model.CartAddInput) (out *model.CartAddOutput, err error)
 		// DeleteFrontend 删除购物车
-		DeleteFrontend(ctx context.Context, id int) error
+		DeleteFrontend(ctx context.Context, ids []int) error
 		UpdateFrontend(ctx context.Context, in model.CartUpdateInput) (out model.CartUpdateOutput, err error)
 	}
 )

@@ -103,6 +103,7 @@ var (
 						controller.User.Info,                   //用户信息
 						controller.User.ResetPassword,          //重置密码
 						controller.Order.ListFrontend,          //订单列表（仅用户自己的订单）
+						controller.Order.AddFrontend,           //添加订单
 						controller.Article.ListFrontend,        //文章列表（仅用户自己的文章）
 						controller.Article.AddFrontend,         //添加文章
 						controller.Article.DeleteFrontend,      //删除文章

@@ -165,7 +165,7 @@ CREATE TABLE `user_info` (
     PRIMARY KEY (`id`) USING BTREE,
     constraint user_info_pk
         unique (name)
-) ENGINE=InnoDB AUTO_INCREMENT DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户信息表';
 
 -- ----------------------------
 -- 插入 user_info 表的记录

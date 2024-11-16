@@ -16,6 +16,7 @@ type (
 		GetList(ctx context.Context, in model.OrderGetListInput) (out *model.OrderGetListOutput, err error)
 		// GetListFrontend 查询订单列表（仅用户自己的订单）
 		GetListFrontend(ctx context.Context, in model.OrderGetListWithStatusInput) (out *model.OrderGetListOutput, err error)
+		AddFrontend(ctx context.Context, in model.OrderAddInput) (out *model.OrderAddOutput, err error)
 	}
 )
 

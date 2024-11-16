@@ -6,6 +6,7 @@ import (
 	"goshop/internal/model/entity"
 	"goshop/internal/service"
 
+	"github.com/gogf/gf/encoding/ghtml"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/util/gconv"
 
@@ -92,4 +93,15 @@ func (s *sOrder) GetListFrontend(ctx context.Context, in model.OrderGetListWithS
 		return out, err
 	}
 	return
+}
+
+func (s *sOrder) AddFrontend(ctx context.Context, in model.OrderAddInput) (out *model.OrderAddOutput, err error) {
+	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
+		return out, err
+	}
+	lastInsertID, err := dao.OrderInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
+	if err != nil {
+		return out, err
+	}
+	return &model.OrderAddOutput{OrderId: int(lastInsertID)}, err
 }

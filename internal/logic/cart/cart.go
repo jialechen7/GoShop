@@ -73,26 +73,31 @@ func (s *sCart) AddFrontend(ctx context.Context, in model.CartAddInput) (out *mo
 }
 
 // DeleteFrontend 删除购物车
-func (s *sCart) DeleteFrontend(ctx context.Context, id int) error {
-	var cartInfo entity.CartInfo
-	err := dao.CartInfo.Ctx(ctx).Where(dao.CartInfo.Columns().Id, id).Scan(&cartInfo)
-	if err != nil {
-		return err
-	}
+func (s *sCart) DeleteFrontend(ctx context.Context, ids []int) error {
+	err := dao.CartInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		for _, id := range ids {
+			var cartInfo entity.CartInfo
+			err := dao.CartInfo.Ctx(ctx).Where(dao.CartInfo.Columns().Id, id).Scan(&cartInfo)
+			if err != nil {
+				return err
+			}
 
-	userId := gconv.Int(ctx.Value(consts.CtxUserId))
-	// 判断当前用户是否有权限对该购物车操作
-	if userId != cartInfo.UserId {
-		return gerror.New(consts.ErrNoPermission)
-	}
-
-	return dao.CartInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
-		// 删除购物车
-		_, err := dao.CartInfo.Ctx(ctx).Where(g.Map{
-			dao.CartInfo.Columns().Id: id,
-		}).Unscoped().Delete()
-		return err
+			userId := gconv.Int(ctx.Value(consts.CtxUserId))
+			// 判断当前用户是否有权限对该购物车操作
+			if userId != cartInfo.UserId {
+				return gerror.New(consts.ErrNoPermission)
+			}
+			_, err = dao.CartInfo.Ctx(ctx).Where(g.Map{
+				dao.CartInfo.Columns().Id: id,
+			}).Unscoped().Delete()
+			if err != nil {
+				return err
+			}
+		}
+		return nil
 	})
+
+	return err
 }
 
 func (s *sCart) UpdateFrontend(ctx context.Context, in model.CartUpdateInput) (out model.CartUpdateOutput, err error) {

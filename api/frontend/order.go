@@ -17,7 +17,15 @@ type OrderGetListCommonRes struct {
 }
 
 type OrderAddReq struct {
-	g.Meta `path:"/order/add" tags:"Order" method:"post" summary:"创建订单接口"`
+	g.Meta           `path:"/order/add" tags:"Order" method:"post" summary:"创建订单接口"`
+	PayType          int         `json:"pay_type" v:"required|in:1,2,3#请选择支付方式"`
+	Remark           string      `json:"remark"`
+	Status           int         `json:"status" v:"required#请选择订单状态"`
+	Price            int         `json:"price" v:"required#请输入订单价格"`
+	ConsigneeName    string      `json:"consignee_name" v:"required#请输入收货人姓名"`
+	ConsigneePhone   string      `json:"consignee_phone" v:"required#请输入收货人电话"`
+	ConsigneeAddress string      `json:"consignee_address" v:"required#请输入收货人地址"`
+	OrderGoodsInfos  interface{} `json:"order_goods_infos" v:"required#请选择订单商品信息"`
 }
 
 type OrderAddRes struct {

@@ -39,3 +39,26 @@ type OrderGetListOutputItem struct {
 	ActualPrice      int         `json:"actual_price"`
 	TimeCommon
 }
+
+type OrderAddUpdateBase struct {
+	Number           string
+	UserId           int
+	PayType          int
+	Remark           string
+	PayAt            *gtime.Time
+	Status           int
+	ConsigneeName    string
+	ConsigneePhone   string
+	ConsigneeAddress string
+	Price            int
+	CouponPrice      int
+	ActualPrice      int
+}
+
+type OrderAddInput struct {
+	OrderAddUpdateBase
+}
+
+type OrderAddOutput struct {
+	OrderId int `json:"order_id"`
+}

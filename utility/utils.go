@@ -291,6 +291,13 @@ func RandInt(max int) int {
 	return rand.Intn(max)
 }
 
+// 生成订单号（时间戳+4位随机数）
+func GetOrderNum() (number string) {
+	rand.Seed(time.Now().UnixNano())
+	number = gconv.String(time.Now().UnixNano()) + gconv.String(rand.Intn(1000))
+	return
+}
+
 //获取今天的开始时间 0点
 //gtime.New(time.Now()).StartOfDay()
 

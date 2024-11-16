@@ -28,7 +28,7 @@ type CartAddRes struct {
 
 type CartDeleteReq struct {
 	g.Meta `path:"/cart/delete" method:"delete" tags:"Cart" summary:"删除购物车接口"`
-	Id     int `v:"min:1#请选择需要删除的购物车" dc:"购物车id"`
+	Ids    []int `json:"ids" v:"required#请选择需要删除的购物车" dc:"购物车ids"`
 }
 type CartDeleteRes struct{}
 

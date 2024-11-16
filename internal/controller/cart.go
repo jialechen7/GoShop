@@ -49,7 +49,7 @@ func (c *cCart) AddFrontend(ctx context.Context, req *frontend.CartAddReq) (res 
 }
 
 func (c *cCart) DeleteFrontend(ctx context.Context, req *frontend.CartDeleteReq) (res *frontend.CartDeleteRes, err error) {
-	err = service.Cart().DeleteFrontend(ctx, req.Id)
+	err = service.Cart().DeleteFrontend(ctx, req.Ids)
 	if err != nil {
 		return nil, err
 	}

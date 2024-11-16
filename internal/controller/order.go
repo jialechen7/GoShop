@@ -4,8 +4,13 @@ import (
 	"context"
 	"goshop/api/backend"
 	"goshop/api/frontend"
+	"goshop/internal/consts"
 	"goshop/internal/model"
 	"goshop/internal/service"
+	"goshop/utility"
+
+	"github.com/gogf/gf/v2/os/gtime"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 // Order 订单管理
@@ -45,5 +50,28 @@ func (c *cOrder) ListFrontend(ctx context.Context, req *frontend.OrderGetListCom
 		Page:  getListRes.Page,
 		Size:  getListRes.Size,
 		Total: getListRes.Total,
+	}, nil
+}
+
+func (c *cOrder) AddFrontend(ctx context.Context, req *frontend.OrderAddReq) (res *frontend.OrderAddRes, err error) {
+	out, err := service.Order().AddFrontend(ctx, model.OrderAddInput{
+		OrderAddUpdateBase: model.OrderAddUpdateBase{
+			Number:           utility.GetOrderNum(),
+			UserId:           gconv.Int(ctx.Value(consts.CtxUserId)),
+			PayType:          req.PayType,
+			Remark:           req.Remark,
+			PayAt:            gtime.Now(),
+			Status:           req.Status,
+			ConsigneeName:    req.ConsigneeName,
+			ConsigneePhone:   req.ConsigneePhone,
+			ConsigneeAddress: req.ConsigneeAddress,
+			Price:            req.Price,
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &frontend.OrderAddRes{
+		OrderId: out.OrderId,
 	}, nil
 }
