@@ -179,13 +179,19 @@ func (s *sGoods) DetailFrontend(ctx context.Context, id int) (out *model.GoodsDe
 
 	userId := gconv.Int(ctx.Value(consts.CtxUserId))
 	goodsId := goodsInfo.Id
-	queryType := consts.PraiseGoodsType
 
 	// 判断当前用户是否对该商品点赞
 	isPraise, _ := dao.PraiseInfo.Ctx(ctx).Where(g.Map{
-		dao.PraiseInfo.Columns().Type:     queryType,
+		dao.PraiseInfo.Columns().Type:     consts.PraiseGoodsType,
 		dao.PraiseInfo.Columns().UserId:   userId,
 		dao.PraiseInfo.Columns().ObjectId: goodsId,
+	}).Count()
+
+	// 判断当前用户是否对该商品收藏
+	isCollect, _ := dao.CollectionInfo.Ctx(ctx).Where(g.Map{
+		dao.CollectionInfo.Columns().Type:     consts.CollectionGoodsType,
+		dao.CollectionInfo.Columns().UserId:   userId,
+		dao.CollectionInfo.Columns().ObjectId: goodsId,
 	}).Count()
 
 	return &model.GoodsDetailOutput{
@@ -202,6 +208,7 @@ func (s *sGoods) DetailFrontend(ctx context.Context, id int) (out *model.GoodsDe
 		Tags:             goodsInfo.Tags,
 		DetailInfo:       goodsInfo.DetailInfo,
 		IsPraise:         isPraise,
+		IsCollect:        isCollect,
 		TimeCommon: model.TimeCommon{
 			CreatedAt: goodsInfo.CreatedAt,
 			UpdatedAt: goodsInfo.UpdatedAt,

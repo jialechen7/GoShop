@@ -66,7 +66,24 @@ func (c *cArticle) AddBackend(ctx context.Context, req *backend.ArticleAddReq) (
 	}, nil
 }
 
-// ListFrontend 查询文章列表（仅用户自己）
+// ListMyFrontend 查询文章列表（仅用户自己）
+func (c *cArticle) ListMyFrontend(ctx context.Context, req *frontend.ArticleGetMyListCommonReq) (res *frontend.ArticleGetListCommonRes, err error) {
+	getListRes, err := service.Article().GetMyListFrontend(ctx, model.ArticleGetListInput{
+		Page: req.Page,
+		Size: req.Size,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &frontend.ArticleGetListCommonRes{
+		List:  getListRes.List,
+		Page:  getListRes.Page,
+		Size:  getListRes.Size,
+		Total: getListRes.Total,
+	}, nil
+}
+
+// ListFrontend 查询文章列表
 func (c *cArticle) ListFrontend(ctx context.Context, req *frontend.ArticleGetListCommonReq) (res *frontend.ArticleGetListCommonRes, err error) {
 	getListRes, err := service.Article().GetListFrontend(ctx, model.ArticleGetListInput{
 		Page: req.Page,
@@ -124,16 +141,18 @@ func (c *cArticle) DetailFrontend(ctx context.Context, req *frontend.ArticleDeta
 		return nil, err
 	}
 	return &frontend.ArticleDetailRes{
-		Id:        out.Id,
-		UserId:    out.UserId,
-		Title:     out.Title,
-		Desc:      out.Desc,
-		Detail:    out.Detail,
-		PicUrl:    out.PicUrl,
-		IsAdmin:   out.IsAdmin,
-		Praise:    out.Praise,
-		IsPraise:  out.IsPraise,
-		CreatedAt: out.CreatedAt,
-		UpdatedAt: out.UpdatedAt,
+		Id:         out.Id,
+		UserId:     out.UserId,
+		Title:      out.Title,
+		Desc:       out.Desc,
+		Detail:     out.Detail,
+		PicUrl:     out.PicUrl,
+		IsAdmin:    out.IsAdmin,
+		Praise:     out.Praise,
+		Collection: out.Collection,
+		IsPraise:   out.IsPraise,
+		IsCollect:  out.IsCollect,
+		CreatedAt:  out.CreatedAt,
+		UpdatedAt:  out.UpdatedAt,
 	}, nil
 }

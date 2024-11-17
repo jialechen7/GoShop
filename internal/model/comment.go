@@ -6,6 +6,13 @@ type CommentGetListInput struct {
 	Size int // 分页数量，最大50
 }
 
+type CommentGetListFrontendInput struct {
+	Page     int // 分页码
+	Size     int // 分页数量
+	Type     int // 评论类型
+	ObjectId int // 评论对象ID
+}
+
 // CommentGetListOutput 查询列表结果
 type CommentGetListOutput struct {
 	List  []CommentGetListOutputItem `json:"list" description:"列表"`

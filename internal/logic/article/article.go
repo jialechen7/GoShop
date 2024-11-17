@@ -92,8 +92,8 @@ func (s *sArticle) DeleteBackend(ctx context.Context, id int) error {
 	})
 }
 
-// GetListFrontend 查询文章列表（仅用户发表的文章）
-func (s *sArticle) GetListFrontend(ctx context.Context, in model.ArticleGetListInput) (out *model.ArticleGetListOutput, err error) {
+// GetMyListFrontend 查询文章列表（仅用户发表的文章）
+func (s *sArticle) GetMyListFrontend(ctx context.Context, in model.ArticleGetListInput) (out *model.ArticleGetListOutput, err error) {
 	var (
 		m = dao.ArticleInfo.Ctx(ctx)
 	)
@@ -102,7 +102,11 @@ func (s *sArticle) GetListFrontend(ctx context.Context, in model.ArticleGetListI
 		Size: in.Size,
 	}
 
-	listModel := m.Where(dao.ArticleInfo.Columns().UserId, gconv.Int(ctx.Value(consts.CtxUserId))).Page(in.Page, in.Size)
+	m = m.Where(g.Map{
+		dao.ArticleInfo.Columns().UserId:  gconv.Int(ctx.Value(consts.CtxUserId)),
+		dao.ArticleInfo.Columns().IsAdmin: consts.ArticlePublisherFrontend,
+	})
+	listModel := m.Page(in.Page, in.Size)
 
 	// 执行查询
 	var list []*entity.ArticleInfo
@@ -113,7 +117,39 @@ func (s *sArticle) GetListFrontend(ctx context.Context, in model.ArticleGetListI
 	if len(list) == 0 {
 		return out, nil
 	}
-	out.Total, err = listModel.Count()
+	out.Total, err = m.Count()
+	if err != nil {
+		return out, err
+	}
+
+	if err := listModel.Scan(&out.List); err != nil {
+		return out, err
+	}
+	return
+}
+
+// GetListFrontend 查询文章列表（所有人包括未登录都可查看）
+func (s *sArticle) GetListFrontend(ctx context.Context, in model.ArticleGetListInput) (out *model.ArticleGetListOutput, err error) {
+	var (
+		m = dao.ArticleInfo.Ctx(ctx)
+	)
+	out = &model.ArticleGetListOutput{
+		Page: in.Page,
+		Size: in.Size,
+	}
+
+	listModel := m.Page(in.Page, in.Size)
+
+	// 执行查询
+	var list []*entity.ArticleInfo
+	if err := listModel.Scan(&list); err != nil {
+		return out, err
+	}
+	// 没有数据
+	if len(list) == 0 {
+		return out, nil
+	}
+	out.Total, err = m.Count()
 	if err != nil {
 		return out, err
 	}
@@ -170,25 +206,33 @@ func (s *sArticle) DetailFrontend(ctx context.Context, id int) (out *model.Artic
 
 	userId := gconv.Int(ctx.Value(consts.CtxUserId))
 	articleId := articleInfo.Id
-	queryType := consts.PraiseArticleType
 
 	// 判断当前用户是否对该文章点赞
 	isPraise, _ := dao.PraiseInfo.Ctx(ctx).Where(g.Map{
-		dao.PraiseInfo.Columns().Type:     queryType,
+		dao.PraiseInfo.Columns().Type:     consts.PraiseArticleType,
 		dao.PraiseInfo.Columns().UserId:   userId,
 		dao.PraiseInfo.Columns().ObjectId: articleId,
 	}).Count()
 
+	// 判断当前用户是否对该文章收藏
+	isCollection, _ := dao.CollectionInfo.Ctx(ctx).Where(g.Map{
+		dao.CollectionInfo.Columns().Type:     consts.CollectionArticleType,
+		dao.CollectionInfo.Columns().UserId:   userId,
+		dao.CollectionInfo.Columns().ObjectId: articleId,
+	}).Count()
+
 	return &model.ArticleDetailOutput{
-		Id:       articleId,
-		UserId:   articleInfo.UserId,
-		Title:    articleInfo.Title,
-		Desc:     articleInfo.Desc,
-		Detail:   articleInfo.Detail,
-		PicUrl:   articleInfo.PicUrl,
-		Praise:   articleInfo.Praise,
-		IsPraise: isPraise,
-		IsAdmin:  articleInfo.IsAdmin,
+		Id:         articleId,
+		UserId:     articleInfo.UserId,
+		Title:      articleInfo.Title,
+		Desc:       articleInfo.Desc,
+		Detail:     articleInfo.Detail,
+		PicUrl:     articleInfo.PicUrl,
+		Praise:     articleInfo.Praise,
+		Collection: articleInfo.Collection,
+		IsPraise:   isPraise,
+		IsCollect:  isCollection,
+		IsAdmin:    articleInfo.IsAdmin,
 		TimeCommon: model.TimeCommon{
 			CreatedAt: articleInfo.CreatedAt,
 			UpdatedAt: articleInfo.UpdatedAt,

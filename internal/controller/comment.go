@@ -8,8 +8,6 @@ import (
 	"goshop/internal/model"
 	"goshop/internal/service"
 
-	"github.com/gogf/gf/v2/frame/g"
-
 	"github.com/gogf/gf/util/gconv"
 )
 
@@ -19,7 +17,6 @@ var Comment = cComment{}
 type cComment struct{}
 
 func (c *cComment) ListBackend(ctx context.Context, req *backend.CommentGetListCommonReq) (res *backend.CommentGetListCommonRes, err error) {
-	g.Dump(req)
 	getListRes, err := service.Comment().GetListBackend(ctx, model.CommentGetListInput{
 		Page: req.Page,
 		Size: req.Size,
@@ -37,9 +34,11 @@ func (c *cComment) ListBackend(ctx context.Context, req *backend.CommentGetListC
 
 // ListFrontend 查询评论列表
 func (c *cComment) ListFrontend(ctx context.Context, req *frontend.CommentGetListCommonReq) (res *frontend.CommentGetListCommonRes, err error) {
-	getListRes, err := service.Comment().GetListFrontend(ctx, model.CommentGetListInput{
-		Page: req.Page,
-		Size: req.Size,
+	getListRes, err := service.Comment().GetListFrontend(ctx, model.CommentGetListFrontendInput{
+		Page:     req.Page,
+		Size:     req.Size,
+		Type:     req.Type,
+		ObjectId: req.ObjectId,
 	})
 	if err != nil {
 		return nil, err

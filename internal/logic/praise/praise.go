@@ -44,6 +44,8 @@ func (s *sPraise) GetListFrontend(ctx context.Context, in model.PraiseGetListInp
 		m = m.With(model.ArticleInfo{})
 	} else if in.Type == consts.PraiseGoodsType {
 		m = m.With(model.GoodsInfo{})
+	} else {
+		m = m.WithAll()
 	}
 	listModel := m.Page(in.Page, in.Size)
 

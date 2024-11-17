@@ -21,7 +21,7 @@ func StartFrontendGToken() (gfUserToken *gtoken.GfToken, err error) {
 	gfUserToken = &gtoken.GfToken{
 		ServerName: "goshop-frontend",
 		//Timeout:         10 * 1000,
-		CacheMode:        2,
+		CacheMode:        consts.CacheModeRedis,
 		LoginPath:        "/user/login",
 		LoginBeforeFunc:  userLoginBeforeFunc,
 		LoginAfterFunc:   userLoginAfterFunc,
@@ -29,7 +29,7 @@ func StartFrontendGToken() (gfUserToken *gtoken.GfToken, err error) {
 		AuthPaths:        g.SliceStr{"/frontend/user/*"},
 		AuthExcludePaths: g.SliceStr{"/frontend/user/register", "/rotation/*"}, // 不拦截路径
 		AuthAfterFunc:    userAuthAfterFunc,
-		MultiLogin:       true,
+		MultiLogin:       consts.MultiLogin,
 	}
 	err = gfUserToken.Start()
 	return
@@ -42,12 +42,12 @@ func userLoginBeforeFunc(r *ghttp.Request) (string, interface{}) {
 	ctx := context.TODO()
 
 	userInfo := entity.UserInfo{}
-	err := dao.UserInfo.Ctx(ctx).Where("name", name).Scan(&userInfo)
+	err := dao.UserInfo.Ctx(ctx).Where(dao.UserInfo.Columns().Name, name).Scan(&userInfo)
 	if err != nil {
-		response.JsonExit(r, consts.UserNameOrPasswordError, "用户名不存在", nil)
+		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrUserNotExist, nil)
 	}
 	if utility.EncryptPassword(password, userInfo.UserSalt) != userInfo.Password {
-		response.JsonExit(r, consts.UserNameOrPasswordError, "密码错误", nil)
+		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrPassword, nil)
 	}
 	// 唯一标识，扩展参数user data
 	return consts.GtokenUserPrefix + strconv.Itoa(userInfo.Id), userInfo
@@ -61,11 +61,11 @@ func userLoginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		return
 	} else {
 		respData.Code = 0
-		// 此处的userkey为LoginBeforeFunc返回的第二个参数
+		// 此处的userKey为LoginBeforeFunc返回的第二个参数
 		userKey := respData.GetString("userKey")
 		userId := gstr.StrEx(userKey, consts.GtokenUserPrefix)
 		userInfo := entity.UserInfo{}
-		err := dao.UserInfo.Ctx(context.TODO()).Where("id", userId).Scan(&userInfo)
+		err := dao.UserInfo.Ctx(context.TODO()).Where(dao.UserInfo.Columns().Id, userId).Scan(&userInfo)
 		if err != nil {
 			return
 		}
@@ -73,7 +73,7 @@ func userLoginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		data := &frontend.LoginRes{
 			Type:     "Bearer",
 			Token:    respData.GetString("token"),
-			ExpireIn: 10 * 24 * 60 * 60,
+			ExpireIn: consts.GtokenExpireIn,
 			Name:     userInfo.Name,
 			Avatar:   userInfo.Avatar,
 			Sign:     userInfo.Sign,

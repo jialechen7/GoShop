@@ -90,5 +90,6 @@ type GoodsDetailOutput struct {
 	Tags             string `json:"tags"`
 	DetailInfo       string `json:"detail_info"`
 	IsPraise         int    `json:"is_praise"`
+	IsCollect        int    `json:"is_collect"`
 	TimeCommon
 }

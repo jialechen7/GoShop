@@ -6,8 +6,6 @@ import (
 	"goshop/api/frontend"
 	"goshop/internal/model"
 	"goshop/internal/service"
-
-	"github.com/gogf/gf/v2/frame/g"
 )
 
 // Goods 商品管理
@@ -33,7 +31,6 @@ func (c *cGoods) ListBackend(ctx context.Context, req *backend.GoodsGetListCommo
 }
 
 func (c *cGoods) UpdateBackend(ctx context.Context, req *backend.GoodsUpdateReq) (res *backend.GoodsUpdateRes, err error) {
-	g.Dump(req)
 	err = service.Goods().UpdateBackend(ctx, model.GoodsUpdateInput{
 		Id: req.Id,
 		GoodsCreateUpdateBase: model.GoodsCreateUpdateBase{
@@ -140,6 +137,7 @@ func (c *cGoods) DetailFrontend(ctx context.Context, req *frontend.GoodsDetailRe
 		Tags:             out.Tags,
 		DetailInfo:       out.DetailInfo,
 		IsPraise:         out.IsPraise,
+		IsCollect:        out.IsCollect,
 	}, nil
 }
 

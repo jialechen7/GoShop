@@ -254,6 +254,7 @@ CREATE TABLE `article_info` (
   `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '封面图',
   `is_admin` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1后台管理员发布 2前台用户发布',
   `praise` int NOT NULL DEFAULT '0' COMMENT '点赞数',
+  `collection` int NOT NULL DEFAULT '0' COMMENT '收藏数',
   `detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '文章详情',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -264,12 +265,12 @@ CREATE TABLE `article_info` (
 -- ----------------------------
 -- Records of article_info
 -- ----------------------------
-INSERT INTO `article_info` (`user_id`, `title`, `desc`, `pic_url`, `is_admin`, `praise`, `detail`, `created_at`, `updated_at`)
-VALUES (1, '探索MacBook Pro的性能', '这篇文章探讨了MacBook Pro的性能表现，适用于不同场景的使用分析', 'https://img12.360buyimg.com/n7/jfs/t1/224360/34/24095/23440/6726f94bFc20591e4/d25e4eafc3d38089.png.avif', 2, 10,
+INSERT INTO `article_info` (`user_id`, `title`, `desc`, `pic_url`, `is_admin`, `praise`, `collection`, `detail`, `created_at`, `updated_at`)
+VALUES (1, '探索MacBook Pro的性能', '这篇文章探讨了MacBook Pro的性能表现，适用于不同场景的使用分析', 'https://img12.360buyimg.com/n7/jfs/t1/224360/34/24095/23440/6726f94bFc20591e4/d25e4eafc3d38089.png.avif', 2, 10, 0,
         'MacBook Pro 是苹果公司推出的高端笔记本电脑，以其卓越的性能和精致的设计深受专业人士和创作者的喜爱。无论是在处理大型图形设计任务，还是在进行视频编辑和开发工作，MacBook Pro 都能够提供无与伦比的性能支持。特别是其配备的 M1 或 M2 芯片，结合高分辨率的 Retina 屏幕，使得 MacBook Pro 成为当前市场上最受欢迎的高性能笔记本之一。',
         NOW(), NOW());
-INSERT INTO `article_info` (`user_id`, `title`, `desc`, `pic_url`, `is_admin`, `praise`, `detail`, `created_at`, `updated_at`)
-VALUES (1, 'iPhone 14 Pro的全面评测', '本文将对iPhone 14 Pro进行全面评测，探讨其性能、拍照功能及创新设计', 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 2, 20,
+INSERT INTO `article_info` (`user_id`, `title`, `desc`, `pic_url`, `is_admin`, `praise`, `collection`, `detail`, `created_at`, `updated_at`)
+VALUES (1, 'iPhone 14 Pro的全面评测', '本文将对iPhone 14 Pro进行全面评测，探讨其性能、拍照功能及创新设计', 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 2, 20, 0,
         'iPhone 14 Pro 是苹果公司推出的最新一代旗舰智能手机，搭载了强大的 A16 Bionic 芯片，拥有极致的性能表现。其全新的动态岛设计不仅使得显示屏更加简洁美观，还增强了互动性。iPhone 14 Pro 配备了 48MP 主摄像头，支持更高质量的照片和视频拍摄，特别适合喜欢摄影的用户。此外，iPhone 14 Pro 的显示效果也极其出色，采用了 ProMotion 技术和 Always-On 屏幕，提供了更流畅的体验。',
         NOW(), NOW());
 
@@ -464,4 +465,19 @@ CREATE TABLE `cart_info` (
     `updated_at` datetime DEFAULT NULL,
     `deleted_at` datetime DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Table structure for collection_info
+-- ----------------------------
+DROP TABLE IF EXISTS `collection_info`;
+CREATE TABLE `collection_info` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `user_id` int NOT NULL DEFAULT '0' COMMENT '用户id',
+    `object_id` int NOT NULL DEFAULT '0' COMMENT '对象id',
+    `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '收藏类型：1商品 2文章',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `unique_index` (`user_id`,`object_id`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

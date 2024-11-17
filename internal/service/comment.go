@@ -15,7 +15,7 @@ type (
 		// GetListBackend 查询评论列表
 		GetListBackend(ctx context.Context, in model.CommentGetListInput) (out *model.CommentGetListOutput, err error)
 		// GetListFrontend 查询评论列表
-		GetListFrontend(ctx context.Context, in model.CommentGetListInput) (out *model.CommentGetListOutput, err error)
+		GetListFrontend(ctx context.Context, in model.CommentGetListFrontendInput) (out *model.CommentGetListOutput, err error)
 		// UpdateBackend 更新评论
 		UpdateBackend(ctx context.Context, in model.CommentUpdateInput) error
 		// DeleteBackend 删除评论

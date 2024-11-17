@@ -10,6 +10,11 @@ type ArticleGetListCommonReq struct {
 	CommonPaginationReq
 }
 
+type ArticleGetMyListCommonReq struct {
+	g.Meta `path:"/article/mylist" tags:"Article" method:"get" summary:"我的文章列表接口"`
+	CommonPaginationReq
+}
+
 type ArticleGetListCommonRes struct {
 	List  interface{} `json:"list" description:"列表"`
 	Page  int         `json:"page" description:"分页码"`
@@ -47,15 +52,17 @@ type ArticleDetailReq struct {
 }
 
 type ArticleDetailRes struct {
-	Id        int         `json:"id"`
-	UserId    int         `json:"user_id"`
-	Title     string      `json:"title"`
-	Desc      string      `json:"desc"`
-	Detail    string      `json:"detail"`
-	PicUrl    string      `json:"pic_url"`
-	IsAdmin   int         `json:"is_admin"`
-	Praise    int         `json:"praise"`
-	IsPraise  int         `json:"is_praise"`
-	CreatedAt *gtime.Time `json:"created_at"`
-	UpdatedAt *gtime.Time `json:"updated_at"`
+	Id         int         `json:"id"`
+	UserId     int         `json:"user_id"`
+	Title      string      `json:"title"`
+	Desc       string      `json:"desc"`
+	Detail     string      `json:"detail"`
+	PicUrl     string      `json:"pic_url"`
+	IsAdmin    int         `json:"is_admin"`
+	Praise     int         `json:"praise"`
+	Collection int         `json:"collection"`
+	IsPraise   int         `json:"is_praise"`
+	IsCollect  int         `json:"is_collect"`
+	CreatedAt  *gtime.Time `json:"created_at"`
+	UpdatedAt  *gtime.Time `json:"updated_at"`
 }

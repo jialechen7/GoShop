@@ -59,14 +59,16 @@ type ArticleDetailInput struct {
 }
 
 type ArticleDetailOutput struct {
-	Id       int    `json:"id"`
-	UserId   int    `json:"user_id"`
-	Title    string `json:"title"`
-	Desc     string `json:"desc"`
-	Detail   string `json:"detail"`
-	PicUrl   string `json:"pic_url"`
-	IsAdmin  int    `json:"is_admin"`
-	Praise   int    `json:"praise"`
-	IsPraise int    `json:"is_praise"`
+	Id         int    `json:"id"`
+	UserId     int    `json:"user_id"`
+	Title      string `json:"title"`
+	Desc       string `json:"desc"`
+	Detail     string `json:"detail"`
+	PicUrl     string `json:"pic_url"`
+	IsAdmin    int    `json:"is_admin"`
+	Praise     int    `json:"praise"`
+	Collection int    `json:"collection"`
+	IsPraise   int    `json:"is_praise"`
+	IsCollect  int    `json:"is_collect"`
 	TimeCommon
 }

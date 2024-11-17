@@ -59,7 +59,7 @@ func (s *sComment) GetListBackend(ctx context.Context, in model.CommentGetListIn
 }
 
 // GetListFrontend 查询评论列表
-func (s *sComment) GetListFrontend(ctx context.Context, in model.CommentGetListInput) (out *model.CommentGetListOutput, err error) {
+func (s *sComment) GetListFrontend(ctx context.Context, in model.CommentGetListFrontendInput) (out *model.CommentGetListOutput, err error) {
 	var (
 		m = dao.CommentInfo.Ctx(ctx)
 	)
@@ -68,6 +68,10 @@ func (s *sComment) GetListFrontend(ctx context.Context, in model.CommentGetListI
 		Size: in.Size,
 	}
 
+	m = m.Where(g.Map{
+		dao.CommentInfo.Columns().Type:     in.Type,
+		dao.CommentInfo.Columns().ObjectId: in.ObjectId,
+	})
 	listModel := m.Page(in.Page, in.Size)
 
 	// 执行查询
@@ -79,7 +83,7 @@ func (s *sComment) GetListFrontend(ctx context.Context, in model.CommentGetListI
 	if len(list) == 0 {
 		return out, nil
 	}
-	out.Total, err = listModel.Count()
+	out.Total, err = m.Count()
 	if err != nil {
 		return out, err
 	}

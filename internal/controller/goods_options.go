@@ -6,8 +6,6 @@ import (
 	"goshop/api/frontend"
 	"goshop/internal/model"
 	"goshop/internal/service"
-
-	"github.com/gogf/gf/v2/frame/g"
 )
 
 // GoodsOptions 商品规格管理
@@ -34,7 +32,6 @@ func (c *cGoodsOptions) ListBackend(ctx context.Context, req *backend.GoodsOptio
 
 // ListFrontend 查询商品规格列表
 func (c *cGoodsOptions) ListFrontend(ctx context.Context, req *frontend.GoodsOptionsGetListCommonReq) (res *frontend.GoodsOptionsGetListCommonRes, err error) {
-	g.Dump(req)
 	getListRes, err := service.GoodsOptions().GetListFrontend(ctx, model.GoodsOptionsGetListInput{
 		Page:    req.Page,
 		Size:    req.Size,

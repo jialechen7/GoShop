@@ -20,32 +20,34 @@ type ArticleInfoDao struct {
 
 // ArticleInfoColumns defines and stores column names for table article_info.
 type ArticleInfoColumns struct {
-	Id        string //
-	UserId    string // 作者id
-	Title     string // 标题
-	Desc      string // 摘要
-	PicUrl    string // 封面图
-	IsAdmin   string // 1后台管理员发布 2前台用户发布
-	Praise    string // 点赞数
-	Detail    string // 文章详情
-	CreatedAt string //
-	UpdatedAt string //
-	DeletedAt string //
+	Id         string //
+	UserId     string // 作者id
+	Title      string // 标题
+	Desc       string // 摘要
+	PicUrl     string // 封面图
+	IsAdmin    string // 1后台管理员发布 2前台用户发布
+	Praise     string // 点赞数
+	Collection string // 收藏数
+	Detail     string // 文章详情
+	CreatedAt  string //
+	UpdatedAt  string //
+	DeletedAt  string //
 }
 
 // articleInfoColumns holds the columns for table article_info.
 var articleInfoColumns = ArticleInfoColumns{
-	Id:        "id",
-	UserId:    "user_id",
-	Title:     "title",
-	Desc:      "desc",
-	PicUrl:    "pic_url",
-	IsAdmin:   "is_admin",
-	Praise:    "praise",
-	Detail:    "detail",
-	CreatedAt: "created_at",
-	UpdatedAt: "updated_at",
-	DeletedAt: "deleted_at",
+	Id:         "id",
+	UserId:     "user_id",
+	Title:      "title",
+	Desc:       "desc",
+	PicUrl:     "pic_url",
+	IsAdmin:    "is_admin",
+	Praise:     "praise",
+	Collection: "collection",
+	Detail:     "detail",
+	CreatedAt:  "created_at",
+	UpdatedAt:  "updated_at",
+	DeletedAt:  "deleted_at",
 }
 
 // NewArticleInfoDao creates and returns a new DAO object for table data access.

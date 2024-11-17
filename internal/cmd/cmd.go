@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"goshop/internal/consts"
 	"goshop/internal/controller"
 	"goshop/internal/service"
 
@@ -12,9 +13,9 @@ import (
 
 var (
 	Main = gcmd.Command{
-		Name:  "main",
-		Usage: "main",
-		Brief: "start http server",
+		Name:  consts.ProjectName,
+		Usage: consts.ProjectUsage,
+		Brief: consts.ProjectBrief,
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			gfAdminToken, err := StartBackendGToken()
@@ -91,6 +92,10 @@ var (
 				group.Bind(
 					controller.Rotation.ListFrontend,
 					controller.Category.ListWithParentId,
+					controller.Goods.ListFrontend,        //商品列表
+					controller.Goods.ListByLevelFrontend, //商品列表（根据2级分类）
+					controller.Comment.ListFrontend,      //评论列表
+					controller.Article.ListFrontend,      //种草推荐文章列表（所有人可见）
 				)
 				// 需要frontend鉴权的路由
 				group.Group("/", func(group *ghttp.RouterGroup) {
@@ -99,35 +104,36 @@ var (
 						panic(err)
 					}
 					group.Bind(
-						controller.User.Create,                 //用户注册
-						controller.User.Info,                   //用户信息
-						controller.User.ResetPassword,          //重置密码
-						controller.Order.ListFrontend,          //订单列表（仅用户自己的订单）
-						controller.Order.AddFrontend,           //添加订单
-						controller.Article.ListFrontend,        //文章列表（仅用户自己的文章）
-						controller.Article.AddFrontend,         //添加文章
-						controller.Article.DeleteFrontend,      //删除文章
-						controller.Article.DetailFrontend,      //文章详情
-						controller.Praise.ListFrontend,         //点赞列表（仅用户自己的点赞）
-						controller.Praise.AddFrontend,          //添加点赞
-						controller.Praise.DeleteFrontend,       //删除点赞
-						controller.Praise.DeleteByTypeFrontend, //删除点赞（根据类型）
-						controller.Comment.ListFrontend,        //评论列表
-						controller.Comment.AddFrontend,         //添加评论
-						controller.Comment.DeleteFrontend,      //删除评论
-						controller.Consignee.ListFrontend,      //查询收货人列表（仅用户自己）
-						controller.Consignee.AddFrontend,       //添加收货人
-						controller.Consignee.DeleteFrontend,    //删除收货人
-						controller.Consignee.UpdateFrontend,    //删除收货人
-						controller.Goods.ListFrontend,          //商品列表
-						controller.Goods.ListByLevelFrontend,   //商品列表（根据2级分类）
-						controller.Goods.DetailFrontend,        //商品详情
-						controller.GoodsOptions.ListFrontend,   //商品规格列表
-						controller.GoodsOptions.DetailFrontend, //商品规格详情
-						controller.Cart.ListFrontend,           //购物车列表（仅用户自己）
-						controller.Cart.AddFrontend,            //添加购物车
-						controller.Cart.DeleteFrontend,         //删除购物车
-						controller.Cart.UpdateFrontend,         //更新购物车
+						controller.User.Create,                     //用户注册
+						controller.User.Info,                       //用户信息
+						controller.User.ResetPassword,              //重置密码
+						controller.Order.ListFrontend,              //订单列表（仅用户自己的订单）
+						controller.Order.AddFrontend,               //添加订单
+						controller.Article.ListMyFrontend,          //文章列表（仅用户自己的文章）
+						controller.Article.AddFrontend,             //添加文章
+						controller.Article.DeleteFrontend,          //删除文章
+						controller.Article.DetailFrontend,          //文章详情
+						controller.Praise.ListFrontend,             //点赞列表（仅用户自己的点赞）
+						controller.Praise.AddFrontend,              //添加点赞
+						controller.Praise.DeleteFrontend,           //删除点赞
+						controller.Praise.DeleteByTypeFrontend,     //删除点赞（根据类型）
+						controller.Collection.ListFrontend,         //收藏列表（仅用户自己的收藏）
+						controller.Collection.AddFrontend,          //添加收藏
+						controller.Collection.DeleteFrontend,       //删除收藏
+						controller.Collection.DeleteByTypeFrontend, //删除收藏（根据类型）
+						controller.Comment.AddFrontend,             //添加评论
+						controller.Comment.DeleteFrontend,          //删除评论
+						controller.Consignee.ListFrontend,          //查询收货人列表（仅用户自己）
+						controller.Consignee.AddFrontend,           //添加收货人
+						controller.Consignee.DeleteFrontend,        //删除收货人
+						controller.Consignee.UpdateFrontend,        //删除收货人
+						controller.Goods.DetailFrontend,            //商品详情
+						controller.GoodsOptions.ListFrontend,       //商品规格列表
+						controller.GoodsOptions.DetailFrontend,     //商品规格详情
+						controller.Cart.ListFrontend,               //购物车列表（仅用户自己）
+						controller.Cart.AddFrontend,                //添加购物车
+						controller.Cart.DeleteFrontend,             //删除购物车
+						controller.Cart.UpdateFrontend,             //更新购物车
 					)
 				})
 

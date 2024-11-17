@@ -10,6 +10,7 @@ import (
 	_ "goshop/internal/logic/bizctx"
 	_ "goshop/internal/logic/cart"
 	_ "goshop/internal/logic/category"
+	_ "goshop/internal/logic/collection"
 	_ "goshop/internal/logic/comment"
 	_ "goshop/internal/logic/consignee"
 	_ "goshop/internal/logic/dashboard"

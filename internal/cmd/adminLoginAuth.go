@@ -21,7 +21,7 @@ func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
 	gfAdminToken = &gtoken.GfToken{
 		ServerName: "goshop-backend",
 		//Timeout:         10 * 1000,
-		CacheMode:        2,
+		CacheMode:        consts.CacheModeRedis,
 		LoginPath:        "/admin/login",
 		LoginBeforeFunc:  loginBeforeFunc,
 		LoginAfterFunc:   loginAfterFunc,
@@ -29,7 +29,7 @@ func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
 		AuthPaths:        g.SliceStr{"/"},
 		AuthExcludePaths: g.SliceStr{"/backend/admin/add"}, // 不拦截路径
 		AuthAfterFunc:    authAfterFunc,
-		MultiLogin:       true,
+		MultiLogin:       consts.MultiLogin,
 	}
 	err = gfAdminToken.Start()
 	return
@@ -42,14 +42,12 @@ func loginBeforeFunc(r *ghttp.Request) (string, interface{}) {
 	ctx := context.TODO()
 
 	adminInfo := entity.AdminInfo{}
-	err := dao.AdminInfo.Ctx(ctx).Where("name", name).Scan(&adminInfo)
+	err := dao.AdminInfo.Ctx(ctx).Where(dao.AdminInfo.Columns().Name, name).Scan(&adminInfo)
 	if err != nil {
-		r.Response.WriteJson(gtoken.Fail("用户名不存在"))
-		r.ExitAll()
+		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrUserNotExist, nil)
 	}
 	if utility.EncryptPassword(password, adminInfo.UserSalt) != adminInfo.Password {
-		r.Response.WriteJson(gtoken.Fail("密码不正确"))
-		r.ExitAll()
+		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrPassword, nil)
 	}
 	// 唯一标识，扩展参数user data
 	return consts.GtokenAdminPrefix + strconv.Itoa(adminInfo.Id), adminInfo
@@ -63,11 +61,11 @@ func loginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		return
 	} else {
 		respData.Code = 0
-		// 此处的userkey为LoginBeforeFunc返回的第二个参数
+		// 此处的userKey为LoginBeforeFunc返回的第二个参数
 		userKey := respData.GetString("userKey")
 		adminId := gstr.StrEx(userKey, consts.GtokenAdminPrefix)
 		adminInfo := entity.AdminInfo{}
-		err := dao.AdminInfo.Ctx(context.TODO()).Where("id", adminId).Scan(&adminInfo)
+		err := dao.AdminInfo.Ctx(context.TODO()).Where(dao.AdminInfo.Columns().Id, adminId).Scan(&adminInfo)
 		if err != nil {
 			return
 		}
@@ -92,7 +90,7 @@ func loginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		data := &backend.LoginRes{
 			Type:        "Bearer",
 			Token:       respData.GetString("token"),
-			ExpireIn:    10 * 24 * 60 * 60,
+			ExpireIn:    consts.GtokenExpireIn,
 			IsAdmin:     adminInfo.IsAdmin,
 			RoleIds:     adminInfo.RoleIds,
 			Permissions: permissions,
