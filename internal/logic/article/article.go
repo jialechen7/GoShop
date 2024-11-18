@@ -74,6 +74,8 @@ func (s *sArticle) AddBackend(ctx context.Context, in model.ArticleAddInput) (ou
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
+	in.UserId = gconv.Int(ctx.Value(consts.CtxAdminId))
+	in.IsAdmin = consts.ArticlePublisherAdmin
 	lastInsertID, err := dao.ArticleInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
 	if err != nil {
 		return out, err
@@ -166,6 +168,8 @@ func (s *sArticle) AddFrontend(ctx context.Context, in model.ArticleAddInput) (o
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
+	in.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
+	in.IsAdmin = consts.ArticlePublisherFrontend
 	lastInsertID, err := dao.ArticleInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
 	if err != nil {
 		return out, err

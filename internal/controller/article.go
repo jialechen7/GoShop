@@ -4,11 +4,8 @@ import (
 	"context"
 	"goshop/api/backend"
 	"goshop/api/frontend"
-	"goshop/internal/consts"
 	"goshop/internal/model"
 	"goshop/internal/service"
-
-	"github.com/gogf/gf/util/gconv"
 )
 
 // Article 文章管理
@@ -50,12 +47,10 @@ func (c *cArticle) UpdateBackend(ctx context.Context, req *backend.ArticleUpdate
 func (c *cArticle) AddBackend(ctx context.Context, req *backend.ArticleAddReq) (res *backend.ArticleAddRes, err error) {
 	out, err := service.Article().AddBackend(ctx, model.ArticleAddInput{
 		ArticleCreateUpdateBase: model.ArticleCreateUpdateBase{
-			UserId:  gconv.Int(ctx.Value(consts.CtxAdminId)),
-			Title:   req.Title,
-			Desc:    req.Desc,
-			PicUrl:  req.PicUrl,
-			Detail:  req.Detail,
-			IsAdmin: consts.ArticlePublisherAdmin,
+			Title:  req.Title,
+			Desc:   req.Desc,
+			PicUrl: req.PicUrl,
+			Detail: req.Detail,
 		},
 	})
 	if err != nil {
@@ -111,12 +106,10 @@ func (c *cArticle) DeleteBackend(ctx context.Context, req *backend.ArticleDelete
 func (c *cArticle) AddFrontend(ctx context.Context, req *frontend.ArticleAddReq) (res *frontend.ArticleAddRes, err error) {
 	out, err := service.Article().AddFrontend(ctx, model.ArticleAddInput{
 		ArticleCreateUpdateBase: model.ArticleCreateUpdateBase{
-			UserId:  gconv.Int(ctx.Value(consts.CtxUserId)),
-			Title:   req.Title,
-			Desc:    req.Desc,
-			PicUrl:  req.PicUrl,
-			IsAdmin: consts.ArticlePublisherFrontend,
-			Detail:  req.Detail,
+			Title:  req.Title,
+			Desc:   req.Desc,
+			PicUrl: req.PicUrl,
+			Detail: req.Detail,
 		},
 	})
 	if err != nil {

@@ -121,6 +121,7 @@ func (s *sComment) AddFrontend(ctx context.Context, in model.CommentAddInput) (o
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
+	in.CommentCreateUpdateBase.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	lastInsertID, err := dao.CommentInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
 	if err != nil {
 		return out, err

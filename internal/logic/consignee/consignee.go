@@ -107,6 +107,7 @@ func (s *sConsignee) UpdateBackend(ctx context.Context, in model.ConsigneeUpdate
 	if err := ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return err
 	}
+	in.ConsigneeCreateUpdateBase.UserId = gconv.Int(ctx.Value(consts.CtxAdminId))
 	_, err := dao.ConsigneeInfo.Ctx(ctx).Data(in).OmitEmpty().Where(dao.ConsigneeInfo.Columns().Id, in.Id).Update()
 	return err
 }
@@ -117,6 +118,7 @@ func (s *sConsignee) AddBackend(ctx context.Context, in model.ConsigneeAddInput)
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
+	in.ConsigneeCreateUpdateBase.UserId = gconv.Int(ctx.Value(consts.CtxAdminId))
 	lastInsertID, err := dao.ConsigneeInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
 	if err != nil {
 		return out, err
@@ -141,6 +143,7 @@ func (s *sConsignee) AddFrontend(ctx context.Context, in model.ConsigneeAddInput
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
+	in.ConsigneeCreateUpdateBase.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	var lastInsertID int64
 	err = dao.ConsigneeInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		if in.IsDefault == consts.ConsigneeDefault {
@@ -189,6 +192,7 @@ func (s *sConsignee) UpdateFrontend(ctx context.Context, in model.ConsigneeUpdat
 	if err := ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return err
 	}
+	in.ConsigneeCreateUpdateBase.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	return dao.ConsigneeInfo.Transaction(ctx, func(ctx context.Context, gdb gdb.TX) error {
 		if in.IsDefault == consts.ConsigneeDefault {
 			err := s.UnsetDefault(ctx)

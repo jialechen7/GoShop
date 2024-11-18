@@ -2,10 +2,13 @@ package admin
 
 import (
 	"context"
+	"goshop/internal/consts"
 	"goshop/internal/model/entity"
 	"goshop/utility"
 	"strconv"
 	"strings"
+
+	"github.com/gogf/gf/util/gconv"
 
 	"github.com/gogf/gf/v2/util/grand"
 
@@ -105,6 +108,7 @@ func (s *sAdmin) Delete(ctx context.Context, id int) error {
 
 // Update 修改管理员
 func (s *sAdmin) Update(ctx context.Context, in model.AdminUpdateInput) error {
+	in.Id = gconv.Int(ctx.Value(consts.CtxAdminId))
 	return dao.AdminInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 不允许HTML代码
 		if err := ghtml.SpecialCharsMapOrStruct(in); err != nil {

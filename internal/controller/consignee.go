@@ -4,11 +4,8 @@ import (
 	"context"
 	"goshop/api/backend"
 	"goshop/api/frontend"
-	"goshop/internal/consts"
 	"goshop/internal/model"
 	"goshop/internal/service"
-
-	"github.com/gogf/gf/util/gconv"
 )
 
 // Consignee 收货人管理
@@ -39,7 +36,6 @@ func (c *cConsignee) UpdateBackend(ctx context.Context, req *backend.ConsigneeUp
 	err = service.Consignee().UpdateBackend(ctx, model.ConsigneeUpdateInput{
 		Id: req.Id,
 		ConsigneeCreateUpdateBase: model.ConsigneeCreateUpdateBase{
-			UserId:    gconv.Int(ctx.Value(consts.CtxUserId)),
 			IsDefault: req.IsDefault,
 			Name:      req.Name,
 			Phone:     req.Phone,
@@ -57,7 +53,6 @@ func (c *cConsignee) UpdateBackend(ctx context.Context, req *backend.ConsigneeUp
 func (c *cConsignee) AddBackend(ctx context.Context, req *backend.ConsigneeAddReq) (res *backend.ConsigneeAddRes, err error) {
 	out, err := service.Consignee().AddBackend(ctx, model.ConsigneeAddInput{
 		ConsigneeCreateUpdateBase: model.ConsigneeCreateUpdateBase{
-			UserId:    gconv.Int(ctx.Value(consts.CtxUserId)),
 			IsDefault: req.IsDefault,
 			Name:      req.Name,
 			Phone:     req.Phone,
@@ -104,7 +99,6 @@ func (c *cConsignee) DeleteBackend(ctx context.Context, req *backend.ConsigneeDe
 func (c *cConsignee) AddFrontend(ctx context.Context, req *frontend.ConsigneeAddReq) (res *frontend.ConsigneeAddRes, err error) {
 	out, err := service.Consignee().AddFrontend(ctx, model.ConsigneeAddInput{
 		ConsigneeCreateUpdateBase: model.ConsigneeCreateUpdateBase{
-			UserId:    gconv.Int(ctx.Value(consts.CtxUserId)),
 			IsDefault: req.IsDefault,
 			Name:      req.Name,
 			Phone:     req.Phone,
@@ -135,7 +129,6 @@ func (c *cConsignee) UpdateFrontend(ctx context.Context, req *frontend.Consignee
 	err = service.Consignee().UpdateFrontend(ctx, model.ConsigneeUpdateInput{
 		Id: req.Id,
 		ConsigneeCreateUpdateBase: model.ConsigneeCreateUpdateBase{
-			UserId:    gconv.Int(ctx.Value(consts.CtxUserId)),
 			IsDefault: req.IsDefault,
 			Name:      req.Name,
 			Phone:     req.Phone,

@@ -65,6 +65,7 @@ func (s *sCart) AddFrontend(ctx context.Context, in model.CartAddInput) (out *mo
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
+	in.CartCreateUpdateBase.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	lastInsertID, err := dao.CartInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
 	if err != nil {
 		return out, err
@@ -100,12 +101,14 @@ func (s *sCart) DeleteFrontend(ctx context.Context, ids []int) error {
 	return err
 }
 
+// UpdateFrontend 更新购物车
 func (s *sCart) UpdateFrontend(ctx context.Context, in model.CartUpdateInput) (out model.CartUpdateOutput, err error) {
 	// 不允许HTML代码
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
 	userId := gconv.Int(ctx.Value(consts.CtxUserId))
+	in.CartCreateUpdateBase.UserId = userId
 	// 判断当前用户是否有权限对该购物车操作
 	var cartInfo entity.CartInfo
 	err = dao.CartInfo.Ctx(ctx).Where(dao.CartInfo.Columns().Id, in.Id).Scan(&cartInfo)

@@ -40,23 +40,32 @@ type OrderGetListOutputItem struct {
 	TimeCommon
 }
 
-type OrderAddUpdateBase struct {
-	Number           string
-	UserId           int
-	PayType          int
-	Remark           string
-	PayAt            *gtime.Time
-	Status           int
-	ConsigneeName    string
-	ConsigneePhone   string
-	ConsigneeAddress string
-	Price            int
-	CouponPrice      int
-	ActualPrice      int
+type OrderAddInput struct {
+	Number             string
+	UserId             int
+	PayType            int
+	Remark             string
+	PayAt              *gtime.Time
+	Status             int
+	ConsigneeName      string
+	ConsigneePhone     string
+	ConsigneeAddress   string
+	Price              int
+	CouponPrice        int
+	ActualPrice        int
+	OrderAddGoodsInfos []*OrderAddGoodsInfo
 }
 
-type OrderAddInput struct {
-	OrderAddUpdateBase
+type OrderAddGoodsInfo struct {
+	Id             int
+	OrderId        int
+	GoodsId        int
+	GoodsOptionsId int
+	Count          int
+	Remark         string
+	Price          int
+	CouponPrice    int
+	ActualPrice    int
 }
 
 type OrderAddOutput struct {

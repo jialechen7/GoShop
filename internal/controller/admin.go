@@ -66,9 +66,7 @@ func (c *cAdmin) Update(ctx context.Context, req *backend.AdminUpdateReq) (res *
 }
 
 func (c *cAdmin) UpdatePassword(ctx context.Context, req *backend.AdminUpdatePasswordReq) (res *backend.AdminUpdatePasswordRes, err error) {
-	userId := gconv.Int(ctx.Value(consts.CtxAdminId))
 	err = service.Admin().Update(ctx, model.AdminUpdateInput{
-		Id: userId,
 		AdminCreateUpdateBase: model.AdminCreateUpdateBase{
 			Password: req.Password,
 		},

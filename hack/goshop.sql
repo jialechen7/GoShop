@@ -481,3 +481,22 @@ CREATE TABLE `collection_info` (
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `unique_index` (`user_id`,`object_id`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Table structure for order_goods_info
+-- ----------------------------
+DROP TABLE IF EXISTS `order_goods_info`;
+CREATE TABLE `order_goods_info` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT '商品维度的订单表',
+    `order_id` int NOT NULL DEFAULT '0' COMMENT '关联的主订单表',
+    `goods_id` int NOT NULL DEFAULT '0' COMMENT '商品id',
+    `goods_options_id` int DEFAULT '0' COMMENT '商品规格id(sku id)',
+    `count` int NOT NULL COMMENT '商品数量',
+    `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '备注',
+    `price` int NOT NULL DEFAULT '0' COMMENT '订单金额 单位分',
+    `coupon_price` int NOT NULL DEFAULT '0' COMMENT '优惠券金额 单位分',
+    `actual_price` int NOT NULL DEFAULT '0' COMMENT '实际支付金额 单位分',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='订单商品表';

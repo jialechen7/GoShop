@@ -67,7 +67,6 @@ func (s *sCollection) GetListFrontend(ctx context.Context, in model.CollectionGe
 	if err := listModel.Scan(&out.List); err != nil {
 		return out, err
 	}
-	g.Dump(out.List)
 	return
 }
 
@@ -77,6 +76,7 @@ func (s *sCollection) AddFrontend(ctx context.Context, in model.CollectionAddInp
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
+	in.CollectionCreateUpdateBase.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	var lastInsertID int64
 	err = dao.CollectionInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 插入收藏
@@ -116,6 +116,7 @@ func (s *sCollection) DeleteFrontend(ctx context.Context, id int) error {
 
 // DeleteByTypeFrontend 删除收藏（根据类型）
 func (s *sCollection) DeleteByTypeFrontend(ctx context.Context, in model.CollectionDeleteByTypeInput) error {
+	in.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	return dao.CollectionInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 删除收藏
 		_, err := dao.CollectionInfo.Ctx(ctx).Where(g.Map{

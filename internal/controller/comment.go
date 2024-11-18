@@ -4,11 +4,8 @@ import (
 	"context"
 	"goshop/api/backend"
 	"goshop/api/frontend"
-	"goshop/internal/consts"
 	"goshop/internal/model"
 	"goshop/internal/service"
-
-	"github.com/gogf/gf/util/gconv"
 )
 
 // Comment 评论管理
@@ -62,7 +59,6 @@ func (c *cComment) DeleteBackend(ctx context.Context, req *backend.CommentDelete
 func (c *cComment) AddFrontend(ctx context.Context, req *frontend.CommentAddReq) (res *frontend.CommentAddRes, err error) {
 	out, err := service.Comment().AddFrontend(ctx, model.CommentAddInput{
 		CommentCreateUpdateBase: model.CommentCreateUpdateBase{
-			UserId:   gconv.Int(ctx.Value(consts.CtxUserId)),
 			ParentId: req.ParentId,
 			ObjectId: req.ObjectId,
 			Type:     req.Type,

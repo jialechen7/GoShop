@@ -4,12 +4,9 @@ import (
 	"context"
 	"goshop/api/backend"
 	"goshop/api/frontend"
-	"goshop/internal/consts"
 	"goshop/internal/model"
 	"goshop/internal/service"
-	"goshop/utility"
 
-	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -54,20 +51,20 @@ func (c *cOrder) ListFrontend(ctx context.Context, req *frontend.OrderGetListCom
 }
 
 func (c *cOrder) AddFrontend(ctx context.Context, req *frontend.OrderAddReq) (res *frontend.OrderAddRes, err error) {
-	out, err := service.Order().AddFrontend(ctx, model.OrderAddInput{
-		OrderAddUpdateBase: model.OrderAddUpdateBase{
-			Number:           utility.GetOrderNum(),
-			UserId:           gconv.Int(ctx.Value(consts.CtxUserId)),
-			PayType:          req.PayType,
-			Remark:           req.Remark,
-			PayAt:            gtime.Now(),
-			Status:           req.Status,
-			ConsigneeName:    req.ConsigneeName,
-			ConsigneePhone:   req.ConsigneePhone,
-			ConsigneeAddress: req.ConsigneeAddress,
-			Price:            req.Price,
-		},
-	})
+	orderAddInput := model.OrderAddInput{
+		PayType:          req.PayType,
+		Remark:           req.Remark,
+		Status:           req.Status,
+		Price:            req.Price,
+		ConsigneeName:    req.ConsigneeName,
+		ConsigneePhone:   req.ConsigneePhone,
+		ConsigneeAddress: req.ConsigneeAddress,
+	}
+	if err = gconv.Scan(req.OrderGoodsInfos, &orderAddInput.OrderAddGoodsInfos); err != nil {
+		return nil, err
+	}
+	out, err := service.Order().AddFrontend(ctx, orderAddInput)
+
 	if err != nil {
 		return nil, err
 	}

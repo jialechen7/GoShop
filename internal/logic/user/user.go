@@ -55,7 +55,7 @@ func (s *sUser) ResetPassword(ctx context.Context, in model.UserUpdateInput) (ou
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
-
+	in.Id = gconv.Int(ctx.Value(consts.CtxUserId))
 	userStatus := gconv.Int(ctx.Value(consts.CtxUserStatus))
 	if userStatus == consts.UserStatusBlacked {
 		return out, gerror.New(consts.ErrUserStatus)

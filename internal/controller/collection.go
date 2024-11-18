@@ -3,11 +3,8 @@ package controller
 import (
 	"context"
 	"goshop/api/frontend"
-	"goshop/internal/consts"
 	"goshop/internal/model"
 	"goshop/internal/service"
-
-	"github.com/gogf/gf/util/gconv"
 )
 
 // Collection 收藏管理
@@ -36,7 +33,6 @@ func (c *cCollection) ListFrontend(ctx context.Context, req *frontend.Collection
 func (c *cCollection) AddFrontend(ctx context.Context, req *frontend.CollectionAddReq) (res *frontend.CollectionAddRes, err error) {
 	out, err := service.Collection().AddFrontend(ctx, model.CollectionAddInput{
 		CollectionCreateUpdateBase: model.CollectionCreateUpdateBase{
-			UserId:   gconv.Int(ctx.Value(consts.CtxUserId)),
 			Type:     req.Type,
 			ObjectId: req.ObjectId,
 		},
@@ -61,7 +57,6 @@ func (c *cCollection) DeleteByTypeFrontend(ctx context.Context, req *frontend.Co
 	err = service.Collection().DeleteByTypeFrontend(ctx, model.CollectionDeleteByTypeInput{
 		Type:     req.Type,
 		ObjectId: req.ObjectId,
-		UserId:   gconv.Int(ctx.Value(consts.CtxUserId)),
 	})
 	if err != nil {
 		return nil, err

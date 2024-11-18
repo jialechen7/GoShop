@@ -52,7 +52,6 @@ func (c *cUser) ResetPassword(ctx context.Context, req *frontend.UserResetPasswo
 			Password:     req.Password,
 			SecretAnswer: req.SecretAnswer,
 		},
-		Id: gconv.Int(ctx.Value(consts.CtxUserId)),
 	})
 	return res, err
 }

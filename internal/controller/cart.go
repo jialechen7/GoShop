@@ -3,11 +3,8 @@ package controller
 import (
 	"context"
 	"goshop/api/frontend"
-	"goshop/internal/consts"
 	"goshop/internal/model"
 	"goshop/internal/service"
-
-	"github.com/gogf/gf/util/gconv"
 )
 
 // Cart 购物车管理
@@ -35,7 +32,6 @@ func (c *cCart) ListFrontend(ctx context.Context, req *frontend.CartGetListCommo
 func (c *cCart) AddFrontend(ctx context.Context, req *frontend.CartAddReq) (res *frontend.CartAddRes, err error) {
 	out, err := service.Cart().AddFrontend(ctx, model.CartAddInput{
 		CartCreateUpdateBase: model.CartCreateUpdateBase{
-			UserId:         gconv.Int(ctx.Value(consts.CtxUserId)),
 			GoodsOptionsId: req.GoodsOptionsId,
 			Count:          req.Count,
 		},
@@ -56,10 +52,10 @@ func (c *cCart) DeleteFrontend(ctx context.Context, req *frontend.CartDeleteReq)
 	return &frontend.CartDeleteRes{}, nil
 }
 
+// UpdateFrontend 更新购物车
 func (c *cCart) UpdateFrontend(ctx context.Context, req *frontend.CartUpdateReq) (res *frontend.CartUpdateRes, err error) {
 	out, err := service.Cart().UpdateFrontend(ctx, model.CartUpdateInput{
 		CartCreateUpdateBase: model.CartCreateUpdateBase{
-			UserId:         gconv.Int(ctx.Value(consts.CtxUserId)),
 			GoodsOptionsId: req.GoodsOptionsId,
 			Count:          req.Count,
 		},

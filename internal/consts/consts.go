@@ -25,6 +25,7 @@ const (
 	ErrNoPermission          = "您没有权限访问"
 	ErrUserNotExist          = "用户不存在"
 	ErrPassword              = "密码错误"
+	ErrStockNotEnough        = "库存不足"
 	MinPasswordLength        = 6 // 密码最小长度
 	ArticlePublisherAdmin    = 1 // 后台管理员发布文章
 	ArticlePublisherFrontend = 2 // 前台用户发布文章

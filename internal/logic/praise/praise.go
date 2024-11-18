@@ -75,6 +75,7 @@ func (s *sPraise) AddFrontend(ctx context.Context, in model.PraiseAddInput) (out
 	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
 		return out, err
 	}
+	in.PraiseCreateUpdateBase.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	var lastInsertID int64
 	err = dao.PraiseInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 插入点赞
@@ -114,6 +115,7 @@ func (s *sPraise) DeleteFrontend(ctx context.Context, id int) error {
 
 // DeleteByTypeFrontend 删除点赞（根据类型）
 func (s *sPraise) DeleteByTypeFrontend(ctx context.Context, in model.PraiseDeleteByTypeInput) error {
+	in.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	return dao.PraiseInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 删除点赞
 		_, err := dao.PraiseInfo.Ctx(ctx).Where(g.Map{

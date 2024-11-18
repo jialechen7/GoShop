@@ -5,10 +5,15 @@ import (
 	"goshop/internal/consts"
 	"goshop/internal/model/entity"
 	"goshop/internal/service"
+	"goshop/utility"
 
-	"github.com/gogf/gf/encoding/ghtml"
-	"github.com/gogf/gf/frame/g"
-	"github.com/gogf/gf/util/gconv"
+	"github.com/gogf/gf/v2/errors/gerror"
+
+	"github.com/gogf/gf/v2/os/gtime"
+
+	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/util/gconv"
 
 	"goshop/internal/dao"
 	"goshop/internal/model"
@@ -95,13 +100,55 @@ func (s *sOrder) GetListFrontend(ctx context.Context, in model.OrderGetListWithS
 	return
 }
 
+// AddFrontend 添加订单
 func (s *sOrder) AddFrontend(ctx context.Context, in model.OrderAddInput) (out *model.OrderAddOutput, err error) {
-	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
-		return out, err
-	}
-	lastInsertID, err := dao.OrderInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
+	var orderId int
+	in.Number = utility.GetOrderNum()
+	in.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
+	in.PayAt = gtime.Now()
+	err = dao.OrderInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		// 1. 插入订单信息
+		orderId, err := dao.OrderInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
+		if err != nil {
+			return err
+		}
+
+		// 2. 插入订单商品信息
+		for _, goodsInfo := range in.OrderAddGoodsInfos {
+			goodsInfo.OrderId = int(orderId)
+			_, err = dao.OrderGoodsInfo.Ctx(ctx).OmitEmpty().Data(goodsInfo).Insert()
+			if err != nil {
+				return err
+			}
+		}
+
+		// 3. 更新商品销量和库存
+		for _, goodsInfo := range in.OrderAddGoodsInfos {
+			var goodsEntity *entity.GoodsInfo
+			err = dao.GoodsInfo.Ctx(ctx).WherePri(goodsInfo.GoodsId).Scan(&goodsEntity)
+			if err != nil {
+				return err
+			}
+			if goodsEntity.Stock < goodsInfo.Count {
+				return gerror.New(consts.ErrStockNotEnough)
+			}
+			_, err = dao.GoodsInfo.Ctx(ctx).WherePri(goodsInfo.GoodsId).Increment(dao.GoodsInfo.Columns().Sale, goodsInfo.Count)
+			if err != nil {
+				return err
+			}
+			_, err = dao.GoodsInfo.Ctx(ctx).WherePri(goodsInfo.GoodsId).Decrement(dao.GoodsInfo.Columns().Stock, goodsInfo.Count)
+			if err != nil {
+				return err
+			}
+			_, err = dao.GoodsOptionsInfo.Ctx(ctx).WherePri(goodsInfo.GoodsOptionsId).Decrement(dao.GoodsOptionsInfo.Columns().Stock, goodsInfo.Count)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	})
 	if err != nil {
 		return out, err
 	}
-	return &model.OrderAddOutput{OrderId: int(lastInsertID)}, err
+	return &model.OrderAddOutput{OrderId: int(orderId)}, err
 }
