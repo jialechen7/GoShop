@@ -46,7 +46,7 @@ func (s *sGoods) GetListBackend(ctx context.Context, in model.GoodsGetListInput)
 	if len(list) == 0 {
 		return out, nil
 	}
-	out.Total, err = listModel.Count()
+	out.Total, err = m.Count()
 	if err != nil {
 		return out, err
 	}
@@ -112,7 +112,7 @@ func (s *sGoods) GetListFrontend(ctx context.Context, in model.GoodsGetListInput
 	if len(list) == 0 {
 		return out, nil
 	}
-	out.Total, err = listModel.Count()
+	out.Total, err = m.Count()
 	if err != nil {
 		return out, err
 	}

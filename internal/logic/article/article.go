@@ -47,7 +47,7 @@ func (s *sArticle) GetListBackend(ctx context.Context, in model.ArticleGetListIn
 	if len(list) == 0 {
 		return out, nil
 	}
-	out.Total, err = listModel.Count()
+	out.Total, err = m.Count()
 	if err != nil {
 		return out, err
 	}
