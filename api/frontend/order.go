@@ -5,7 +5,7 @@ import (
 )
 
 type OrderGetListCommonReq struct {
-	g.Meta `path:"/order/list" tags:"Order" method:"get" summary:"订单列表接口"`
+	g.Meta `path:"/order/list" tags:"订单前台" method:"get" summary:"订单列表接口"`
 	Status int `json:"status" in:"query" v:"required#请选择订单状态"`
 	CommonPaginationReq
 }
@@ -17,7 +17,7 @@ type OrderGetListCommonRes struct {
 }
 
 type OrderAddReq struct {
-	g.Meta           `path:"/order/add" tags:"Order" method:"post" summary:"创建订单接口"`
+	g.Meta           `path:"/order/add" tags:"订单前台" method:"post" summary:"创建订单接口"`
 	PayType          int                  `json:"pay_type" v:"required|in:1,2,3#请选择支付方式"`
 	Remark           string               `json:"remark"`
 	Status           int                  `json:"status" v:"required#请选择订单状态"`
@@ -43,12 +43,12 @@ type OrderAddRes struct {
 }
 
 type OrderDeleteReq struct {
-	g.Meta `path:"/order/delete" method:"delete" tags:"Order" summary:"删除订单接口"`
+	g.Meta `path:"/order/delete" method:"delete" tags:"订单前台" summary:"删除订单接口"`
 	Id     int `v:"min:1#请选择需要删除的订单" dc:"订单id"`
 }
 type OrderDeleteRes struct{}
 
 type OrderUpdateReq struct {
-	g.Meta `path:"/order/update" method:"post" tags:"订单" summary:"修改订单接口"`
+	g.Meta `path:"/order/update" method:"post" tags:"订单前台" summary:"修改订单接口"`
 }
 type OrderUpdateRes struct{}

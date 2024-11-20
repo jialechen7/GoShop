@@ -3,7 +3,7 @@ package backend
 import "github.com/gogf/gf/v2/frame/g"
 
 type OrderGetListCommonReq struct {
-	g.Meta `path:"/order/list" tags:"order" method:"get" summary:"订单列表接口"`
+	g.Meta `path:"/order/list" tags:"订单后台" method:"get" summary:"订单列表接口"`
 	CommonPaginationReq
 }
 

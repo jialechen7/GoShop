@@ -5,13 +5,13 @@ import (
 )
 
 type GoodsGetListByLevelReq struct {
-	g.Meta `path:"/goods/level/list/" tags:"Goods" method:"get" summary:"商品列表接口"`
+	g.Meta `path:"/goods/level/list/" tags:"商品前台" method:"get" summary:"商品列表接口"`
 	CommonPaginationReq
 	LevelId int `json:"level_id" v:"min:1#请选择需要查询的分类" form:"query" dc:"分类ID"`
 }
 
 type GoodsGetListCommonReq struct {
-	g.Meta `path:"/goods/list" tags:"Goods" method:"get" summary:"商品列表接口"`
+	g.Meta `path:"/goods/list" tags:"商品前台" method:"get" summary:"商品列表接口"`
 	CommonPaginationReq
 }
 
@@ -23,7 +23,7 @@ type GoodsGetListCommonRes struct {
 }
 
 type GoodsDetailReq struct {
-	g.Meta `path:"/goods/detail" method:"get" tags:"商品" summary:"商品详情接口"`
+	g.Meta `path:"/goods/detail" method:"get" tags:"商品前台" summary:"商品详情接口"`
 	Id     int `v:"min:1#请选择需要查询的商品" form:"query" dc:"商品id"`
 }
 

@@ -5,7 +5,7 @@ import (
 )
 
 type GoodsOptionsGetListCommonReq struct {
-	g.Meta `path:"/goods_options/list" tags:"GoodsOptions" method:"get" summary:"商品规格列表接口"`
+	g.Meta `path:"/goods_options/list" tags:"商品规格前台" method:"get" summary:"商品规格列表接口"`
 	CommonPaginationReq
 	GoodsId int `json:"goods_id" v:"min:1#请选择需要查询的商品,required#请选择商品id" form:"query" dc:"商品id"`
 }
@@ -18,7 +18,7 @@ type GoodsOptionsGetListCommonRes struct {
 }
 
 type GoodsOptionsDetailReq struct {
-	g.Meta `path:"/goods_options/detail" method:"get" tags:"商品规格" summary:"商品规格详情接口"`
+	g.Meta `path:"/goods_options/detail" method:"get" tags:"商品规格前台" summary:"商品规格详情接口"`
 	Id     int `v:"min:1#请选择需要查询的商品规格" form:"query" dc:"商品规格id"`
 }
 

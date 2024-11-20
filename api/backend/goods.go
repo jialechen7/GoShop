@@ -5,7 +5,7 @@ import (
 )
 
 type GoodsGetListCommonReq struct {
-	g.Meta `path:"/goods/list" tags:"Goods" method:"get" summary:"商品列表接口"`
+	g.Meta `path:"/goods/list" tags:"商品后台" method:"get" summary:"商品列表接口"`
 	CommonPaginationReq
 }
 
@@ -17,7 +17,7 @@ type GoodsGetListCommonRes struct {
 }
 
 type GoodsAddReq struct {
-	g.Meta           `path:"/goods/add" tags:"Goods" method:"post" summary:"创建商品接口"`
+	g.Meta           `path:"/goods/add" tags:"商品后台" method:"post" summary:"创建商品接口"`
 	GoodsId          int    `json:"goods_id"`
 	PicUrl           string `json:"pic_url" form:"pic_url" v:"required#请上传图片" dc:"图片地址"`
 	Name             string `json:"name" form:"name" v:"required#请输入名称" dc:"名称"`
@@ -37,13 +37,13 @@ type GoodsAddRes struct {
 }
 
 type GoodsDeleteReq struct {
-	g.Meta `path:"/goods/delete" method:"delete" tags:"Goods" summary:"删除商品接口"`
+	g.Meta `path:"/goods/delete" method:"delete" tags:"商品后台" summary:"删除商品接口"`
 	Id     int `v:"min:1#请选择需要删除的商品" dc:"商品id"`
 }
 type GoodsDeleteRes struct{}
 
 type GoodsUpdateReq struct {
-	g.Meta           `path:"/goods/update" method:"post" tags:"商品" summary:"修改商品接口"`
+	g.Meta           `path:"/goods/update" method:"post" tags:"商品后台" summary:"修改商品接口"`
 	Id               int    `json:"id" form:"id" v:"required#请输入id" dc:"商品id"`
 	PicUrl           string `json:"pic_url" form:"pic_url" v:"required#请上传图片" dc:"图片地址"`
 	Name             string `json:"name" form:"name" v:"required#请输入名称" dc:"名称"`
@@ -60,7 +60,7 @@ type GoodsUpdateReq struct {
 type GoodsUpdateRes struct{}
 
 type GoodsDetailReq struct {
-	g.Meta `path:"/goods/detail" method:"get" tags:"商品" summary:"商品详情接口"`
+	g.Meta `path:"/goods/detail" method:"get" tags:"商品后台" summary:"商品详情接口"`
 	Id     int `v:"min:1#请选择需要查询的商品" form:"query" dc:"商品id"`
 }
 

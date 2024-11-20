@@ -5,7 +5,7 @@ import (
 )
 
 type PraiseGetListCommonReq struct {
-	g.Meta `path:"/praise/list" tags:"Praise" method:"get" summary:"点赞列表接口"`
+	g.Meta `path:"/praise/list" tags:"点赞前台" method:"get" summary:"点赞列表接口"`
 	CommonPaginationReq
 	Type int `json:"type" form:"type" v:"required#请选择类型" dc:"类型"`
 }
@@ -18,7 +18,7 @@ type PraiseGetListCommonRes struct {
 }
 
 type PraiseAddReq struct {
-	g.Meta   `path:"/praise/add" tags:"Praise" method:"post" summary:"创建点赞接口"`
+	g.Meta   `path:"/praise/add" tags:"点赞前台" method:"post" summary:"创建点赞接口"`
 	Type     int `json:"type" form:"type" v:"required#请选择类型" dc:"类型"`
 	ObjectId int `json:"object_id" form:"object_id" v:"required#请选择对象" dc:"对象ID"`
 }
@@ -28,13 +28,13 @@ type PraiseAddRes struct {
 }
 
 type PraiseDeleteReq struct {
-	g.Meta `path:"/praise/delete" method:"delete" tags:"Praise" summary:"删除点赞接口"`
+	g.Meta `path:"/praise/delete" method:"delete" tags:"点赞前台" summary:"删除点赞接口"`
 	Id     int `v:"min:1#请选择需要删除的点赞" dc:"点赞id"`
 }
 type PraiseDeleteRes struct{}
 
 type PraiseDeleteByTypeReq struct {
-	g.Meta   `path:"/praise/deleteByType" method:"delete" tags:"Praise" summary:"删除点赞接口"`
+	g.Meta   `path:"/praise/deleteByType" method:"delete" tags:"点赞前台" summary:"删除点赞接口"`
 	Type     int `json:"type" form:"type" v:"required#请选择类型" dc:"类型"`
 	ObjectId int `json:"object_id" form:"object_id" v:"required#请选择对象" dc:"对象"`
 }
@@ -42,12 +42,12 @@ type PraiseDeleteByTypeReq struct {
 type PraiseDeleteByTypeRes struct{}
 
 type PraiseUpdateReq struct {
-	g.Meta `path:"/praise/update" method:"post" tags:"点赞" summary:"修改点赞接口"`
+	g.Meta `path:"/praise/update" method:"post" tags:"点赞前台" summary:"修改点赞接口"`
 }
 type PraiseUpdateRes struct{}
 
 type PraiseDetailReq struct {
-	g.Meta `path:"/praise/detail" method:"get" tags:"点赞" summary:"点赞详情接口"`
+	g.Meta `path:"/praise/detail" method:"get" tags:"点赞前台" summary:"点赞详情接口"`
 	Id     int `v:"min:1#请选择需要查询的点赞" form:"query" dc:"点赞id"`
 }
 

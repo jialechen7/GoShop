@@ -5,7 +5,7 @@ import (
 )
 
 type UserRegisterReq struct {
-	g.Meta       `path:"/user/register" tags:"User" method:"post" summary:"用户注册接口"`
+	g.Meta       `path:"/user/register" tags:"用户前台" method:"post" summary:"用户注册接口"`
 	Name         string `json:"name" v:"required#用户名不能为空" dc:"用户名"`
 	Password     string `json:"password" v:"required#密码不能为空" dc:"密码"`
 	Avatar       string `json:"avatar" dc:"头像"`
@@ -19,13 +19,13 @@ type UserRegisterRes struct {
 }
 
 type UserDeleteReq struct {
-	g.Meta `path:"/user/delete" method:"delete" tags:"User" summary:"删除用户接口"`
+	g.Meta `path:"/user/delete" method:"delete" tags:"用户前台" summary:"删除用户接口"`
 	Id     int `v:"min:1#请选择需要删除的用户" dc:"用户id"`
 }
 type UserDeleteRes struct{}
 
 type UserGetInfoReq struct {
-	g.Meta `path:"/user/info" method:"get" tags:"用户" summary:"获取用户信息接口"`
+	g.Meta `path:"/user/info" method:"get" tags:"用户前台" summary:"获取用户信息接口"`
 }
 
 // UserGetInfoRes 用于gtoken
@@ -39,7 +39,7 @@ type UserGetInfoRes struct {
 }
 
 type UserResetPasswordReq struct {
-	g.Meta       `path:"/sso/password/update" method:"post" tags:"用户" summary:"重置密码接口"`
+	g.Meta       `path:"/sso/password/update" method:"post" tags:"用户前台" summary:"重置密码接口"`
 	Password     string `json:"password" v:"required#密码不能为空" dc:"密码"`
 	SecretAnswer string `json:"secret_answer" v:"required#密保问题答案不能为空" dc:"密保问题答案"`
 }

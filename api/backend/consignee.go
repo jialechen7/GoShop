@@ -5,7 +5,7 @@ import (
 )
 
 type ConsigneeGetListCommonReq struct {
-	g.Meta `path:"/consignee/list" tags:"Consignee" method:"get" summary:"收货人列表接口"`
+	g.Meta `path:"/consignee/list" tags:"收货人后台" method:"get" summary:"收货人列表接口"`
 	CommonPaginationReq
 	Name  string `json:"name" query:"name" dc:"收货人姓名"`
 	Phone string `json:"phone" query:"phone" dc:"手机号"`
@@ -19,7 +19,7 @@ type ConsigneeGetListCommonRes struct {
 }
 
 type ConsigneeAddReq struct {
-	g.Meta    `path:"/consignee/add" tags:"Consignee" method:"post" summary:"创建收货人接口"`
+	g.Meta    `path:"/consignee/add" tags:"收货人后台" method:"post" summary:"创建收货人接口"`
 	Name      string `json:"name" form:"name" v:"required#请输入收货人姓名" dc:"收货人姓名"`
 	IsDefault int    `json:"is_default" form:"is_default" v:"required#请选择是否默认" dc:"是否默认"`
 	Phone     string `json:"phone" form:"phone" v:"required#请输入手机号" dc:"手机号"`
@@ -35,13 +35,13 @@ type ConsigneeAddRes struct {
 }
 
 type ConsigneeDeleteReq struct {
-	g.Meta `path:"/consignee/delete" method:"delete" tags:"Consignee" summary:"删除收货人接口"`
+	g.Meta `path:"/consignee/delete" method:"delete" tags:"收货人后台" summary:"删除收货人接口"`
 	Id     int `v:"min:1#请选择需要删除的收货人" dc:"收货人id"`
 }
 type ConsigneeDeleteRes struct{}
 
 type ConsigneeUpdateReq struct {
-	g.Meta    `path:"/consignee/update" method:"post" tags:"收货人" summary:"修改收货人接口"`
+	g.Meta    `path:"/consignee/update" method:"post" tags:"收货人后台" summary:"修改收货人接口"`
 	Id        int    `json:"id" form:"id" v:"required#请输入id" dc:"收货人id"`
 	Name      string `json:"name" form:"name" v:"required#请输入收货人姓名" dc:"收货人姓名"`
 	IsDefault int    `json:"is_default" form:"is_default" v:"required#请选择是否默认" dc:"是否默认"`

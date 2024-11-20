@@ -3,7 +3,7 @@ package frontend
 import "github.com/gogf/gf/v2/frame/g"
 
 type RotationGetListCommonReq struct {
-	g.Meta `path:"/rotation/list" tags:"Rotation" method:"get" summary:"轮播图列表接口"`
+	g.Meta `path:"/rotation/list" tags:"轮播图前台" method:"get" summary:"轮播图列表接口"`
 	Sort   int `json:"sort" in:"query" dc:"排序类型"`
 	CommonPaginationReq
 }

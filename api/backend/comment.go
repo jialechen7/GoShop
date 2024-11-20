@@ -5,7 +5,7 @@ import (
 )
 
 type CommentGetListCommonReq struct {
-	g.Meta `path:"/comment/list" tags:"Comment" method:"get" summary:"评论列表接口"`
+	g.Meta `path:"/comment/list" tags:"评论后台" method:"get" summary:"评论列表接口"`
 	CommonPaginationReq
 }
 
@@ -17,12 +17,12 @@ type CommentGetListCommonRes struct {
 }
 
 type CommentDeleteReq struct {
-	g.Meta `path:"/comment/delete" method:"delete" tags:"Comment" summary:"删除评论接口"`
+	g.Meta `path:"/comment/delete" method:"delete" tags:"评论后台" summary:"删除评论接口"`
 	Id     int `v:"min:1#请选择需要删除的评论" dc:"评论id"`
 }
 type CommentDeleteRes struct{}
 
 type CommentUpdateReq struct {
-	g.Meta `path:"/comment/update" method:"post" tags:"评论" summary:"修改评论接口"`
+	g.Meta `path:"/comment/update" method:"post" tags:"评论后台" summary:"修改评论接口"`
 }
 type CommentUpdateRes struct{}

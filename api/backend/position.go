@@ -5,7 +5,7 @@ import (
 )
 
 type PositionGetListCommonReq struct {
-	g.Meta `path:"/position/list" tags:"Position" method:"get" summary:"手工位列表接口"`
+	g.Meta `path:"/position/list" tags:"手工位后台" method:"get" summary:"手工位列表接口"`
 	Sort   int `json:"sort"   in:"query" dc:"排序类型"`
 	CommonPaginationReq
 }
@@ -17,7 +17,7 @@ type PositionGetListCommonRes struct {
 }
 
 type PositionReq struct {
-	g.Meta    `path:"/position/add" tags:"Position" method:"post" summary:"创建手工位接口"`
+	g.Meta    `path:"/position/add" tags:"手工位后台" method:"post" summary:"创建手工位接口"`
 	PicUrl    string `json:"pic_url" v:"required#图片链接不能为空" dc:"图片链接"`
 	Link      string `json:"link" v:"required#跳转链接不能为空" dc:"跳转链接"`
 	GoodsName string `json:"goods_name" v:"required#商品名称不能为空" dc:"商品名称"` // 冗余设计
@@ -29,13 +29,13 @@ type PositionRes struct {
 }
 
 type PositionDeleteReq struct {
-	g.Meta `path:"/position/delete" method:"delete" tags:"Position" summary:"删除手工位接口"`
+	g.Meta `path:"/position/delete" method:"delete" tags:"手工位后台" summary:"删除手工位接口"`
 	Id     int `v:"min:1#请选择需要删除的手工位" dc:"手工位id"`
 }
 type PositionDeleteRes struct{}
 
 type PositionUpdateReq struct {
-	g.Meta    `path:"/position/update" method:"post" tags:"手工位" summary:"修改手工位接口"`
+	g.Meta    `path:"/position/update" method:"post" tags:"手工位后台" summary:"修改手工位接口"`
 	Id        int    `json:"id"      v:"min:1#请选择需要修改的手工位" dc:"手工位Id"`
 	PicUrl    string `json:"pic_url" v:"required#图片链接不能为空" dc:"图片链接"`
 	Link      string `json:"link" v:"required#跳转链接不能为空" dc:"跳转链接"`
