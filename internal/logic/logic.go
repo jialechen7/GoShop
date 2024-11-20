@@ -28,4 +28,5 @@ import (
 	_ "goshop/internal/logic/rotation"
 	_ "goshop/internal/logic/session"
 	_ "goshop/internal/logic/user"
+	_ "goshop/internal/logic/user_coupon"
 )

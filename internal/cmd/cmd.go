@@ -139,6 +139,10 @@ var (
 						controller.Cart.AddFrontend,                //添加购物车
 						controller.Cart.DeleteFrontend,             //删除购物车
 						controller.Cart.UpdateFrontend,             //更新购物车
+						controller.UserCoupon.List,                 //优惠券列表
+						controller.UserCoupon.Add,                  //添加优惠券
+						controller.UserCoupon.Delete,               //删除优惠券
+						controller.UserCoupon.Update,               //更新优惠券
 					)
 				})
 
