@@ -500,3 +500,25 @@ CREATE TABLE `order_goods_info` (
     `updated_at` datetime DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='订单商品表';
+
+-- ----------------------------
+-- Table structure for coupon_info
+-- ----------------------------
+DROP TABLE IF EXISTS `coupon_info`;
+CREATE TABLE `coupon_info` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+    `price` int NOT NULL DEFAULT '0' COMMENT '优惠前面值 单位分\n',
+    `goods_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '关联使用的goods_ids，逗号分隔',
+    `category_id` int NOT NULL DEFAULT '0' COMMENT '关联使用的分类id',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    `deleted_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='优惠券表\n';
+
+INSERT INTO coupon_info (name, price, goods_ids, category_id, created_at, updated_at)
+VALUES
+    ('满1000减100', 10000, '8,9,10', 1, NOW(), NOW()),
+    ('满2000减200', 20000, '8,9,10', 1, NOW(), NOW()),
+    ('满3000减300', 30000, '8,9,10', 1, NOW(), NOW());

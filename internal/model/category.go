@@ -21,6 +21,12 @@ type CategoryGetListOutput struct {
 	Total int                         `json:"total" description:"数据总数"`
 }
 
+// CategoryGetAllListOutput 查询全部一级分类列表结果
+type CategoryGetAllListOutput struct {
+	List  []CategoryGetListOutputItem `json:"list" description:"列表"`
+	Total int                         `json:"total" description:"数据总数"`
+}
+
 type CategoryGetListOutputItem struct {
 	Id       int    `json:"id"` // 自增ID
 	ParentId int    `json:"parent_id"`

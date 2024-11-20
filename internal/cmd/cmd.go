@@ -54,6 +54,7 @@ var (
 					controller.User.Update,           //更新用户
 					controller.User.Delete,           //删除用户
 					controller.Order.List,            //订单列表
+					controller.Category.ListAll,      //全部一级分类列表
 					controller.Category.List,         //分类列表
 					controller.Category.Add,          //添加分类
 					controller.Category.Delete,       //删除分类
@@ -69,6 +70,10 @@ var (
 					controller.Goods.UpdateBackend,   //更新商品
 					controller.Goods.DeleteBackend,   //删除商品
 					controller.Goods.DetailBackend,   //商品详情
+					controller.Coupon.List,           //优惠券列表
+					controller.Coupon.Add,            //添加优惠券
+					controller.Coupon.Delete,         //删除优惠券
+					controller.Coupon.Update,         //更新优惠券
 					//controller.Login,        //登录（使用gtoken时不需要绑定，在gtoken中绑定）
 				)
 

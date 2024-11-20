@@ -13,6 +13,7 @@ import (
 	_ "goshop/internal/logic/collection"
 	_ "goshop/internal/logic/comment"
 	_ "goshop/internal/logic/consignee"
+	_ "goshop/internal/logic/coupon"
 	_ "goshop/internal/logic/dashboard"
 	_ "goshop/internal/logic/file"
 	_ "goshop/internal/logic/goods"

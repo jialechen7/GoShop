@@ -33,6 +33,9 @@ const (
 	PraiseArticleType        = 2 // 点赞查询文章类型
 	CollectionGoodsType      = 1 // 收藏商品类型
 	CollectionArticleType    = 2 // 收藏文章类型
+	CategoryLevel1           = 1 // 一级分类
+	CategoryLevel2           = 2 // 二级分类
+	CategoryLevel3           = 3 // 二级分类
 	ConsigneeNotDefault      = 0
 	ConsigneeDefault         = 1                // 默认收货人
 	CacheModeRedis           = 2                // 缓存模式：2-Redis

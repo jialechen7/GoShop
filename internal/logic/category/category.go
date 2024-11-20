@@ -2,6 +2,7 @@ package category
 
 import (
 	"context"
+	"goshop/internal/consts"
 	"goshop/internal/model/entity"
 	"goshop/internal/service"
 
@@ -53,6 +54,21 @@ func (s *sCategory) GetList(ctx context.Context, in model.CategoryGetListInput) 
 		return out, err
 	}
 	return
+}
+
+// GetAll 获取全部分类
+func (s *sCategory) GetAll(ctx context.Context) (out *model.CategoryGetAllListOutput, err error) {
+	res, err := dao.CategoryInfo.Ctx(ctx).All(dao.CategoryInfo.Columns().Level, consts.CategoryLevel1)
+	if err != nil {
+		return nil, err
+	}
+	out = &model.CategoryGetAllListOutput{}
+	out.Total = len(res)
+	if err := res.Structs(&out.List); err != nil {
+		return nil, err
+	}
+
+	return out, nil
 }
 
 // GetListFrontend 查询分类列表

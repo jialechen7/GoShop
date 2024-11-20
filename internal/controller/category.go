@@ -48,6 +48,18 @@ func (c *cCategory) ListWithParentId(ctx context.Context, req *frontend.Category
 	}, nil
 }
 
+// ListAll 获取全部一级分类
+func (c *cCategory) ListAll(ctx context.Context, req *backend.CategoryGetAllListCommonReq) (res *backend.CategoryGetAllListCommonRes, err error) {
+	getAllRes, err := service.Category().GetAll(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &backend.CategoryGetAllListCommonRes{
+		List:  getAllRes.List,
+		Total: getAllRes.Total,
+	}, nil
+}
+
 func (c *cCategory) Add(ctx context.Context, req *backend.CategoryAddReq) (res *backend.CategoryAddRes, err error) {
 	out, err := service.Category().Add(ctx, model.CategoryAddInput{
 		CategoryCreateUpdateBase: model.CategoryCreateUpdateBase{

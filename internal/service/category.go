@@ -14,6 +14,8 @@ type (
 	ICategory interface {
 		// GetList 查询分类列表（管理员查询全部）
 		GetList(ctx context.Context, in model.CategoryGetListInput) (out *model.CategoryGetListOutput, err error)
+		// GetAll 获取全部分类
+		GetAll(ctx context.Context) (out *model.CategoryGetAllListOutput, err error)
 		// GetListFrontend 查询分类列表
 		GetListFrontend(ctx context.Context, in model.CategoryGetListWithParentIdInput) (out *model.CategoryGetListOutput, err error)
 		// Add 添加分类

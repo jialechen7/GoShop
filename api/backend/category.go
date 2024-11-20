@@ -8,10 +8,20 @@ type CategoryGetListCommonReq struct {
 	g.Meta `path:"/category/level/list" tags:"分类后台" method:"get" summary:"分类列表接口"`
 	CommonPaginationReq
 }
+
+type CategoryGetAllListCommonReq struct {
+	g.Meta `path:"/category/list/all" tags:"分类后台" method:"get" summary:"全部一级分类列表接口"`
+}
+
 type CategoryGetListCommonRes struct {
 	List  interface{} `json:"list" description:"列表"`
 	Page  int         `json:"page" description:"分页码"`
 	Size  int         `json:"size" description:"分页数量"`
+	Total int         `json:"total" description:"数据总数"`
+}
+
+type CategoryGetAllListCommonRes struct {
+	List  interface{} `json:"list" description:"列表"`
 	Total int         `json:"total" description:"数据总数"`
 }
 
