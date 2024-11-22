@@ -26,6 +26,8 @@ const (
 	ErrUserNotExist          = "用户不存在"
 	ErrPassword              = "密码错误"
 	ErrStockNotEnough        = "库存不足"
+	ErrCaptcha               = "验证码错误"
+	ErrParams                = "参数错误"
 	MinPasswordLength        = 6 // 密码最小长度
 	ArticlePublisherAdmin    = 1 // 后台管理员发布文章
 	ArticlePublisherFrontend = 2 // 前台用户发布文章
@@ -41,4 +43,7 @@ const (
 	CacheModeRedis           = 2                // 缓存模式：2-Redis
 	MultiLogin               = true             // 是否支持多点登录
 	GtokenExpireIn           = 7 * 24 * 60 * 60 // gtoken过期时间(单位:秒)
+	CaptachaLength           = 6                // 验证码长度
+	CaptachaPrefix           = "captcha:"       // 验证码前缀
+	CaptachaExpire           = 60 * 5           // 验证码过期时间(单位:秒)
 )

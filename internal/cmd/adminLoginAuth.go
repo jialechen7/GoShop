@@ -39,10 +39,22 @@ func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
 func loginBeforeFunc(r *ghttp.Request) (string, interface{}) {
 	name := r.Get("name").String()
 	password := r.Get("password").String()
+	captchaId := r.Get("captcha_id").String()
+	captchaCode := r.Get("captcha_code").String()
+	if name == "" || password == "" || captchaId == "" || captchaCode == "" {
+		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrParams, nil)
+	}
 	ctx := context.TODO()
+	gvar, err := g.Redis().Do(ctx, "GET", consts.CaptachaPrefix+captchaId)
+	if err != nil {
+		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrCaptcha, nil)
+	}
+	if gvar == nil || gconv.String(gvar) != captchaCode {
+		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrCaptcha, nil)
+	}
 
 	adminInfo := entity.AdminInfo{}
-	err := dao.AdminInfo.Ctx(ctx).Where(dao.AdminInfo.Columns().Name, name).Scan(&adminInfo)
+	err = dao.AdminInfo.Ctx(ctx).Where(dao.AdminInfo.Columns().Name, name).Scan(&adminInfo)
 	if err != nil {
 		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrUserNotExist, nil)
 	}

@@ -33,6 +33,9 @@ var (
 					service.Middleware().Ctx,
 					service.Middleware().ResponseHandler,
 				)
+				group.Bind(
+					controller.Captacha.Get, // 获取验证码
+				)
 				// gtoken 中间件绑定
 				err := gfAdminToken.Middleware(ctx, group)
 				if err != nil {

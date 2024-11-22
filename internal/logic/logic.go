@@ -8,6 +8,7 @@ import (
 	_ "goshop/internal/logic/admin"
 	_ "goshop/internal/logic/article"
 	_ "goshop/internal/logic/bizctx"
+	_ "goshop/internal/logic/captcha"
 	_ "goshop/internal/logic/cart"
 	_ "goshop/internal/logic/category"
 	_ "goshop/internal/logic/collection"

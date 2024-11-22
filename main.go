@@ -4,6 +4,7 @@ import (
 	"goshop/internal/cmd"
 	_ "goshop/internal/logic"
 	_ "goshop/internal/packed"
+	_ "goshop/utility/captcha"
 
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	_ "github.com/gogf/gf/contrib/nosql/redis/v2"

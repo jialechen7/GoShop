@@ -3,7 +3,7 @@
 -- ----------------------------
 INSERT INTO `admin_info` (`name`, `password`, `role_ids`, `user_salt`, `is_admin`, `created_at`, `updated_at`) VALUES
 ('jialechen', 'b23239a15dbae17bc78cc83cd3c1d071', '1,2', 'wUUjkJqFiM', 1, NOW(), NOW()),
-('admin', 'b23239a15dbae17bc78cc83cd3c1d071', '1,2', 'wUUjkJqFiM', 1, NOW(), NOW());
+('admin', '3e7665414906ba5c30d993dc12cec9ed', '1,2', 'CQggcu45qq', 1, NOW(), NOW());
 
 -- ----------------------------
 -- data of position_info
