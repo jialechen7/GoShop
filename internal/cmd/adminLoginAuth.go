@@ -17,8 +17,10 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
+var GfAdminToken *gtoken.GfToken
+
 func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
-	gfAdminToken = &gtoken.GfToken{
+	GfAdminToken = &gtoken.GfToken{
 		ServerName: "goshop-backend",
 		//Timeout:         10 * 1000,
 		CacheMode:        consts.CacheModeRedis,
@@ -31,8 +33,8 @@ func StartBackendGToken() (gfAdminToken *gtoken.GfToken, err error) {
 		AuthAfterFunc:    authAfterFunc,
 		MultiLogin:       consts.MultiLogin,
 	}
-	err = gfAdminToken.Start()
-	return
+	err = GfAdminToken.Start()
+	return GfAdminToken, err
 }
 
 // loginBeforeFunc 自定义登录验证
@@ -45,7 +47,7 @@ func loginBeforeFunc(r *ghttp.Request) (string, interface{}) {
 		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrParams, nil)
 	}
 	ctx := context.TODO()
-	gvar, err := g.Redis().Do(ctx, "GET", consts.CaptachaPrefix+captchaId)
+	gvar, err := g.Redis().Do(ctx, "GET", consts.CaptchaPrefix+captchaId)
 	if err != nil {
 		response.JsonExit(r, consts.UserNameOrPasswordError, consts.ErrCaptcha, nil)
 	}

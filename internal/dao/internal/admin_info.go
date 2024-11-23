@@ -20,28 +20,30 @@ type AdminInfoDao struct {
 
 // AdminInfoColumns defines and stores column names for table admin_info.
 type AdminInfoColumns struct {
-	Id        string //
-	Name      string // 用户名
-	Password  string // 密码
-	RoleIds   string // 角色ids
-	UserSalt  string // 加密盐
-	IsAdmin   string // 是否超级管理员
-	CreatedAt string //
-	UpdatedAt string //
-	DeletedAt string //
+	Id           string //
+	Name         string // 用户名
+	Password     string // 密码
+	RoleIds      string // 角色ids
+	UserSalt     string // 加密盐
+	IsAdmin      string // 是否超级管理员
+	GithubOpenid string // github openid
+	CreatedAt    string //
+	UpdatedAt    string //
+	DeletedAt    string //
 }
 
 // adminInfoColumns holds the columns for table admin_info.
 var adminInfoColumns = AdminInfoColumns{
-	Id:        "id",
-	Name:      "name",
-	Password:  "password",
-	RoleIds:   "role_ids",
-	UserSalt:  "user_salt",
-	IsAdmin:   "is_admin",
-	CreatedAt: "created_at",
-	UpdatedAt: "updated_at",
-	DeletedAt: "deleted_at",
+	Id:           "id",
+	Name:         "name",
+	Password:     "password",
+	RoleIds:      "role_ids",
+	UserSalt:     "user_salt",
+	IsAdmin:      "is_admin",
+	GithubOpenid: "github_openid",
+	CreatedAt:    "created_at",
+	UpdatedAt:    "updated_at",
+	DeletedAt:    "deleted_at",
 }
 
 // NewAdminInfoDao creates and returns a new DAO object for table data access.

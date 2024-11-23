@@ -21,6 +21,7 @@ import (
 	_ "goshop/internal/logic/goods_options"
 	_ "goshop/internal/logic/login"
 	_ "goshop/internal/logic/middleware"
+	_ "goshop/internal/logic/oauth"
 	_ "goshop/internal/logic/order"
 	_ "goshop/internal/logic/permission"
 	_ "goshop/internal/logic/position"

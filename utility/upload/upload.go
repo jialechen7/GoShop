@@ -18,7 +18,7 @@ import (
 
 // UploadImgToCloud 上传图片到七牛云工具方法
 func UploadImgToCloud(ctx context.Context, file *ghttp.UploadFile) (url string, err error) {
-	dirPath := g.Cfg().MustGet(ctx, "qiniu.tempDir").String()
+	dirPath := g.Cfg().MustGet(ctx, "qiniu.temp_dir").String()
 	fileName, err := file.Save(dirPath, true)
 	if err != nil {
 		return "", err

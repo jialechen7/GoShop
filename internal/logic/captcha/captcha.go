@@ -24,14 +24,14 @@ func New() *sCaptcha {
 
 func (s *sCaptcha) GetCaptcha(ctx context.Context) (captchaId string, image []byte, err error) {
 	captchaId = uuid.NewString()
-	captachaImage, captachaCode := captcha.CreateCaptcha(consts.CaptachaLength)
-	g.Dump(captachaCode)
-	_, err = g.Redis().Do(ctx, "SET", consts.CaptachaPrefix+captchaId, captachaCode, "EX", consts.CaptachaExpire)
+	captchaImage, captchaCode := captcha.CreateCaptcha(consts.CaptchaLength)
+	g.Dump(captchaId, captchaCode)
+	_, err = g.Redis().Do(ctx, "SET", consts.CaptchaPrefix+captchaId, captchaCode, "EX", consts.CaptchaExpire)
 	if err != nil {
 		return "", nil, err
 	}
 	emptyBuffer := bytes.NewBuffer(nil)
-	err = png.Encode(emptyBuffer, captachaImage)
+	err = png.Encode(emptyBuffer, captchaImage)
 	if err != nil {
 		return "", nil, err
 	}

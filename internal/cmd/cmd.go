@@ -33,8 +33,11 @@ var (
 					service.Middleware().Ctx,
 					service.Middleware().ResponseHandler,
 				)
+
+				group.GET("/oauth/github/receive_code", controller.Oauth.GithubReceiveCode)
 				group.Bind(
-					controller.Captacha.Get, // 获取验证码
+					controller.Captcha.Get,       // 获取验证码
+					controller.Oauth.GithubLogin, // github登录
 				)
 				// gtoken 中间件绑定
 				err := gfAdminToken.Middleware(ctx, group)

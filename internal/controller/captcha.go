@@ -7,17 +7,17 @@ import (
 	"goshop/internal/service"
 )
 
-var Captacha = cCaptacha{}
+var Captcha = cCaptcha{}
 
-type cCaptacha struct{}
+type cCaptcha struct{}
 
-func (c *cCaptacha) Get(ctx context.Context, req *backend.GetCaptchaReq) (res *backend.GetCaptchaRes, err error) {
-	captachaId, image, err := service.Captcha().GetCaptcha(ctx)
+func (c *cCaptcha) Get(ctx context.Context, req *backend.GetCaptchaReq) (res *backend.GetCaptchaRes, err error) {
+	captchaId, image, err := service.Captcha().GetCaptcha(ctx)
 	if err != nil {
 		return nil, err
 	}
 	return &backend.GetCaptchaRes{
-		CaptchaId: captachaId,
+		CaptchaId: captchaId,
 		Image:     "data:image/png;base64," + base64.StdEncoding.EncodeToString(image),
 	}, nil
 }
