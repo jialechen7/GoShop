@@ -14,11 +14,16 @@ type UserCouponGetListOutput struct {
 	Total int                           `json:"total" description:"数据总数"`
 }
 
+type UserCouponGetListAllOutput struct {
+	List []UserCouponGetListOutputItem `json:"list" description:"列表"`
+}
+
 type UserCouponGetListOutputItem struct {
-	Id       int `json:"id"`
-	UserId   int `json:"user_id"`
-	CouponId int `json:"coupon_id"`
-	Status   int `json:"status"`
+	Id         int         `json:"id"`
+	UserId     int         `json:"user_id"`
+	CouponId   int         `json:"coupon_id"`
+	Status     int         `json:"status"`
+	CouponInfo *CouponInfo `json:"coupon_info" orm:"with:id=coupon_id"`
 	TimeCommon
 }
 

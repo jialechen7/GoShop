@@ -74,7 +74,7 @@ func (c *cCoupon) Update(ctx context.Context, req *backend.CouponUpdateReq) (res
 
 // ListFrontend 查询优惠券列表
 func (c *cCoupon) ListFrontend(ctx context.Context, req *frontend.CouponGetListCommonReq) (res *frontend.CouponGetListCommonRes, err error) {
-	getListRes, err := service.Coupon().GetListFrontend(ctx, model.CouponGetListAvailableInput{
+	getListRes, err := service.Coupon().GetListFrontend(ctx, model.CouponGetListWithGoodsIdInput{
 		GoodsId: req.GoodsId,
 	})
 	if err != nil {
@@ -82,5 +82,18 @@ func (c *cCoupon) ListFrontend(ctx context.Context, req *frontend.CouponGetListC
 	}
 	return &frontend.CouponGetListCommonRes{
 		List: getListRes.List,
+	}, nil
+}
+
+func (c *cCoupon) ListAvailableFrontend(ctx context.Context, req *frontend.CouponGetListAvailableReq) (res *frontend.CouponGetListAvailableRes, err error) {
+	getListRes, err := service.Coupon().GetListAvailable(ctx, model.CouponGetListAvailableInput{
+		OrderGoodsInfos: req.OrderGoodsInfos,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &frontend.CouponGetListAvailableRes{
+		AvailableList:   getListRes.AvailableList,
+		UnavailableList: getListRes.UnavailableList,
 	}, nil
 }

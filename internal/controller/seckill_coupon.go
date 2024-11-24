@@ -6,8 +6,6 @@ import (
 	"goshop/api/frontend"
 	"goshop/internal/model"
 	"goshop/internal/service"
-
-	"github.com/gogf/gf/v2/frame/g"
 )
 
 // SeckillCoupon 秒杀优惠券管理
@@ -33,7 +31,6 @@ func (c *cSeckillCoupon) List(ctx context.Context, req *backend.SeckillCouponGet
 }
 
 func (c *cSeckillCoupon) Add(ctx context.Context, req *backend.SeckillCouponAddReq) (res *backend.SeckillCouponAddRes, err error) {
-	g.Dump(req)
 	out, err := service.SeckillCoupon().Add(ctx, model.SeckillCouponAddInput{
 		Name:       req.Name,
 		Condition:  req.Condition,

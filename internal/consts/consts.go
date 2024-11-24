@@ -60,4 +60,6 @@ const (
 	CouponStatusAvailable    = 1              // 优惠券状态：1-可用
 	CouponStatusUsed         = 2              // 优惠券状态：2-已使用
 	CouponStatusExpired      = 3              // 优惠券状态：3-已过期
+	CouponStatusUsedText     = "已使用"          // 优惠券状态文本：已使用
+	CouponStatusExpiredText  = "已过期"          // 优惠券状态文本：已过期
 )

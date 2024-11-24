@@ -155,6 +155,7 @@ var (
 						controller.UserCoupon.Update,               //更新优惠券
 						controller.SeckillCoupon.Kill,              //用户秒杀优惠券
 						controller.Coupon.ListFrontend,             //优惠券列表
+						controller.Coupon.ListAvailableFrontend,    //可用优惠券列表
 					)
 				})
 

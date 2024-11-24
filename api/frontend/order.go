@@ -22,6 +22,9 @@ type OrderAddReq struct {
 	Remark           string               `json:"remark"`
 	Status           int                  `json:"status" v:"required#请选择订单状态"`
 	Price            int                  `json:"price" v:"required#请输入订单价格"`
+	CouponPrice      int                  `json:"coupon_price" v:"required#请输入优惠价格"`
+	ActualPrice      int                  `json:"actual_price" v:"required#请输入实际价格"`
+	CouponId         int                  `json:"coupon_id"`
 	ConsigneeName    string               `json:"consignee_name" v:"required#请输入收货人姓名"`
 	ConsigneePhone   string               `json:"consignee_phone" v:"required#请输入收货人电话"`
 	ConsigneeAddress string               `json:"consignee_address" v:"required#请输入收货人地址"`

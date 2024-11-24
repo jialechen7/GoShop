@@ -11,7 +11,7 @@ import (
 // OrderGoodsInfo is the golang structure for table order_goods_info.
 type OrderGoodsInfo struct {
 	Id             int         `json:"id"             orm:"id"               description:"商品维度的订单表"`
-	OrderId        int         `json:"orderId"        orm:"order_id"         description:"关联的主订单表"`
+	OrderId        int64       `json:"orderId"        orm:"order_id"         description:"关联的主订单表"`
 	GoodsId        int         `json:"goodsId"        orm:"goods_id"         description:"商品id"`
 	GoodsOptionsId int         `json:"goodsOptionsId" orm:"goods_options_id" description:"商品规格id(sku id)"`
 	Count          int         `json:"count"          orm:"count"            description:"商品数量"`

@@ -183,8 +183,9 @@ VALUES
     (2, 'https://img12.360buyimg.com/n1/jfs/t1/160186/19/47269/98348/66c7e925F87921646/c7209966aa477011.jpg.avif', '大号餐桌', 899, 100, NOW(), NOW()),
     (6, 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 'iPhone 14Pro 256GB', 899900, 100, NOW(), NOW()),
     (6, 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 'iPhone 14Pro 512GB', 1099900, 100, NOW(), NOW()),
-    (6, 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 'iPhone 14Pro 1TB', 1299900, 100, NOW(), NOW());
-
+    (6, 'https://img12.360buyimg.com/n7/jfs/t1/66219/21/25962/142412/66a4e56eF026a1b3f/0fafaee7a5def073.jpg.avif', 'iPhone 14Pro 1TB', 1299900, 100, NOW(), NOW()),
+    (8, 'https://img12.360buyimg.com/n7/jfs/t1/224360/34/24095/23440/6726f94bFc20591e4/d25e4eafc3d38089.png.avif', 'MacBook Pro 16 512GB', 1799900, 50, NOW(), NOW()),
+    (8, 'https://img12.360buyimg.com/n7/jfs/t1/224360/34/24095/23440/6726f94bFc20591e4/d25e4eafc3d38089.png.avif', 'MacBook Pro 16 1TB', 1999900, 50, NOW(), NOW());
 -- ----------------------------
 -- data of coupon_info
 -- ----------------------------

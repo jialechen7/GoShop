@@ -54,6 +54,7 @@ type OrderAddInput struct {
 	Price              int
 	CouponPrice        int
 	ActualPrice        int
+	CouponId           int
 	OrderAddGoodsInfos []*OrderAddGoodsInfo
 }
 

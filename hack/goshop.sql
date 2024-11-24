@@ -327,7 +327,7 @@ CREATE TABLE `collection_info` (
 DROP TABLE IF EXISTS `order_goods_info`;
 CREATE TABLE `order_goods_info` (
     `id` int NOT NULL AUTO_INCREMENT COMMENT '商品维度的订单表',
-    `order_id` int NOT NULL DEFAULT '0' COMMENT '关联的主订单表',
+    `order_id` bigint NOT NULL DEFAULT '0' COMMENT '关联的主订单表',
     `goods_id` int NOT NULL DEFAULT '0' COMMENT '商品id',
     `goods_options_id` int DEFAULT '0' COMMENT '商品规格id(sku id)',
     `count` int NOT NULL COMMENT '商品数量',

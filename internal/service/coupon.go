@@ -15,7 +15,9 @@ type (
 		// GetListBackend 查询优惠券列表
 		GetListBackend(ctx context.Context, in model.CouponGetListInput) (out *model.CouponGetListOutput, err error)
 		// GetListFrontend 查询可抢优惠券列表
-		GetListFrontend(ctx context.Context, in model.CouponGetListAvailableInput) (out *model.CouponGetListAvailableOutput, err error)
+		GetListFrontend(ctx context.Context, in model.CouponGetListWithGoodsIdInput) (out *model.CouponGetListWithGoodsIdOutput, err error)
+		// GetListAvailable 获取可用优惠券列表
+		GetListAvailable(ctx context.Context, in model.CouponGetListAvailableInput) (out *model.CouponGetListAvailableOutput, err error)
 		// Add 添加优惠券
 		Add(ctx context.Context, in model.CouponAddInput) (out *model.CouponAddOutput, err error)
 		// Delete 删除优惠券

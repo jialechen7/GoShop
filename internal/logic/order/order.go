@@ -103,14 +103,14 @@ func (s *sOrder) GetListFrontend(ctx context.Context, in model.OrderGetListWithS
 
 // AddFrontend 添加订单
 func (s *sOrder) AddFrontend(ctx context.Context, in model.OrderAddInput) (out *model.OrderAddOutput, err error) {
-	var orderId int
 	in.Id = id_generator.NextId(consts.OrderIdKey)
 	in.Number = utility.GetOrderNum()
 	in.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	in.PayAt = gtime.Now()
+	orderId := in.Id
 	err = dao.OrderInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 1. 插入订单信息
-		orderId, err := dao.OrderInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
+		_, err := dao.OrderInfo.Ctx(ctx).OmitEmpty().Data(in).Insert()
 		if err != nil {
 			return err
 		}
@@ -143,6 +143,19 @@ func (s *sOrder) AddFrontend(ctx context.Context, in model.OrderAddInput) (out *
 				return err
 			}
 			_, err = dao.GoodsOptionsInfo.Ctx(ctx).WherePri(goodsInfo.GoodsOptionsId).Decrement(dao.GoodsOptionsInfo.Columns().Stock, goodsInfo.Count)
+			if err != nil {
+				return err
+			}
+		}
+
+		// 4. 更新优惠券状态
+		if in.CouponId != 0 {
+			_, err = dao.UserCouponInfo.Ctx(ctx).Where(g.Map{
+				dao.UserCouponInfo.Columns().UserId:   in.UserId,
+				dao.UserCouponInfo.Columns().CouponId: in.CouponId,
+			}).Data(g.Map{
+				dao.UserCouponInfo.Columns().Status: consts.CouponStatusUsed,
+			}).Update()
 			if err != nil {
 				return err
 			}
