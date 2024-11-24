@@ -1,6 +1,7 @@
 package utility
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"math/rand"
@@ -8,9 +9,12 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/google/uuid"
 
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/database/gdb"
@@ -296,6 +300,21 @@ func GetOrderNum() (number string) {
 	rand.Seed(time.Now().UnixNano())
 	number = gconv.String(time.Now().UnixNano()) + gconv.String(rand.Intn(1000))
 	return
+}
+
+// GetGoroutineID 获取当前goroutine id
+func GetGoroutineID() int64 {
+	buf := make([]byte, 64)
+	n := runtime.Stack(buf, false)
+	idField := bytes.Fields(buf[:n])[1]
+	id, _ := strconv.ParseInt(string(idField), 10, 64)
+	return id
+}
+
+// GenerateUUIDWithoutDash 生成不带横杠的UUID
+func GenerateUUIDWithoutDash() string {
+	u := uuid.New()                                // Generate a new UUID
+	return strings.ReplaceAll(u.String(), "-", "") // Remove all dashes
 }
 
 //获取今天的开始时间 0点

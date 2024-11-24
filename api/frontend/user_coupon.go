@@ -17,7 +17,7 @@ type UserCouponGetListCommonRes struct {
 
 type UserCouponAddUpdateCommon struct {
 	CouponId int `json:"coupon_id" form:"coupon_id" v:"required#请选择优惠券" dc:"优惠券id"`
-	Status   int `json:"status" form:"status" v:"required#请选择状态" dc:"状态"`
+	Status   int `json:"status" d:"1" form:"status" v:"required#请选择状态" dc:"状态"`
 }
 
 type UserCouponAddReq struct {

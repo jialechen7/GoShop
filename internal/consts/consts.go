@@ -28,6 +28,11 @@ const (
 	ErrStockNotEnough        = "库存不足"
 	ErrCaptcha               = "验证码错误"
 	ErrParams                = "参数错误"
+	ErrStock                 = "库存不足"
+	ErrSeckillNotStart       = "秒杀活动未开始"
+	ErrSeckillEnd            = "秒杀活动已结束"
+	ErrDecreaseStock         = "扣减库存失败"
+	ErrHasSeckill            = "请勿重复领取"
 	MinPasswordLength        = 6 // 密码最小长度
 	ArticlePublisherAdmin    = 1 // 后台管理员发布文章
 	ArticlePublisherFrontend = 2 // 前台用户发布文章
@@ -48,4 +53,11 @@ const (
 	CaptchaLength            = 6                // 验证码长度
 	CaptchaPrefix            = "captcha:"       // 验证码前缀
 	CaptchaExpire            = 60 * 5           // 验证码过期时间(单位:秒)
+	OrderIdKey               = "order_id"
+	UserCouponIdKey          = "user_coupon:" // 用户优惠券key
+	CouponTypeCommon         = 0              // 优惠券类型：0-普通优惠券
+	CouponTypeSeckill        = 1              // 优惠券类型：1-秒杀优惠券
+	CouponStatusAvailable    = 1              // 优惠券状态：1-可用
+	CouponStatusUsed         = 2              // 优惠券状态：2-已使用
+	CouponStatusExpired      = 3              // 优惠券状态：3-已过期
 )

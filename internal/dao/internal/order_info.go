@@ -20,7 +20,7 @@ type OrderInfoDao struct {
 
 // OrderInfoColumns defines and stores column names for table order_info.
 type OrderInfoColumns struct {
-	Id               string //
+	Id               string // 订单id，使用基于Redis自增的全局唯一id
 	Number           string // 订单编号
 	UserId           string // 用户id
 	PayType          string // 支付方式 1微信 2支付宝 3云闪付

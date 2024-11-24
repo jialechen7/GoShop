@@ -12,7 +12,7 @@ import (
 // OrderInfo is the golang structure of table order_info for DAO operations like Where/Data.
 type OrderInfo struct {
 	g.Meta           `orm:"table:order_info, do:true"`
-	Id               interface{} //
+	Id               interface{} // 订单id，使用基于Redis自增的全局唯一id
 	Number           interface{} // 订单编号
 	UserId           interface{} // 用户id
 	PayType          interface{} // 支付方式 1微信 2支付宝 3云闪付

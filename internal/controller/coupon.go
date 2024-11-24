@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"goshop/api/backend"
+	"goshop/api/frontend"
 	"goshop/internal/model"
 	"goshop/internal/service"
 )
@@ -12,9 +13,9 @@ var Coupon = cCoupon{}
 
 type cCoupon struct{}
 
-// List 查询优惠券列表
-func (c *cCoupon) List(ctx context.Context, req *backend.CouponGetListCommonReq) (res *backend.CouponGetListCommonRes, err error) {
-	getListRes, err := service.Coupon().GetList(ctx, model.CouponGetListInput{
+// ListBackend 查询优惠券列表
+func (c *cCoupon) ListBackend(ctx context.Context, req *backend.CouponGetListCommonReq) (res *backend.CouponGetListCommonRes, err error) {
+	getListRes, err := service.Coupon().GetListBackend(ctx, model.CouponGetListInput{
 		Page: req.Page,
 		Size: req.Size,
 	})
@@ -33,6 +34,7 @@ func (c *cCoupon) Add(ctx context.Context, req *backend.CouponAddReq) (res *back
 	out, err := service.Coupon().Add(ctx, model.CouponAddInput{
 		CouponCreateUpdateBase: model.CouponCreateUpdateBase{
 			Name:       req.Name,
+			Condition:  req.Condition,
 			Price:      req.Price,
 			GoodsIds:   req.GoodsIds,
 			CategoryId: req.CategoryId,
@@ -68,4 +70,17 @@ func (c *cCoupon) Update(ctx context.Context, req *backend.CouponUpdateReq) (res
 		return nil, err
 	}
 	return &backend.CouponUpdateRes{}, nil
+}
+
+// ListFrontend 查询优惠券列表
+func (c *cCoupon) ListFrontend(ctx context.Context, req *frontend.CouponGetListCommonReq) (res *frontend.CouponGetListCommonRes, err error) {
+	getListRes, err := service.Coupon().GetListFrontend(ctx, model.CouponGetListAvailableInput{
+		GoodsId: req.GoodsId,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &frontend.CouponGetListCommonRes{
+		List: getListRes.List,
+	}, nil
 }

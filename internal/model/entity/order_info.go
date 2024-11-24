@@ -10,7 +10,7 @@ import (
 
 // OrderInfo is the golang structure for table order_info.
 type OrderInfo struct {
-	Id               int         `json:"id"               orm:"id"                description:""`
+	Id               int64       `json:"id"               orm:"id"                description:"订单id，使用基于Redis自增的全局唯一id"`
 	Number           string      `json:"number"           orm:"number"            description:"订单编号"`
 	UserId           int         `json:"userId"           orm:"user_id"           description:"用户id"`
 	PayType          int         `json:"payType"          orm:"pay_type"          description:"支付方式 1微信 2支付宝 3云闪付"`

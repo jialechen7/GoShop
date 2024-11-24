@@ -24,7 +24,7 @@ type OrderGetListOutput struct {
 }
 
 type OrderGetListOutputItem struct {
-	Id               int         `json:"id"` // 自增ID
+	Id               int         `json:"id"`
 	Number           string      `json:"number"`
 	UserId           int         `json:"userId"`
 	PayType          int         `json:"pay_type"`
@@ -41,6 +41,7 @@ type OrderGetListOutputItem struct {
 }
 
 type OrderAddInput struct {
+	Id                 int64
 	Number             string
 	UserId             int
 	PayType            int

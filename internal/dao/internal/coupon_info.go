@@ -20,11 +20,13 @@ type CouponInfoDao struct {
 
 // CouponInfoColumns defines and stores column names for table coupon_info.
 type CouponInfoColumns struct {
-	Id         string //
+	Id         string // 优惠券id
 	Name       string //
+	Condition  string // 满减条件 单位分
 	Price      string // 优惠前面值 单位分
-	GoodsIds   string // 关联使用的goods_ids，逗号分隔
-	CategoryId string // 关联使用的分类id
+	GoodsIds   string // 可使用的goods_ids，逗号分隔
+	CategoryId string // 可使用的分类id
+	Type       string // 优惠券类型：0：普通券 1：秒杀券
 	CreatedAt  string //
 	UpdatedAt  string //
 	DeletedAt  string //
@@ -34,9 +36,11 @@ type CouponInfoColumns struct {
 var couponInfoColumns = CouponInfoColumns{
 	Id:         "id",
 	Name:       "name",
+	Condition:  "condition",
 	Price:      "price",
 	GoodsIds:   "goods_ids",
 	CategoryId: "category_id",
+	Type:       "type",
 	CreatedAt:  "created_at",
 	UpdatedAt:  "updated_at",
 	DeletedAt:  "deleted_at",

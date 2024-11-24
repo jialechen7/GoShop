@@ -76,10 +76,14 @@ var (
 					controller.Goods.UpdateBackend,   //更新商品
 					controller.Goods.DeleteBackend,   //删除商品
 					controller.Goods.DetailBackend,   //商品详情
-					controller.Coupon.List,           //优惠券列表
+					controller.Coupon.ListBackend,    //优惠券列表
 					controller.Coupon.Add,            //添加优惠券
 					controller.Coupon.Delete,         //删除优惠券
 					controller.Coupon.Update,         //更新优惠券
+					controller.SeckillCoupon.List,    //秒杀优惠券列表
+					controller.SeckillCoupon.Add,     //添加秒杀优惠券
+					controller.SeckillCoupon.Delete,  //删除秒杀优惠券
+					controller.SeckillCoupon.Update,  //更新秒杀优惠券
 					//controller.Login,        //登录（使用gtoken时不需要绑定，在gtoken中绑定）
 				)
 
@@ -149,6 +153,8 @@ var (
 						controller.UserCoupon.Add,                  //添加优惠券
 						controller.UserCoupon.Delete,               //删除优惠券
 						controller.UserCoupon.Update,               //更新优惠券
+						controller.SeckillCoupon.Kill,              //用户秒杀优惠券
+						controller.Coupon.ListFrontend,             //优惠券列表
 					)
 				})
 

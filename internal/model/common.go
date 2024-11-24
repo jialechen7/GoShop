@@ -52,3 +52,27 @@ type GoodsOptionsInfo struct {
 	CreatedAt  *gtime.Time `json:"created_at"`
 	UpdatedAt  *gtime.Time `json:"updated_at"`
 }
+
+type CouponInfo struct {
+	gmeta.Meta `orm:"table:coupon_info"`
+	Id         int         `json:"id"`
+	Name       string      `json:"name"`
+	Condition  int         `json:"condition"`
+	Price      int         `json:"price"`
+	GoodsIds   string      `json:"goods_ids"`
+	CategoryId int         `json:"category_id"`
+	Type       int         `json:"type"`
+	CreatedAt  *gtime.Time `json:"created_at"`
+	UpdatedAt  *gtime.Time `json:"updated_at"`
+}
+
+type SeckillCouponInfo struct {
+	gmeta.Meta `orm:"table:seckill_coupon_info"`
+	Id         int         `json:"id"`
+	CouponId   int         `json:"coupon_id"`
+	Stock      int         `json:"stock"`
+	StartTime  *gtime.Time `json:"start_time"`
+	EndTime    *gtime.Time `json:"end_time"`
+	CreatedAt  *gtime.Time `json:"created_at"`
+	UpdatedAt  *gtime.Time `json:"updated_at"`
+}

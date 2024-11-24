@@ -6,6 +6,7 @@ import (
 	"goshop/internal/model/entity"
 	"goshop/internal/service"
 
+	"github.com/gogf/gf/errors/gerror"
 	"github.com/gogf/gf/util/gconv"
 
 	"goshop/internal/dao"
@@ -61,11 +62,19 @@ func (s *sUserCoupon) GetList(ctx context.Context, in model.UserCouponGetListInp
 
 // Add 添加优惠券
 func (s *sUserCoupon) Add(ctx context.Context, in model.UserCouponAddInput) (out *model.UserCouponAddOutput, err error) {
-	// 不允许HTML代码
-	if err = ghtml.SpecialCharsMapOrStruct(in); err != nil {
+	in.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
+	in.Status = consts.CouponStatusAvailable
+	// 每个用户只能领取一次
+	count, err := dao.UserCouponInfo.Ctx(ctx).Where(g.Map{
+		dao.UserCouponInfo.Columns().UserId:   in.UserId,
+		dao.UserCouponInfo.Columns().CouponId: in.CouponId,
+	}).Count()
+	if err != nil {
 		return out, err
 	}
-	in.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
+	if count > 0 {
+		return out, gerror.New(consts.ErrHasSeckill)
+	}
 	lastInsertID, err := dao.UserCouponInfo.Ctx(ctx).OmitEmpty().Data(in).InsertAndGetId()
 	if err != nil {
 		return out, err

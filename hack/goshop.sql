@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `rotation_info` (
 -- ----------------------------
 DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE IF NOT EXISTS `order_info` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` BIGINT NOT NULL COMMENT '订单id，使用基于Redis自增的全局唯一id',
     `number` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单编号',
     `user_id` INT NOT NULL DEFAULT '0' COMMENT '用户id',
     `pay_type` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '支付方式 1微信 2支付宝 3云闪付',
@@ -341,20 +341,35 @@ CREATE TABLE `order_goods_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='订单商品表';
 
 -- ----------------------------
--- Table structure for coupon_info
+-- Table structure for 1
 -- ----------------------------
 DROP TABLE IF EXISTS `coupon_info`;
 CREATE TABLE `coupon_info` (
-    `id` int NOT NULL AUTO_INCREMENT,
+    `id` int NOT NULL AUTO_INCREMENT COMMENT '优惠券id',
     `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
-    `price` int NOT NULL DEFAULT '0' COMMENT '优惠前面值 单位分',
-    `goods_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '关联使用的goods_ids，逗号分隔',
-    `category_id` int NOT NULL DEFAULT '0' COMMENT '关联使用的分类id',
+    `condition` int NOT NULL DEFAULT 0 COMMENT '满减条件 单位分',
+    `price` int NOT NULL DEFAULT 0 COMMENT '优惠前面值 单位分',
+    `goods_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '可使用的goods_ids，逗号分隔，空表示通用',
+    `category_id` int NOT NULL DEFAULT 0 COMMENT '可使用的分类id',
+    `type` tinyint(1) NOT NULL DEFAULT 0 COMMENT '优惠券类型：0：普通券 1：秒杀券',
     `created_at` datetime DEFAULT NULL,
     `updated_at` datetime DEFAULT NULL,
     `deleted_at` datetime DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='优惠券表';
+
+DROP TABLE IF EXISTS `seckill_coupon_info`;
+CREATE TABLE `seckill_coupon_info` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT '秒杀优惠券id',
+    `coupon_id` int NOT NULL COMMENT '优惠券id',
+    `stock` int NOT NULL DEFAULT '0' COMMENT '库存',
+    `start_time` datetime DEFAULT NULL COMMENT '开始时间',
+    `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+    `created_at` datetime DEFAULT NULL,
+    `updated_at` datetime DEFAULT NULL,
+    `deleted_at` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='秒杀优惠券表';
 
 -- ----------------------------
 -- Table structure for user_coupon_info

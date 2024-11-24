@@ -6,6 +6,7 @@ import (
 	"goshop/internal/model/entity"
 	"goshop/internal/service"
 	"goshop/utility"
+	"goshop/utility/id_generator"
 
 	"github.com/gogf/gf/v2/errors/gerror"
 
@@ -103,6 +104,7 @@ func (s *sOrder) GetListFrontend(ctx context.Context, in model.OrderGetListWithS
 // AddFrontend 添加订单
 func (s *sOrder) AddFrontend(ctx context.Context, in model.OrderAddInput) (out *model.OrderAddOutput, err error) {
 	var orderId int
+	in.Id = id_generator.NextId(consts.OrderIdKey)
 	in.Number = utility.GetOrderNum()
 	in.UserId = gconv.Int(ctx.Value(consts.CtxUserId))
 	in.PayAt = gtime.Now()
