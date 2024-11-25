@@ -20,8 +20,8 @@ type (
 		Delete(ctx context.Context, id int) error
 		// Update 更新秒杀优惠券
 		Update(ctx context.Context, in model.SeckillCouponUpdateInput) error
-		// Kill 用户秒杀优惠券，注意传入参数的id是couponId
-		Kill(ctx context.Context, id int) error
+		// Kill 用户秒杀优惠券
+		Kill(ctx context.Context, coupon_id int) error
 	}
 )
 

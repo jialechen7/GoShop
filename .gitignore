@@ -21,3 +21,4 @@ bin
 upload/
 !utility/upload/**
 !utility/upload
+tokens.txt

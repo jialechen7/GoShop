@@ -94,6 +94,7 @@ database:
   default:
       link: "mysql:root:root@tcp(127.0.0.1:3306)/goshop"
       debug: true
+      maxIdle: 1000
   logger:
     path: "temp/logs/sql"
     level: "all"

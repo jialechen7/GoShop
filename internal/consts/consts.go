@@ -19,7 +19,6 @@ const (
 	CtxUserSign              = "CtxUserSign"
 	CtxUserSex               = "CtxUserSex"
 	CtxUserStatus            = "CtxUserStatus"
-	UserStatusBlacked        = 2 // 用户状态：2-黑名单
 	ErrSecretAnswer          = "密保答案错误"
 	ErrUserStatus            = "您的账号被冻结拉黑，请联系管理员"
 	ErrNoPermission          = "您没有权限访问"
@@ -62,4 +61,6 @@ const (
 	CouponStatusExpired      = 3              // 优惠券状态：3-已过期
 	CouponStatusUsedText     = "已使用"          // 优惠券状态文本：已使用
 	CouponStatusExpiredText  = "已过期"          // 优惠券状态文本：已过期
+	UserStatusNormal         = 1              // 用户状态：1-正常
+	UserStatusBlacked        = 2              // 用户状态：2-黑名单
 )

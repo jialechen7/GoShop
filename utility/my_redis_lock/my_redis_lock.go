@@ -1,4 +1,4 @@
-package redis_lock
+package my_redis_lock
 
 import (
 	"context"

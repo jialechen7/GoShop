@@ -5,7 +5,7 @@ import (
 	"goshop/internal/consts"
 	"goshop/internal/model/entity"
 	"goshop/internal/service"
-	"goshop/utility/redis_lock"
+	"goshop/utility/my_redis_lock"
 
 	"github.com/gogf/gf/v2/util/gconv"
 
@@ -100,11 +100,11 @@ func (s *sSeckillCoupon) Update(ctx context.Context, in model.SeckillCouponUpdat
 	return err
 }
 
-// Kill 用户秒杀优惠券，注意传入参数的id是couponId
-func (s *sSeckillCoupon) Kill(ctx context.Context, id int) error {
+// Kill 用户秒杀优惠券
+func (s *sSeckillCoupon) Kill(ctx context.Context, coupon_id int) error {
 	seckillCouponEntity := &entity.SeckillCouponInfo{}
 	// 1. 根据id查到秒杀优惠券的信息
-	if err := dao.SeckillCouponInfo.Ctx(ctx).Where(dao.SeckillCouponInfo.Columns().CouponId, id).Scan(seckillCouponEntity); err != nil {
+	if err := dao.SeckillCouponInfo.Ctx(ctx).Where(dao.SeckillCouponInfo.Columns().CouponId, coupon_id).Scan(seckillCouponEntity); err != nil {
 		return err
 	}
 	// 2. 判断秒杀是否开始
@@ -122,8 +122,10 @@ func (s *sSeckillCoupon) Kill(ctx context.Context, id int) error {
 	// 5. 一人一单
 	userId := gconv.Int(ctx.Value(consts.CtxUserId))
 	// 5.1 分布式锁实现一人一单
-	redisLock := redis_lock.New(consts.UserCouponIdKey+gconv.String(userId), g.Redis())
-	isLock := redisLock.TryLock(5)
+
+	// 创建 Redis Lock 客户端
+	redisLock := my_redis_lock.New(consts.UserCouponIdKey+gconv.String(userId), g.Redis())
+	isLock := redisLock.TryLock(1200)
 	if !isLock {
 		return gerror.New(consts.ErrHasSeckill)
 	}
@@ -131,7 +133,7 @@ func (s *sSeckillCoupon) Kill(ctx context.Context, id int) error {
 	// 5.2 判断是否已经秒杀过
 	count, err := dao.UserCouponInfo.Ctx(ctx).Where(g.Map{
 		dao.UserCouponInfo.Columns().UserId:   userId,
-		dao.UserCouponInfo.Columns().CouponId: id,
+		dao.UserCouponInfo.Columns().CouponId: coupon_id,
 	}).Count()
 	if err != nil {
 		return err
@@ -141,7 +143,7 @@ func (s *sSeckillCoupon) Kill(ctx context.Context, id int) error {
 	}
 	err = dao.SeckillCouponInfo.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 6. 扣减库存
-		result, err := dao.SeckillCouponInfo.Ctx(ctx).Where(dao.SeckillCouponInfo.Columns().CouponId, id).
+		result, err := dao.SeckillCouponInfo.Ctx(ctx).Where(dao.SeckillCouponInfo.Columns().CouponId, coupon_id).
 			WhereGT(dao.SeckillCouponInfo.Columns().Stock, 0).Decrement(dao.SeckillCouponInfo.Columns().Stock, 1)
 		if err != nil {
 			return err
@@ -157,7 +159,7 @@ func (s *sSeckillCoupon) Kill(ctx context.Context, id int) error {
 		// 7. 添加到user_coupon_info表中，表示秒杀成功
 		_, err = dao.UserCouponInfo.Ctx(ctx).Insert(g.Map{
 			dao.UserCouponInfo.Columns().UserId:   gconv.Int(ctx.Value(consts.CtxUserId)),
-			dao.UserCouponInfo.Columns().CouponId: seckillCouponEntity.CouponId,
+			dao.UserCouponInfo.Columns().CouponId: coupon_id,
 			dao.UserCouponInfo.Columns().Status:   consts.CouponStatusAvailable,
 		})
 		if err != nil {

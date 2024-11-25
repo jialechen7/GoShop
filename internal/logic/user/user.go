@@ -40,6 +40,7 @@ func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (out model
 
 	// 生成用户盐并加密密码
 	in.UserSalt = grand.S(10)
+	in.Status = consts.UserStatusNormal
 	in.Password = utility.EncryptPassword(in.Password, in.UserSalt)
 
 	lastInsertID, err := dao.UserInfo.Ctx(ctx).Data(in).InsertAndGetId()
