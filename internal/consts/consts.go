@@ -53,6 +53,7 @@ const (
 	CaptchaPrefix            = "captcha:"       // 验证码前缀
 	CaptchaExpire            = 60 * 5           // 验证码过期时间(单位:秒)
 	OrderIdKey               = "order_id"
+	RedisLockKey             = "lock:"
 	UserCouponIdKey          = "user_coupon:" // 用户优惠券key
 	CouponTypeCommon         = 0              // 优惠券类型：0-普通优惠券
 	CouponTypeSeckill        = 1              // 优惠券类型：1-秒杀优惠券

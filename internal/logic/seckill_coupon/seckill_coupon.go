@@ -5,8 +5,10 @@ import (
 	"goshop/internal/consts"
 	"goshop/internal/model/entity"
 	"goshop/internal/service"
-	"goshop/utility/my_redis_lock"
+	"goshop/utility/redis_lock"
+	"time"
 
+	"github.com/go-redsync/redsync/v4"
 	"github.com/gogf/gf/v2/util/gconv"
 
 	"github.com/gogf/gf/v2/errors/gerror"
@@ -122,14 +124,11 @@ func (s *sSeckillCoupon) Kill(ctx context.Context, coupon_id int) error {
 	// 5. 一人一单
 	userId := gconv.Int(ctx.Value(consts.CtxUserId))
 	// 5.1 分布式锁实现一人一单
-
-	// 创建 Redis Lock 客户端
-	redisLock := my_redis_lock.New(consts.UserCouponIdKey+gconv.String(userId), g.Redis())
-	isLock := redisLock.TryLock(1200)
-	if !isLock {
+	mutex := redis_lock.Rs.NewMutex(consts.RedisLockKey+consts.UserCouponIdKey+gconv.String(userId), redsync.WithExpiry(1200*time.Second))
+	if err := mutex.Lock(); err != nil {
 		return gerror.New(consts.ErrHasSeckill)
 	}
-	defer redisLock.Unlock()
+	defer mutex.Unlock()
 	// 5.2 判断是否已经秒杀过
 	count, err := dao.UserCouponInfo.Ctx(ctx).Where(g.Map{
 		dao.UserCouponInfo.Columns().UserId:   userId,

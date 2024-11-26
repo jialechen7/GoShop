@@ -1,3 +1,5 @@
+// Package my_redis_lock
+// 自己实现的Redis分布式锁版本，存在一定问题
 package my_redis_lock
 
 import (
