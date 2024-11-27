@@ -28,7 +28,7 @@ type SeckillCouponAddReq struct {
 	Name       string `json:"name" form:"name" v:"required#请输入秒杀优惠券名称" description:"秒杀优惠券名称"`
 	Condition  int    `json:"condition" form:"condition" v:"required#请输入秒杀优惠券条件" description:"秒杀优惠券条件(单位分)"`
 	Price      int    `json:"price" form:"price" v:"required#请输入秒杀优惠券金额" description:"秒杀优惠券金额(单位分)"`
-	GoodsIds   string `json:"goods_ids" form:"goods_ids" v:"required#请选择商品" description:"可用的商品id列表"`
+	GoodsIds   string `json:"goods_ids" form:"goods_ids" description:"可用的商品id列表"`
 	CategoryId int    `json:"category_id" form:"category_id" v:"required#请选择分类" description:"可用的分类id"`
 	SeckillCouponAddUpdateCommon
 }
